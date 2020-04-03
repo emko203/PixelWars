@@ -20,7 +20,10 @@ public class BattleFieldInstantiate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetStartPoint();
+        //SetStartPoint();
+
+        startPointX = 0;
+        startPointY = 0;
 
         createMap();
     }
@@ -41,14 +44,14 @@ public class BattleFieldInstantiate : MonoBehaviour
             ypos = startPointY;
         }
     }
-    void SetStartPoint()
+    /*void SetStartPoint()
     {
         startPointX = iSizeX * stepSizeX / 2;
         startPointX = startPointX - 2 * startPointX;
 
         startPointY = iSizeY * stepSizeY / 2;
         startPointY = startPointY - 2 * startPointY;
-    }
+    }*/
 
     void SpawnTile(float x, float y)
     {

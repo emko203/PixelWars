@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -147,6 +148,20 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e761698df04e4458580531ba5ae50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTrans: {fileID: 519420032}
+  instant: {fileID: 1142182285}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -214,6 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1142182286}
   - component: {fileID: 1142182285}
+  - component: {fileID: 1142182287}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -233,8 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3465b250d4dd16d438a659fd7f41b7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iSizeX: 5
-  iSizeY: 4
+  iSizeX: 4
+  iSizeY: 5
   stepSizeX: 2.5
   stepSizeY: 2.5
   tilePrefab: {fileID: 1533078760023747114, guid: c7ce09a7d25a68a448366b0ed9453055,
@@ -253,3 +269,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1142182287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142182284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67aa96f6e7722774ca1454e8e149cd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instantiate: {fileID: 1142182285}
