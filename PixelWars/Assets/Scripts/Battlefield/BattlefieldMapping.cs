@@ -30,7 +30,7 @@ public class BattlefieldMapping : MonoBehaviour
         SetInitialMapping();
     }
 
-    private void SetStartingPlacements()
+    void SetStartingPlacements()
     {
         whereToPlaceRedX = steppingX / 4;
         whereToPlaceBlueX = steppingX / 4 * 3;
@@ -59,7 +59,7 @@ public class BattlefieldMapping : MonoBehaviour
         }
     }
 
-    private void UpdateYPos(int yAmount)
+    void UpdateYPos(int yAmount)
     {
         yAmount += 1;
 
@@ -67,7 +67,7 @@ public class BattlefieldMapping : MonoBehaviour
         whereToPlaceBlueY = (steppingY * yAmount) / 2;
     }
 
-    private void UpdateXPos(int xAmount)
+    void UpdateXPos(int xAmount)
     {
         whereToPlaceRedX = (steppingX * xAmount) / 4;
         whereToPlaceBlueX = (steppingX * xAmount) / 4 * 3;

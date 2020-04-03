@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattlePostion : MonoBehaviour
+public class BattlePostion
 {
     Vector3 blueTeamPosition;
     Vector3 redTeamPosition;
@@ -21,10 +21,85 @@ public class BattlePostion : MonoBehaviour
         this.locationY = locationY;
     }
 
+    /// <summary>
+    /// Checks if blue character is in this space
+    /// </summary>
+    /// <returns>Bool that is true if there is a blue character in this space</returns>
+    public bool IsOcupiedBlue()
+    {
+        if (blueCharacter == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    /// <summary>
+    /// Checks if red character is in this space
+    /// </summary>
+    /// <returns>Bool that is true if there is a red character in this space</returns>
+    public bool IsOcupiedRed()
+    {
+        if (redCharacter == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Saves character into this space
+    /// </summary>
+    /// <param name="character">this character gets saved to this space</param>
+    public void AddCharacterToSpace(CharacterTemplate character)
+    {
+        character.PlaceCharacter(locationX, locationY);
+
+        switch (character.TeamColor)
+        {
+            case EnumTeams.Red:
+                redCharacter = character;
+                break;
+
+            case EnumTeams.Blue:
+                blueCharacter = character;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Removes a character from this space
+    /// </summary>
+    /// <param name="character">This character gets removed from this space</param>
+    public void RemoveCharacterFromSpace(CharacterTemplate character)
+    {
+        switch (character.TeamColor)
+        {
+            case EnumTeams.Red:
+                redCharacter = null;
+                break;
+
+            case EnumTeams.Blue:
+                blueCharacter = null;
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public Vector3 BlueTeamPosition { get => blueTeamPosition;}
     public Vector3 RedTeamPosition { get => redTeamPosition;}
-    public CharacterTemplate BlueCharacter { get => blueCharacter; set => blueCharacter = value; }
-    public CharacterTemplate RedCharacter { get => redCharacter; set => redCharacter = value; }
+    public CharacterTemplate BlueCharacter { get => blueCharacter;}
+    public CharacterTemplate RedCharacter { get => redCharacter;}
     public int LocationX { get => locationX;}
     public int LocationY { get => locationY;}
 }

@@ -7,19 +7,25 @@ public class CharacterTemplate : MonoBehaviour
     float health;
     float manaCost;
     float damage;
-    
+
+    int xPosition;
+    int yPosition;
+
+    EnumTeams teamColor;
+
     string specialAbilityText = "";
 
     private GameObject character;
 
-    #region 
+    #region constructors
 
-    public CharacterTemplate(float health, float manaCost, float damage, string specialAbilityText)
+    public CharacterTemplate(float health, float manaCost, float damage, string specialAbilityText, EnumTeams teamColor)
     {
         this.health = health;
         this.manaCost = manaCost;
         this.damage = damage;
         this.specialAbilityText = specialAbilityText;
+        this.TeamColor = teamColor;
     }
 
     public CharacterTemplate(float health, float manaCost, float damage)
@@ -47,17 +53,64 @@ public class CharacterTemplate : MonoBehaviour
     public float Damage { get => damage; set => damage = value; }
     public string SpecialAbilityText { get => specialAbilityText; set => specialAbilityText = value; }
     public GameObject Character { get => character; }
+    public EnumTeams TeamColor { get => teamColor; set => teamColor = value; }
 
     #endregion
 
-    public void DealDamageTo(CharacterTemplate temp)
+    /// <summary>
+    /// Changes character position in the current map
+    /// </summary>
+    /// <param name="xpos">x</param>
+    /// <param name="ypos">y</param>
+    public void PlaceCharacter(int xpos, int ypos)
+    {
+        xPosition = xpos;
+        yPosition = ypos;
+    }
+
+    /// <summary>
+    /// Moves character forward on x axis
+    /// </summary>
+    /// <param name="speed">Amount of spaces to move</param>
+    public void MoveCharacterX(int speed)
+    {
+        xPosition += speed;
+    }
+
+    /// <summary>
+    /// Moves character forward on y axis
+    /// </summary>
+    /// <param name="speed">Amount of spaces to move</param>
+    public void MoveCharacterY(int speed)
+    {
+        xPosition += speed;
+    }
+
+    /// <summary>
+    /// Substract damage from this character and destoys it on death
+    /// </summary>
+    /// <param name="amount">amount of damage to substract</param>
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        checkDeath();
+    }
+
+    /// <summary>
+    /// Deal damage to character and destroys it on death
+    /// </summary>
+    /// <param name="target">Character to deal damage to</param>
+    public void DealDamageTo(CharacterTemplate target)
     {
         //TODO play some ability animation
 
-        temp.Health -= Damage;
-        temp.checkDeath();
+        target.Health -= Damage;
+        target.checkDeath();
     }
 
+    /// <summary>
+    /// Checks if health is <= 0 if true destroys the character
+    /// </summary>
     public void checkDeath()
     {
         if (health <= 0)
