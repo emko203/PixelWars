@@ -13,12 +13,30 @@ public class BattlePostion
     CharacterTemplate blueCharacter;
     CharacterTemplate redCharacter;
 
+    BattlePostion tileForward;
+    BattlePostion tileBehind;
+    BattlePostion tileLeft;
+    BattlePostion tileRight;
+
     public BattlePostion(Vector3 blueTeamPosition, Vector3 redTeamPosition, int locationX, int locationY)
     {
         this.blueTeamPosition = blueTeamPosition;
         this.redTeamPosition = redTeamPosition;
         this.locationX = locationX;
         this.locationY = locationY;
+    }
+
+    public void DrawCharactersOnSpace()
+    {
+        if (blueCharacter != null)
+        {
+            //TODO: draw bluecharacter on current space
+        }
+
+        if (redCharacter != null)
+        {
+            //TODO: draw bluecharacter on current space
+        }
     }
 
     /// <summary>
@@ -102,4 +120,8 @@ public class BattlePostion
     public CharacterTemplate RedCharacter { get => redCharacter;}
     public int LocationX { get => locationX;}
     public int LocationY { get => locationY;}
+    public BattlePostion TileFront { get => tileForward; set => tileForward = value; }
+    public BattlePostion TileBehind { get => tileBehind; set => tileBehind = value; }
+    public BattlePostion TileLeft { get => tileLeft; set => tileLeft = value; }
+    public BattlePostion TileRight { get => tileRight; set => tileRight = value; }
 }

@@ -28,8 +28,13 @@ public class BattlefieldMapping : MonoBehaviour
         SetStartingPlacements();
 
         SetInitialMapping();
+
+        ConnectTiles();
     }
 
+    /// <summary>
+    /// Where to place a teams character on a space
+    /// </summary>
     void SetStartingPlacements()
     {
         whereToPlaceRedX = steppingX / 4;
@@ -56,6 +61,38 @@ public class BattlefieldMapping : MonoBehaviour
             }
 
             UpdateXPos(x);
+        }
+    }
+    /// <summary>
+    /// Make connections to FRONT,LEFT,RIGHT and BEHIND
+    /// </summary>
+    void ConnectTiles()
+    {
+        for (int x = 0; x < instantiate.iSizeX; x++)
+        {
+            for (int y = 0; y < instantiate.iSizeY; y++)
+            {
+                //set tile in FRONT
+                if (y + 1 < instantiate.iSizeY)
+                {
+                    map[x, y].TileFront = map[x, y + 1];
+                }
+                //set tile in BEHIND
+                if (y - 1 >= 0)
+                {
+                    map[x, y].TileBehind = map[x, y - 1];
+                }
+                //set tile in LEFT
+                if (x - 1 >= 0)
+                {
+                    map[x, y].TileLeft = map[x - 1, y];
+                }
+                //set tile in RIGHT
+                if (x + 1 < instantiate.iSizeX)
+                {
+                    map[x, y].TileRight = map[x + 1, y + 1];
+                }
+            }
         }
     }
 
