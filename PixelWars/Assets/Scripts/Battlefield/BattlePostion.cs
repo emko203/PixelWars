@@ -7,11 +7,11 @@ public class BattlePostion
     Vector3 blueTeamPosition;
     Vector3 redTeamPosition;
 
-    int locationX;
-    int locationY;
+    readonly int locationX;
+    readonly int locationY;
 
-    CharacterTemplate blueCharacter;
-    CharacterTemplate redCharacter;
+    Character blueCharacter;
+    Character redCharacter;
 
     BattlePostion tileForward;
     BattlePostion tileBehind;
@@ -74,10 +74,8 @@ public class BattlePostion
     /// Saves character into this space
     /// </summary>
     /// <param name="character">this character gets saved to this space</param>
-    public void AddCharacterToSpace(CharacterTemplate character)
+    public void AddCharacterToSpace(Character character)
     {
-        character.PlaceCharacter(locationX, locationY);
-
         switch (character.TeamColor)
         {
             case EnumTeams.Red:
@@ -97,7 +95,7 @@ public class BattlePostion
     /// Removes a character from this space
     /// </summary>
     /// <param name="character">This character gets removed from this space</param>
-    public void RemoveCharacterFromSpace(CharacterTemplate character)
+    public void RemoveCharacterFromSpace(Character character)
     {
         switch (character.TeamColor)
         {
@@ -116,8 +114,8 @@ public class BattlePostion
 
     public Vector3 BlueTeamPosition { get => blueTeamPosition;}
     public Vector3 RedTeamPosition { get => redTeamPosition;}
-    public CharacterTemplate BlueCharacter { get => blueCharacter;}
-    public CharacterTemplate RedCharacter { get => redCharacter;}
+    public Character BlueCharacter { get => blueCharacter;}
+    public Character RedCharacter { get => redCharacter;}
     public int LocationX { get => locationX;}
     public int LocationY { get => locationY;}
     public BattlePostion TileFront { get => tileForward; set => tileForward = value; }
