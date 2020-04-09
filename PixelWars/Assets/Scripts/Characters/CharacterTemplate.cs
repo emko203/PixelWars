@@ -18,6 +18,26 @@ public class CharacterTemplate : MonoBehaviour
     private string specialAbilityText;
     private BattlePostion position;
 
+    public CharacterTemplate(GameObject characterGraphics, List<IAbility_Template> abilities, float health, float manaCost, float damage, float speed, int xposition, int yposition, EnumTeams teamColor, string specialAbilityText, BattlePostion position)
+    {
+        this.characterGraphics = characterGraphics;
+        this.abilities = abilities;
+        this.health = health;
+        this.manaCost = manaCost;
+        this.damage = damage;
+        this.speed = speed;
+        this.xposition = xposition;
+        this.yposition = yposition;
+        this.teamColor = teamColor;
+        this.specialAbilityText = specialAbilityText;
+        this.position = position;
+    }
+
+    public CharacterTemplate()
+    {
+
+    }
+
     /// <summary>
     /// Changes character position in the current map
     /// </summary>

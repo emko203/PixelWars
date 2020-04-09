@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAbility_Template
+public abstract class IAbility_Template
 {
-    string Name { get; set; }
+    string name;
+
+    public string Name { get => name; set => name = value; }
 
     /// <summary>
     /// Checks if we are able to use an ability
     /// </summary>
     /// <returns>bool to show if we should fire of an ability</returns>
-    bool CheckIfAbilityIsPossible();
+    public abstract bool CheckIfAbilityIsPossible();
     /// <summary>
     /// Preform set ability
     /// </summary>
-    void HandleAbility();
+    void HandleAbility()
+    {
+
+    }
 }
