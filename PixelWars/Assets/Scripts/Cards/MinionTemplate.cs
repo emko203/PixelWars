@@ -12,5 +12,4 @@ public class Minion : ScriptableObject
     public int manaCost;
     public int attack;
     public int health;
-
 }

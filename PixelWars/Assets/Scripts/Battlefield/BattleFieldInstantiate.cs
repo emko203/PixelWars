@@ -7,7 +7,7 @@ public class BattleFieldInstantiate : MonoBehaviour
     private float startPointX;
     private float startPointY;
 
-    List<GameObject> Map = new List<GameObject>();
+    readonly List<GameObject> Map = new List<GameObject>();
 
     public int iSizeX;
     public int iSizeY;
@@ -23,10 +23,10 @@ public class BattleFieldInstantiate : MonoBehaviour
         startPointX = 0;
         startPointY = 0;
 
-        createMap();
+        CreateMap();
     }
 
-    void createMap()
+    void CreateMap()
     {
         float xpos = startPointX;
         float ypos = startPointY;
