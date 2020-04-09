@@ -10,6 +10,7 @@ public class Minion : ScriptableObject
     public Sprite artwork;
     public Sprite cardBack;
 
+    public float range;
     public int manaCost;
     public int attack;
     public int health;
