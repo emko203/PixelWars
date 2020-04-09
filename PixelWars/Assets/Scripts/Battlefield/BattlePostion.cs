@@ -62,11 +62,11 @@ public class BattlePostion
 
         switch (character.TeamColor)
         {
-            case EnumTeams.RED:
+            case EnumTeams.Red:
                 redCharacter = character;
                 break;
 
-            case EnumTeams.BLUE:
+            case EnumTeams.Blue:
                 blueCharacter = character;
                 break;
 
@@ -83,11 +83,11 @@ public class BattlePostion
     {
         switch (character.TeamColor)
         {
-            case EnumTeams.RED:
+            case EnumTeams.Red:
                 redCharacter = null;
                 break;
 
-            case EnumTeams.BLUE:
+            case EnumTeams.Blue:
                 blueCharacter = null;
                 break;
 
