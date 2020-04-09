@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class CharacterTemplate : MonoBehaviour
 {
-    GameObject CharacterGraphics { get; set; }
+    [SerializeField] private GameObject characterGraphics;
+    [SerializeField] private List<IAbility_Template> abilities;
 
-    float Health { get; set; }
-    float ManaCost { get; set; }
-    float Damage { get; set; }
-    float Speed { get; set; }
+    [SerializeField] private float health;
+    [SerializeField] private float manaCost;
+    [SerializeField] private float damage;
+    [SerializeField] private float speed;
 
-    int xPosition { get; set; }
-    int yPosition { get; set; }
-
-    EnumTeams TeamColor { get; set; }
-    
-    string SpecialAbilityText { get; set; }
-
-    BattlePostion Position { get; set; }
-
-    List<Ability> Abilities { get; set; }
+    private int xposition;
+    private int yposition;
+    private EnumTeams teamColor;
+    private string specialAbilityText;
+    private BattlePostion position;
 
     /// <summary>
     /// Changes character position in the current map
@@ -108,5 +104,15 @@ public class CharacterTemplate : MonoBehaviour
         Position.RemoveCharacterFromSpace(this);
     }
 
-    
+    public GameObject CharacterGraphics { get => characterGraphics; set => characterGraphics = value; }
+    public List<IAbility_Template> Abilities { get => abilities; set => abilities = value; }
+    public float Health { get => health; set => health = value; }
+    public float ManaCost { get => manaCost; set => manaCost = value; }
+    public float Damage { get => damage; set => damage = value; }
+    public float Speed { get => speed; set => speed = value; }
+    public int Xposition { get => xposition; set => xposition = value; }
+    public int Yposition { get => yposition; set => yposition = value; }
+    public EnumTeams TeamColor { get => teamColor; set => teamColor = value; }
+    public string SpecialAbilityText { get => specialAbilityText; set => specialAbilityText = value; }
+    public BattlePostion Position { get => position; set => position = value; }
 }
