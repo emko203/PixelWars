@@ -9,6 +9,7 @@ public class Spell : ScriptableObject
     public string description;
 
     public Sprite artwork;
+    public Sprite cardBack;
 
     public int manaCost;
 

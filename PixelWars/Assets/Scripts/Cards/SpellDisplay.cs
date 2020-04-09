@@ -11,6 +11,7 @@ public class SpellDisplay : MonoBehaviour
     public Text descriptionText;
 
     public Image artworkImage;
+    public Image cardBackImage;
 
     public Text manaText;
 
@@ -22,6 +23,7 @@ public class SpellDisplay : MonoBehaviour
         descriptionText.text = spell.description;
 
         artworkImage.sprite = spell.artwork;
+        cardBackImage.sprite = spell.cardBack;
 
         manaText.text = spell.manaCost.ToString();
 

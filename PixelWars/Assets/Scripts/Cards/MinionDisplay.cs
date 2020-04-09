@@ -11,6 +11,7 @@ public class MinionDisplay : MonoBehaviour
     public Text descriptionText;
 
     public Image artworkImage;
+    public Image cardBackImage;
 
     public Text manaText;
     public Text attackText;
@@ -23,6 +24,7 @@ public class MinionDisplay : MonoBehaviour
         descriptionText.text = minion.description;
 
         artworkImage.sprite = minion.artwork;
+        cardBackImage.sprite = minion.cardBack;
 
         manaText.text = minion.manaCost.ToString();
         attackText.text = minion.attack.ToString();
