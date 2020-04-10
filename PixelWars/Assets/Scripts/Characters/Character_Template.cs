@@ -11,7 +11,7 @@ public class Character_Template : ScriptableObject
     [SerializeField] private float speed;
     [SerializeField] private float range;
 
-    
+    [SerializeField] private List<AbilityBehaviour> lstBehaviours = new List<AbilityBehaviour>();
 
     
     public float Health { get => health; set => health = value; }
@@ -19,4 +19,5 @@ public class Character_Template : ScriptableObject
     public float Damage { get => damage; set => damage = value; }
     public float Speed { get => speed; set => speed = value; }
     public float Range { get => range; set => range = value; }
+    public List<AbilityBehaviour> LstBehaviours { get => lstBehaviours; set => lstBehaviours = value; }
 }

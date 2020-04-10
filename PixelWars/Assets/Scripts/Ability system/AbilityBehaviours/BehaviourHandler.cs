@@ -12,10 +12,7 @@ public class BehaviourHandler : MonoBehaviour
     {
         foreach (AbilityBehaviour behaviour in lstAbilityBehaviours)
         {
-            if (behaviour.CanCastOnSelf)
-            {
-
-            }
+            
         }
     }
 }

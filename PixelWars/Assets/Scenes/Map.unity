@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 98814557}
   - component: {fileID: 98814556}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,10 +147,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 98814555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f557bd5013650c44bd8f5a9908e66fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9255f9ae300113e4ab27741024d81f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lstAbilityBehaviours: []
 --- !u!4 &98814557
 Transform:
   m_ObjectHideFlags: 0
@@ -205,7 +204,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camTrans: {fileID: 519420032}
-  instant: {fileID: 1142182285}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -273,7 +271,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1142182286}
   - component: {fileID: 1142182285}
-  - component: {fileID: 1142182287}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -290,15 +287,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1142182284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3465b250d4dd16d438a659fd7f41b7bb, type: 3}
+  m_Script: {fileID: 11500000, guid: fa75a9b9a3f76684292280b14058161a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iSizeX: 4
-  iSizeY: 5
-  stepSizeX: 2.5
-  stepSizeY: 2.5
-  tilePrefab: {fileID: 1533078760023747114, guid: c7ce09a7d25a68a448366b0ed9453055,
-    type: 3}
 --- !u!4 &1142182286
 Transform:
   m_ObjectHideFlags: 0
@@ -313,16 +304,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1142182287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1142182284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67aa96f6e7722774ca1454e8e149cd55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  instantiate: {fileID: 1142182285}
