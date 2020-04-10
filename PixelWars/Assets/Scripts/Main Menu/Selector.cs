@@ -18,6 +18,8 @@ public class Selector : MonoBehaviour
 
     private SpriteRenderer ArcherRender, KnightRender, MageRender, RogueRender;
 
+    
+
     private void Awake() 
     {
         CharacterPosition = Archer.transform.position;
@@ -28,11 +30,13 @@ public class Selector : MonoBehaviour
         KnightRender = Knight.GetComponent<SpriteRenderer>();
         MageRender = Mage.GetComponent<SpriteRenderer>();
         RogueRender = Rogue.GetComponent<SpriteRenderer>();
+
+
     }
 
     public void NextCharacter() 
     {
-        switch (CharacterInt) 
+        switch (CharacterInt)
         {
             case 1:
                 ArcherRender.enabled = false;
@@ -42,7 +46,7 @@ public class Selector : MonoBehaviour
                 CharacterInt++;
                 break;
             case 2:
-                
+
                 KnightRender.enabled = false;
                 Knight.transform.position = OffScreenPosition;
                 Mage.transform.position = CharacterPosition;
@@ -61,11 +65,23 @@ public class Selector : MonoBehaviour
                 Rogue.transform.position = OffScreenPosition;
                 Archer.transform.position = CharacterPosition;
                 ArcherRender.enabled = true;
-                CharacterInt=1;
+                ResetInt();
                 break;
             default:
-                CharacterInt = 1;
+                ResetInt();
                 break;
+        }
+    }
+
+    private void ResetInt() 
+    {
+        if (CharacterInt >= 4)
+        {
+            CharacterInt = 1;
+        }
+        else 
+        {
+            CharacterInt = 4;
         }
     }
 
@@ -78,31 +94,31 @@ public class Selector : MonoBehaviour
                 Archer.transform.position = OffScreenPosition;
                 Rogue.transform.position = CharacterPosition;
                 RogueRender.enabled = true;
-                CharacterInt++;
+                ResetInt();
                 break;
             case 2:
-                RogueRender.enabled = false;
-                Rogue.transform.position = OffScreenPosition;
-                Mage.transform.position = CharacterPosition;
-                MageRender.enabled = true;
-                CharacterInt++;
+                KnightRender.enabled = false;
+                Knight.transform.position = OffScreenPosition;
+                Archer.transform.position = CharacterPosition;
+                ArcherRender.enabled = true;
+                CharacterInt--;
                 break;
             case 3:
                 MageRender.enabled = false;
                 Mage.transform.position = OffScreenPosition;
                 Knight.transform.position = CharacterPosition;
                 KnightRender.enabled = true;
-                CharacterInt++;
+                CharacterInt--;
                 break;
             case 4:
-                KnightRender.enabled = false;
-                Knight.transform.position = OffScreenPosition;
-                Archer.transform.position = CharacterPosition;
-                ArcherRender.enabled = true;
-                CharacterInt=1;
+                RogueRender.enabled = false;
+                Rogue.transform.position = OffScreenPosition;
+                Mage.transform.position = CharacterPosition;
+                MageRender.enabled = true;
+                CharacterInt--;
                 break;
             default:
-                CharacterInt = 1;
+                ResetInt();
                 break;
         }
     }
