@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BattlefieldHandler : MonoBehaviour
 {
+    BattlePostion[,] map;
     public int iSizeX;
     public int iSizeY;
 
@@ -11,16 +12,24 @@ public class BattlefieldHandler : MonoBehaviour
     public float stepSizeY;
 
     public GameObject tilePrefab;
+    public Canvas canvas;
 
     BattleFieldInstantiate battleFieldInstantiater;
 
-    BattlePostion[,] map;
+    
+
+    public void Awake()
+    {
+        SpriteRenderer s = tilePrefab.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        stepSizeX = s.sprite.bounds.size.x;
+        stepSizeY = s.sprite.bounds.size.y;
+
+        //set an instantiater with current value
+        battleFieldInstantiater = new BattleFieldInstantiate(iSizeX, iSizeY, stepSizeX, stepSizeY, tilePrefab);
+    }
 
     public void Start()
     {
-        //set an instantiater with current value
-        battleFieldInstantiater = new BattleFieldInstantiate(iSizeX, iSizeY, stepSizeX, stepSizeY, tilePrefab);
-
         //fill map with logic
         map = battleFieldInstantiater.FillMapping();
 
