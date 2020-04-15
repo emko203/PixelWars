@@ -1,0 +1,7 @@
+﻿public enum enumLane
+{
+    LEFT_OUTER_LANE,
+    LEFT_CENTER_LANE,
+    RIGHT_OUTER_LANE,
+    RIGHT_CENTER_LANE
+}

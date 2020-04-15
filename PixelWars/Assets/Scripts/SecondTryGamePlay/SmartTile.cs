@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class SmartTile : MonoBehaviour
 {
-    public int positionNumberX;
-    public int positionNumberY;
+    [SerializeField] private int positionNumberX;
+    [SerializeField] private int positionNumberY;
 
-    public GameObject TileLeft = null;
-    public GameObject TileRight = null;
-    public GameObject TileBottom = null;
-    public GameObject TileTop = null;
+    [SerializeField] private GameObject tileLeft = null;
+    [SerializeField] private GameObject tileRight = null;
+    [SerializeField] private GameObject tileBottom = null;
+    [SerializeField] private GameObject tileTop = null;
 
-    public Transform RedTeamPlacement;
-    public Transform BlueTeamPlacement;
+    [SerializeField] private Transform redTeamPlacement;
+    [SerializeField] private Transform blueTeamPlacement;
+
+    public int PositionNumberX { get => positionNumberX; set => positionNumberX = value; }
+    public int PositionNumberY { get => positionNumberY; set => positionNumberY = value; }
+    public GameObject TileLeft { get => tileLeft; set => tileLeft = value; }
+    public GameObject TileRight { get => tileRight; set => tileRight = value; }
+    public GameObject TileBottom { get => tileBottom; set => tileBottom = value; }
+    public GameObject TileTop { get => tileTop; set => tileTop = value; }
+    public Transform RedTeamPlacement { get => redTeamPlacement; set => redTeamPlacement = value; }
+    public Transform BlueTeamPlacement { get => blueTeamPlacement; set => blueTeamPlacement = value; }
 }
