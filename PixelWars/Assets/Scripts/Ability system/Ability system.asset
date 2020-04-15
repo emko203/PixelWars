@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56d54f560254804f900251f1ddd09f4, type: 3}
+  m_Name: Ability system
+  m_EditorClassIdentifier: 
+  isDOT: 0
+  damagePerTick: 0
+  timeBetweenTicks: 0
+  isAOE: 0
+  amountOfSpaces: 0
+  isNotAllDirections: 0
+  direction: 0
+  isDamaging: 0
+  amountOfDamage: 0
+  isHealing: 0
+  amountOfHealing: 0
+  isDefensive: 0
+  isMovement: 0
+  isRanged: 0
+  amountOfRange: 0
+  isCloseCombat: 0
+  canCastOnSelf: 0
+  needsTarget: 0
+  needsLineOfSight: 0
+  hasPush: 0
+  amountOfPush: 0
+  hasPull: 0
+  amountOfPull: 0
+  hasCooldown: 0
+  amountOfCooldown: 0

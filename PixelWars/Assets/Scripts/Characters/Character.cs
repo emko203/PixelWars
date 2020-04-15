@@ -10,6 +10,15 @@ public class Character : MonoBehaviour
     private BattlePostion position;
 
     /// <summary>
+    /// Returns true if enemy is in the given space
+    /// </summary>
+    /// <returns>True if there is an enemy</returns>
+    public bool CheckForEnemyInFront()
+    {
+        return position.TileFront.IsOcupiedEnemy(teamColor);
+    }
+
+    /// <summary>
     /// Moves character an amount of spaces in an direction
     /// </summary>
     /// <param name="amountOfSpaces">Amount of spaces to move if 0 move default character speed</param>

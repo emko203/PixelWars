@@ -38,12 +38,29 @@ public class BattlePostion
             //TODO: draw bluecharacter on current space
         }
     }
+    /// <summary>
+    /// Checks if enemy character is in this space
+    /// </summary>
+    /// <param name="teamColor">Characters teamcolor</param>
+    /// <returns>Bool that is true if there is a enemy character in this space</returns>
+    public bool IsOcupiedEnemy(EnumTeams teamColor)
+    {
+        switch (teamColor)
+        {
+            case EnumTeams.Red:
+                return IsOcupiedBlue();
+            case EnumTeams.Blue:
+                return IsOcupiedRed();
+            default:
+                return true;
+        }
+    }
 
     /// <summary>
     /// Checks if blue character is in this space
     /// </summary>
     /// <returns>Bool that is true if there is a blue character in this space</returns>
-    public bool IsOcupiedBlue()
+    private bool IsOcupiedBlue()
     {
         if (blueCharacter == null)
         {
@@ -58,7 +75,7 @@ public class BattlePostion
     /// Checks if red character is in this space
     /// </summary>
     /// <returns>Bool that is true if there is a red character in this space</returns>
-    public bool IsOcupiedRed()
+    private bool IsOcupiedRed()
     {
         if (redCharacter == null)
         {

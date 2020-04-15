@@ -1,6 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6422472521182240219
+--- !u!1 &2331957180956232450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 685413371868267739, guid: 63ccd9e85528a054f973a5f348b3ace1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3320281425534534033}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2793397278698663896}
+  - component: {fileID: 2832575160339792553}
+  m_Layer: 0
+  m_Name: RogueSkill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2793397278698663896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3320281425534534033}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331957180956232450}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.0567913, y: -0.31197053, z: -407.96588}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9022966369192323127}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2832575160339792553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 2142402040289295422, guid: 63ccd9e85528a054f973a5f348b3ace1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3320281425534534033}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331957180956232450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52018facbb689c43b3ac6c1029bb130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterToMove: {fileID: 0}
+--- !u!1 &4353001927483564850
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +55,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1761409454491358942}
-  - component: {fileID: 6209538507803857348}
-  - component: {fileID: 459778438512713273}
+  - component: {fileID: 9022966369192323127}
+  - component: {fileID: 3703501328094064429}
+  - component: {fileID: 7145165900626714832}
   m_Layer: 0
-  m_Name: RogueRed
+  m_Name: RogueRed 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1761409454491358942
+--- !u!4 &9022966369192323127
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6422472521182240219}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 4353001927483564850}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2793397278698663896}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6209538507803857348
+--- !u!212 &3703501328094064429
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6422472521182240219}
+  m_GameObject: {fileID: 4353001927483564850}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -82,17 +130,91 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &459778438512713273
+--- !u!114 &7145165900626714832
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6422472521182240219}
+  m_GameObject: {fileID: 4353001927483564850}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d80620a7e9907d4aa48d079a01b3cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 37735331cd1ec904f9f699b8ed7a2601, type: 2}
+  data: {fileID: 11400000, guid: 37735331cd1ec904f9f699b8ed7a2601, type: 2}
   teamColor: 0
+--- !u!1001 &3320281425534534033
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 9022966369192323127}
+    m_Modifications:
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.0567913
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.31197053
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -407.96588
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635997112424200367, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 685413371868267739, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: m_Name
+      value: RogueSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 2142402040289295422, guid: 63ccd9e85528a054f973a5f348b3ace1,
+        type: 3}
+      propertyPath: characterToMove
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63ccd9e85528a054f973a5f348b3ace1, type: 3}
