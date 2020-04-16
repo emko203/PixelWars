@@ -16,9 +16,13 @@ public class GameMaster : MonoBehaviour
         turnHandler.SelectRandomStartPlayer();
     }
 
-    public void SpawnUnit(enumUnit unit)
+    //Do on button click
+    public void SpawnUnit(int laneNumber)
     {
-        
+        enumUnit unitToSpawn = 0;
+        enumLane laneToSpawnIn = (enumLane)laneNumber;
+
+        battlefieldHandler.SpawnUnit(laneToSpawnIn, turnHandler.CurrentPlayerTurn, unitToSpawn);
     }
     
     private void InitializeBattlefield()

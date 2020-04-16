@@ -25,6 +25,17 @@ public class BattlefieldHandler : MonoBehaviour
     public void SpawnUnit(enumLane laneToSpawnIn, EnumTeams teamToSpawnFor, enumUnit unitToSpawn)
     {
         Vector3 spawnPos = GetSpawnFromLane(laneToSpawnIn, teamToSpawnFor);
+        spawnPos.z = -1;
+
+        foreach (GameObject character in characterPool)
+        {
+            if (character.GetComponent<Character>().UnitType == unitToSpawn)
+            {
+                GameObject go = Instantiate(character);
+
+                go.transform.position = spawnPos;
+            }
+        }
     }
 
     public Vector3 GetSpawnFromLane(enumLane lane, EnumTeams team)
@@ -35,7 +46,7 @@ public class BattlefieldHandler : MonoBehaviour
         //set xpos according to team
         int posX = GetXSpawn(team);
 
-        return GetDrawPosWithCoordinates(posY, posX, team);
+        return GetDrawPosWithCoordinates(posX, posY, team);
     }
 
     public Vector3 GetDrawPosWithCoordinates(int x, int y, EnumTeams team)
@@ -128,8 +139,16 @@ public class BattlefieldHandler : MonoBehaviour
 
     private int GetXSpawn(EnumTeams team)
     {
-        throw new NotImplementedException();
+        switch (team)
+        {
+            case EnumTeams.Red:
+                return 1;
+            case EnumTeams.Blue:
+                return GetMaximum()[0];
+            default:
+                return 0;
+        }
     }
 
-#endregion
+    #endregion
 }
