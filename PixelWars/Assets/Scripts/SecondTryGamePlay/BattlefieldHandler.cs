@@ -7,9 +7,13 @@ public class BattlefieldHandler : MonoBehaviour
 {
     [SerializeField] private GameObject battlefield;
     [SerializeField] private List<GameObject> characterPool;
+    [SerializeField] private Selector select;
+
 
     private List<Character> availableCharacters = new List<Character>();
     private List<SmartTile> smartTiles = new List<SmartTile>();
+
+    
 
     #region Monobehaviour funtions
 
