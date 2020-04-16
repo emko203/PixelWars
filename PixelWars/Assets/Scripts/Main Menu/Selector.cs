@@ -13,7 +13,9 @@ public class Selector : MonoBehaviour
     public GameObject SelectedObject;
 
     public static List<GameObject> SelectedCharacters = new List<GameObject>();
-    
+
+    public static List<enumUnit> listEnum = new List<enumUnit>();
+
 
     
     private Vector3 CharacterPosition;
@@ -36,7 +38,9 @@ public class Selector : MonoBehaviour
 
         SelectedObject = Archer;
 
+        
     }
+
 
     public void NextCharacter() 
     {
@@ -142,12 +146,26 @@ public class Selector : MonoBehaviour
         if (SelectedCharacters.Count < 2)
         {            
             SelectedCharacters.Add(SelectedObject);
+            listEnum.Add(SelectedObject.GetComponent<Character>().UnitType);
             Debug.Log("SelectedObject: " + SelectedObject);
         }
         else 
         {
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+       
+    }
+
+    private void SavePlayerPrefs()    
+    {
+        PlayerPrefs.SetInt("SelectionSize", listEnum.Count);
+        for (int i = 0; i < listEnum.Count; i++)
+        {
+            PlayerPrefs.SetInt("Selection_" + i, (int)listEnum[i]);
+        }
+
+        
     }
 
     public void AddCharacterP2()
@@ -160,6 +178,7 @@ public class Selector : MonoBehaviour
         }
         else
         {
+            SavePlayerPrefs();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
@@ -169,6 +188,7 @@ public class Selector : MonoBehaviour
         if (SelectedCharacters.Count >= 1)
         {
             SelectedCharacters.RemoveAt(SelectedCharacters.Count - 1);
+            listEnum.RemoveAt(listEnum.Count - 1);
             Debug.Log("RemovedObject:" + SelectedObject);
         }
         else 
