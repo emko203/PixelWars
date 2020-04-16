@@ -12,8 +12,9 @@ public class Selector : MonoBehaviour
     public GameObject Rogue;
     public GameObject SelectedObject;
 
-    public static List<GameObject> SelectedCharactersPlayer1 = new List<GameObject>();
-    public static List<GameObject> SelectedCharactersPlayer2 = new List<GameObject>();
+    public static List<GameObject> SelectedCharacters = new List<GameObject>();
+    
+
     
     private Vector3 CharacterPosition;
     private Vector3 OffScreenPosition;
@@ -138,9 +139,9 @@ public class Selector : MonoBehaviour
     public void AddCharacter() 
     {
 
-        if (SelectedCharactersPlayer1.Count < 2)
+        if (SelectedCharacters.Count < 2)
         {            
-            SelectedCharactersPlayer1.Add(SelectedObject);
+            SelectedCharacters.Add(SelectedObject);
             Debug.Log("SelectedObject: " + SelectedObject);
         }
         else 
@@ -149,12 +150,47 @@ public class Selector : MonoBehaviour
         }
     }
 
+    public void AddCharacterP2()
+    {
+
+        if (SelectedCharacters.Count < 5)
+        {
+            SelectedCharacters.Add(SelectedObject);
+            Debug.Log("SelectedObject: " + SelectedObject);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    public void RemoveCharacter() 
+    {
+        if (SelectedCharacters.Count >= 1)
+        {
+            SelectedCharacters.RemoveAt(SelectedCharacters.Count - 1);
+            Debug.Log("RemovedObject:" + SelectedObject);
+        }
+        else 
+        {
+            Debug.Log("Character List is Empty");
+        }
+    }
+
+    public void PrintListConsole() 
+    {
+        foreach (object o in SelectedCharacters) 
+        {
+            Debug.Log(o);
+        }
+    }
+
     public void DebugLogLog() 
     {
-        for (int i = 0; i < SelectedCharactersPlayer1.Count; i++)
+        for (int i = 0; i < SelectedCharacters.Count; i++)
         {
-            Debug.Log(SelectedCharactersPlayer1[i]);
+            Debug.Log(SelectedCharacters[i]);
         }
-        Debug.Log("Count " + SelectedCharactersPlayer1.Count);
+        Debug.Log("Count " + SelectedCharacters.Count);
     }
 }
