@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
-    public GameObject battlefield;
+    [SerializeField] private GameObject battlefield;
+    [SerializeField] private List<GameObject> AllCharacterPrefabs;
+    [SerializeField] private BattlefieldHandler battlefieldHandler;
+    [SerializeField] private SelectorManager selectorManager;
 
-    public BattlefieldHandler battlefieldHandler;
 
     private List<SmartTile> mapping = new List<SmartTile>();
+    private List<GameObject> AvailableCharacters = new List<GameObject>();
     private TurnHandler turnHandler = new TurnHandler();
 
     private void Awake()
     {
         turnHandler.SelectRandomStartPlayer();
+        //TODO: fill availablecharacters and replace allcharacters with it.
+        selectorManager.SpawnSelectableCharacterSet(turnHandler.CurrentPlayerTurn, AllCharacterPrefabs);
     }
 
     //Do on button click
