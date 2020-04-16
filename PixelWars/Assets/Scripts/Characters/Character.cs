@@ -6,6 +6,7 @@ public class Character : MonoBehaviour
 {
     [SerializeField] private Character_Template data;
     [SerializeField] private EnumTeams teamColor;
+    [SerializeField] private enumUnit unitType;
 
     /// <summary>
     /// Substract damage from this character and destoys it on death
@@ -37,4 +38,5 @@ public class Character : MonoBehaviour
 
     public EnumTeams TeamColor { get => teamColor; set => teamColor = value; }
     public Character_Template Data { get => data; set => data = value; }
+    public enumUnit UnitType { get => unitType; set => unitType = value; }
 }
