@@ -60,23 +60,20 @@ public class GameMaster : MonoBehaviour
     //Do this at the start of turn
     private void UpdateStartOfTurn()
     {
-        //TODO: fill availablecharacters and replace allcharacters with it.
-        selectorManager.SetupNewRound(turnHandler.CurrentPlayerTurn, GetCharactersFromCurrentTeam());
-        battlefieldHandler.MoveAllUnitsOnBattlefield(turnHandler.CurrentPlayerTurn);
-        turnHandler.SetNextState();
-    }
-
-    private List<GameObject> GetCharactersFromCurrentTeam()
-    {
-        switch (turnHandler.CurrentPlayerTurn)
+        //TODO: fill availablecharacters with data from other scene and replace allcharacters with it.
+        if (!battlefieldHandler.Busy)
         {
-            case EnumTeams.Red:
-                return RedCharacterPrefabs;
-            case EnumTeams.Blue:
-                return BlueCharacterPrefabs;
-            default:
-                return null;
+            selectorManager.HideLaneSelector();
+            battlefieldHandler.MoveAllUnitsOnBattlefield(turnHandler.CurrentPlayerTurn);
         }
+
+        if (battlefieldHandler.Done)
+        {
+            turnHandler.SetNextState();
+            selectorManager.SetupNewRound(turnHandler.CurrentPlayerTurn, GetCharactersFromCurrentTeam());
+            battlefieldHandler.Busy = false;
+        }
+        
     }
 
     //Do this during when a turn is bussy
@@ -92,6 +89,19 @@ public class GameMaster : MonoBehaviour
     }
 
     #endregion
+
+    private List<GameObject> GetCharactersFromCurrentTeam()
+    {
+        switch (turnHandler.CurrentPlayerTurn)
+        {
+            case EnumTeams.Red:
+                return RedCharacterPrefabs;
+            case EnumTeams.Blue:
+                return BlueCharacterPrefabs;
+            default:
+                return null;
+        }
+    }
 
     private void HandleInput()
     {

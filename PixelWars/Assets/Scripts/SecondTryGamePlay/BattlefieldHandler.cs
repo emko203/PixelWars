@@ -11,7 +11,10 @@ public class BattlefieldHandler : MonoBehaviour
     private List<Character> availableCharacters = new List<Character>();
     private List<SmartTile> smartTiles = new List<SmartTile>();
 
+    private float TimeBetweenMoves = 1f;
 
+    private bool done = false;
+    private bool busy = false;
 
     #region Monobehaviour funtions
 
@@ -70,27 +73,57 @@ public class BattlefieldHandler : MonoBehaviour
 
     public void MoveAllUnitsOnBattlefield(EnumTeams teamToMove)
     {
-        if (teamToMove == EnumTeams.Red)
+        switch (teamToMove)
         {
-            foreach (SmartTile tile in smartTiles)
+            case EnumTeams.Red:
+                StartCoroutine(RedMove(teamToMove));
+                break;
+            case EnumTeams.Blue:
+                StartCoroutine(BlueMove(teamToMove));
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator BlueMove(EnumTeams teamToMove)
+    {
+        IsBusy();
+        for (int i = smartTiles.Count - 1; i > 0; i--)
+        {
+            if (!smartTiles[i].IsEmpty(teamToMove))
             {
-                if (!tile.IsEmpty(teamToMove))
-                {
-                    tile.MoveDirection(EnumDirection.UP, teamToMove);
-                }
+                yield return new WaitForSeconds(TimeBetweenMoves);
+                smartTiles[i].MoveDirection(EnumDirection.UP, teamToMove);
             }
         }
-        else
+        IsDone();
+    }
+
+    IEnumerator RedMove(EnumTeams teamToMove)
+    {
+        IsBusy();
+        foreach (SmartTile tile in smartTiles)
         {
-            for (int i = smartTiles.Count-1; i > 0; i--)
+            if (!tile.IsEmpty(teamToMove))
             {
-                if (!smartTiles[i].IsEmpty(teamToMove))
-                {
-                    smartTiles[i].MoveDirection(EnumDirection.UP, teamToMove);
-                }
+                yield return new WaitForSeconds(TimeBetweenMoves);
+
+                tile.MoveDirection(EnumDirection.UP, teamToMove);
             }
         }
-        
+        IsDone();
+    }
+
+    private void IsDone()
+    {
+        Done = true;
+    }
+
+    private void IsBusy()
+    {
+        Busy = true;
+        Done = false;
     }
 
     #endregion
@@ -221,4 +254,7 @@ public class BattlefieldHandler : MonoBehaviour
     }
 
     #endregion
+
+    public bool Done { get => done; set => done = value; }
+    public bool Busy { get => busy; set => busy = value; }
 }
