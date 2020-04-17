@@ -33,13 +33,16 @@ public class BattlefieldHandler : MonoBehaviour
         {
             if (character.GetComponent<Character>().UnitType == unitToSpawn)
             {
-                GameObject go = Instantiate(character);
-
-                go.transform.position = spawnPos;
-
                 //Connect character to smart tile
-                PlaceUnitOnTile(GetXSpawn(character.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), character);
-            }
+                bool placed = PlaceUnitOnTile(GetXSpawn(character.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), character);
+
+                if (placed)
+                {
+                    GameObject go = Instantiate(character);
+
+                    go.transform.position = spawnPos;
+                }
+}
         }
     }
 

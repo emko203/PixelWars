@@ -61,7 +61,7 @@ public class GameMaster : MonoBehaviour
             case EnumPressedKeyAction.SELECT:
                 if (UnitSelected)
                 {
-                    battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
+                        battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
                 }
                 else
                 {
