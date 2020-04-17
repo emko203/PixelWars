@@ -27,19 +27,20 @@ public class BattlefieldHandler : MonoBehaviour
     public void SpawnUnit(EnumLane laneToSpawnIn, EnumTeams teamToSpawnFor, EnumUnit unitToSpawn)
     {
         Vector3 spawnPos = GetSpawnFromLane(laneToSpawnIn, teamToSpawnFor);
-        spawnPos.z = -1;
+        spawnPos.z = -2;
 
         foreach (GameObject character in characterPool)
         {
-            if (character.GetComponent<Character>().UnitType == unitToSpawn)
+            if (character.GetComponent<Character>().UnitType == unitToSpawn && character.GetComponent<Character>().TeamColor == teamToSpawnFor)
             {
+
+                GameObject go = Instantiate(character);
+
+                go.transform.position = spawnPos;
+
                 //Connect character to smart tile
-                bool placed = PlaceUnitOnTile(GetXSpawn(character.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), character);
-
-                    GameObject go = Instantiate(character);
-
-                    go.transform.position = spawnPos;
-}
+                bool placed = PlaceUnitOnTile(GetXSpawn(character.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), go);
+            }
         }
     }
 
@@ -65,6 +66,31 @@ public class BattlefieldHandler : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    public void MoveAllUnitsOnBattlefield(EnumTeams teamToMove)
+    {
+        if (teamToMove == EnumTeams.Red)
+        {
+            foreach (SmartTile tile in smartTiles)
+            {
+                if (!tile.IsEmpty(teamToMove))
+                {
+                    tile.MoveDirection(EnumDirection.UP, teamToMove);
+                }
+            }
+        }
+        else
+        {
+            for (int i = smartTiles.Count-1; i > 0; i--)
+            {
+                if (!smartTiles[i].IsEmpty(teamToMove))
+                {
+                    smartTiles[i].MoveDirection(EnumDirection.UP, teamToMove);
+                }
+            }
+        }
+        
     }
 
     #endregion

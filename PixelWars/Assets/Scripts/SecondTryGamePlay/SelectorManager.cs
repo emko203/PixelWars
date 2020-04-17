@@ -241,6 +241,33 @@ public class SelectorManager : MonoBehaviour
         return lstCurrentSelectedCharacters;
     }
 
+    private void RemoveSprites(EnumTeams currentTeam)
+    {
+        List<SpriteRenderer> ListToEmpty;
+
+        switch (currentTeam)
+        {
+            case EnumTeams.Red:
+                ListToEmpty = redTeam;
+                break;
+            case EnumTeams.Blue:
+                ListToEmpty = blueTeam;
+                break;
+            default:
+                ListToEmpty = null;
+                break;
+        }
+
+
+        if (ListToEmpty != null)
+        {
+            foreach (SpriteRenderer renderer in ListToEmpty)
+            {
+                renderer.sprite = null;
+            }
+        }
+    }
+
     private void RenderRandomsForTeam(List<SpriteRenderer> listToFill, List<GameObject> charactersToPickFrom)
     {
         lstCurrentSelectedCharacters = new List<GameObject>();

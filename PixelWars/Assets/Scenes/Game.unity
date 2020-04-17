@@ -714,13 +714,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battlefield: {fileID: 629651172}
-  AllCharacterPrefabs:
-  - {fileID: 7493910270505690658, guid: 169f82ac61d8add4cb702daa02948b96, type: 3}
-  - {fileID: 6087687150478510471, guid: 69812b5993c99474585f1590f9e94499, type: 3}
-  - {fileID: 4122677094853172875, guid: 6dbf6029bf1cdce45a2fcd47949d3ea6, type: 3}
+  RedCharacterPrefabs:
   - {fileID: 5694302452648927487, guid: 9b9ecb5de6ee72942a41e148bbbd2aa3, type: 3}
-  - {fileID: 3660270964978773773, guid: 6e6f37396c99e684f82604bad3f70105, type: 3}
   - {fileID: 8645726638601307516, guid: 2eaf37553c143004f81a3a7cc10d2661, type: 3}
+  - {fileID: 3660270964978773773, guid: 6e6f37396c99e684f82604bad3f70105, type: 3}
+  - {fileID: 2909683258028748726, guid: c247416a78631164b8849b65545ad766, type: 3}
+  BlueCharacterPrefabs:
+  - {fileID: 6087687150478510471, guid: 69812b5993c99474585f1590f9e94499, type: 3}
+  - {fileID: 7493910270505690658, guid: 169f82ac61d8add4cb702daa02948b96, type: 3}
+  - {fileID: 4122677094853172875, guid: 6dbf6029bf1cdce45a2fcd47949d3ea6, type: 3}
+  - {fileID: 3771279655986087872, guid: 2627d26cad661b74f8e34a0a136aa963, type: 3}
   battlefieldHandler: {fileID: 629651174}
   selectorManager: {fileID: 804704137}
   inputManager: {fileID: 1957161504}
