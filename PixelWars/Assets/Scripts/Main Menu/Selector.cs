@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class Selector : MonoBehaviour
 {
@@ -248,7 +248,7 @@ public class Selector : MonoBehaviour
     public void Options()
     {
         DropdownOptions.Clear();
-        DropdownOptions.Add(SelectedObject.GetComponent<Character>().Data.Name);
+        DropdownOptions.Add(SelectedObject.GetComponent<Character>().Data.CharacterName);
         CharacterDropdown.AddOptions(DropdownOptions);
         CharacterDropdown.RefreshShownValue();
     }
@@ -302,9 +302,9 @@ public class Selector : MonoBehaviour
         }
         for (int i = 0; i < SelectedCharacters.Count; i++)
         {
-            if (SelectedCharacters[i].GetComponent<Character>().Data.Name == CharacterDropdown.options[CharacterDropdown.value].text)
+            if (SelectedCharacters[i].GetComponent<Character>().Data.CharacterName == CharacterDropdown.options[CharacterDropdown.value].text)
             {
-                Debug.Log(SelectedCharacters[i].GetComponent<Character>().Data.Name);
+                Debug.Log(SelectedCharacters[i].GetComponent<Character>().Data.CharacterName);
                 Debug.Log(SelectedCharacters.Count);
                 SelectedCharacters.RemoveAt(i);
                 break;
