@@ -260,19 +260,21 @@ public class Selector : MonoBehaviour
             ConfirmBt.SetActive(true);
             AddBt.SetActive(false);
         }
-        else if (SelectedCharacters.Count > 0)
-        {
-            RemoveBt.SetActive(true);
-        }
-        else if (SelectedCharacters.Count == 0) 
-        {
-            RemoveBt.SetActive(false);
-        }
-        else
+        
+        if(ConfirmBt.activeSelf && SelectedCharacters.Count != 3)
         {
             ConfirmBt.SetActive(false);
             AddBt.SetActive(true);
-        }       
+        }
+
+        if (SelectedCharacters.Count > 0)
+        {
+            RemoveBt.SetActive(true);
+        }
+        else
+        {
+            RemoveBt.SetActive(false);
+        }   
     }
 
     private void CharCountText() 
@@ -291,22 +293,28 @@ public class Selector : MonoBehaviour
                 break;
             }
         }
+       
+        for (int i = 0; i < SelectedCharacters.Count; i++)
+        {
+            if (CharacterDropdown.options.Count > 0)
+            {
+                if (SelectedCharacters[i].GetComponent<Character>().Data.Name == CharacterDropdown.options[CharacterDropdown.value].text)
+                {
+                    Debug.Log(SelectedCharacters[i].GetComponent<Character>().Data.Name);
+                    Debug.Log(SelectedCharacters.Count);
+                    SelectedCharacters.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
         for (int i = 0; i < CharacterDropdown.options.Count; i++)
         {
             if (CharacterDropdown.options[CharacterDropdown.value].text == CharacterDropdown.options[i].text)
             {
                 CharacterDropdown.options.RemoveAt(i);
+                CharacterDropdown.value = 0;
                 CharacterDropdown.RefreshShownValue();
-                break;
-            }
-        }
-        for (int i = 0; i < SelectedCharacters.Count; i++)
-        {
-            if (SelectedCharacters[i].GetComponent<Character>().Data.Name == CharacterDropdown.options[CharacterDropdown.value].text)
-            {
-                Debug.Log(SelectedCharacters[i].GetComponent<Character>().Data.Name);
-                Debug.Log(SelectedCharacters.Count);
-                SelectedCharacters.RemoveAt(i);
                 break;
             }
         }
