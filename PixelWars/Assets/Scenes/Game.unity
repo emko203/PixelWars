@@ -651,7 +651,6 @@ GameObject:
   - component: {fileID: 629651173}
   - component: {fileID: 629651175}
   - component: {fileID: 629651174}
-  - component: {fileID: 629651177}
   - component: {fileID: 629651176}
   m_Layer: 0
   m_Name: Battlefield
@@ -694,7 +693,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battlefield: {fileID: 629651172}
   characterPool:
+  - {fileID: 6087687150478510471, guid: 69812b5993c99474585f1590f9e94499, type: 3}
+  - {fileID: 5694302452648927487, guid: 9b9ecb5de6ee72942a41e148bbbd2aa3, type: 3}
   - {fileID: 7493910270505690658, guid: 169f82ac61d8add4cb702daa02948b96, type: 3}
+  - {fileID: 8645726638601307516, guid: 2eaf37553c143004f81a3a7cc10d2661, type: 3}
+  - {fileID: 4122677094853172875, guid: 6dbf6029bf1cdce45a2fcd47949d3ea6, type: 3}
+  - {fileID: 3660270964978773773, guid: 6e6f37396c99e684f82604bad3f70105, type: 3}
+  - {fileID: 3771279655986087872, guid: 2627d26cad661b74f8e34a0a136aa963, type: 3}
+  - {fileID: 2909683258028748726, guid: c247416a78631164b8849b65545ad766, type: 3}
 --- !u!114 &629651175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,25 +775,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &629651177
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629651172}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: db4115a8626f84646963966353287941, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &745164991
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,10 +878,12 @@ MonoBehaviour:
   - {fileID: 116447739}
   - {fileID: 1835668473}
   - {fileID: 1979193988}
-  xOffset: -0.05
-  yOffset: 0
+  xCharacterOffset: -0.05
+  yCharacterOffset: 0
+  xLaneOffset: 0.25
+  yLaneOffset: 0
   characterSelector: {fileID: 1576489424}
-  LineSelector: {fileID: 541827388}
+  LaneSelector: {fileID: 541827388}
 --- !u!4 &804704138
 Transform:
   m_ObjectHideFlags: 0
@@ -1576,10 +1565,10 @@ MonoBehaviour:
   Player2_Down: 274
   Player1_Up: 119
   Player1_Down: 115
-  Player2_Select: 306
-  Player1_Select: 101
-  Player2_DeSelect: 306
-  Player1_DeSelect: 101
+  Player2_Select: 276
+  Player1_Select: 100
+  Player2_DeSelect: 275
+  Player1_DeSelect: 97
 --- !u!4 &1957161505
 Transform:
   m_ObjectHideFlags: 0
