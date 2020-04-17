@@ -12,6 +12,9 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Animator CharacterAnimator;
 
+    private Player Player1 = new Player();
+    private Player Player2 = new Player();
+
     private List<SmartTile> mapping = new List<SmartTile>();
     private List<GameObject> AvailableCharacters = new List<GameObject>();
     private TurnHandler turnHandler = new TurnHandler();
@@ -22,6 +25,7 @@ public class GameMaster : MonoBehaviour
     private void Awake()
     {
         turnHandler.SelectRandomStartPlayer();
+
         //TODO: fill availablecharacters and replace allcharacters with it.
         selectorManager.SetupNewRound(turnHandler.CurrentPlayerTurn, AllCharacterPrefabs);
         selectorManager.HideLaneSelector();

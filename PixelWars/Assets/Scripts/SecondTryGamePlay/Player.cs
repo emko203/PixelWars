@@ -4,23 +4,43 @@ using UnityEngine;
 
 public class Player
 {
+    private int maxMana = 10;
+    private int maxHealth = 1;
+
+    private int ManaRegen = 2;
+
     private int currentMana = 0;
     private int currentHealth = 1;
-    private int maxMana = 0;
-    private int maxHealth = 0;
 
-    public Player(int maxMana, int maxHealth)
+    public Player()
     {
-        this.maxMana = maxMana;
-        this.maxHealth = maxHealth;
-
         this.currentHealth = maxHealth;
         this.currentMana = maxMana;
+    }
+
+    public void GainMana()
+    {
+        if (currentMana <= maxMana-ManaRegen)
+        {
+            this.currentMana += ManaRegen;
+        }
     }
 
     public void PayMana(int ManaCost)
     {
         currentMana -= ManaCost;
+    }
+
+    public bool CanPlay(int ManaCost)
+    {
+        if (currentMana >= ManaCost)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void takeDamage(int amount)
@@ -40,6 +60,6 @@ public class Player
         }
     }
 
-    public int Mana { get => currentMana;}
-    public int Health { get => currentHealth;}
+    public int CurrentMana { get => currentMana;}
+    public int CurrentHealth { get => currentHealth;}
 }

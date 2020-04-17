@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TurnHandler
 {
-    EnumTeams[] validTeams = { EnumTeams.Blue, EnumTeams.Red };
-    EnumTeams currentPlayerTurn;
+    private  EnumTeams[] validTeams = { EnumTeams.Blue, EnumTeams.Red };
+    private EnumTeams currentPlayerTurn;
 
     /// <summary>
     /// Set next player turn according to last turn
