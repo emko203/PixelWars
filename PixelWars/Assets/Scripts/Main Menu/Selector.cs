@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
 
 
 public class Selector : MonoBehaviour
@@ -14,14 +12,12 @@ public class Selector : MonoBehaviour
     public GameObject Rogue;
     public GameObject SelectedObject;
 
-    public Dropdown CharacterDropdown;
-
     public static List<GameObject> SelectedCharacters = new List<GameObject>();
 
     public static List<enumUnit> listEnum = new List<enumUnit>();
 
-    public static List<string> DropdownOptions = new List<string>();
- 
+
+    
     private Vector3 CharacterPosition;
     private Vector3 OffScreenPosition;
 
@@ -40,16 +36,11 @@ public class Selector : MonoBehaviour
         MageRender = Mage.GetComponent<SpriteRenderer>();
         RogueRender = Rogue.GetComponent<SpriteRenderer>();
 
-        
-
-
-    }
-
-    private void Start() 
-    {
-        CharacterDropdown.ClearOptions();
         SelectedObject = Archer;
+
+        
     }
+
 
     public void NextCharacter() 
     {
@@ -152,29 +143,18 @@ public class Selector : MonoBehaviour
     public void AddCharacter() 
     {
 
-        if (SelectedCharacters.Count < 3)
+        if (SelectedCharacters.Count < 2)
         {            
             SelectedCharacters.Add(SelectedObject);
             listEnum.Add(SelectedObject.GetComponent<Character>().UnitType);
-            Options();
             Debug.Log("SelectedObject: " + SelectedObject);
         }
-
+        else 
+        {
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
        
-    }
-
-    public void Confirm() 
-    {
-        if (SelectedCharacters.Count == 3)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else if (SelectedCharacters.Count == 6) 
-        {
-            SavePlayerPrefs();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
-        }
     }
 
     private void SavePlayerPrefs()    
@@ -191,14 +171,16 @@ public class Selector : MonoBehaviour
     public void AddCharacterP2()
     {
 
-        if (SelectedCharacters.Count < 6)
+        if (SelectedCharacters.Count < 5)
         {
             SelectedCharacters.Add(SelectedObject);
-            listEnum.Add(SelectedObject.GetComponent<Character>().UnitType);
-            Options();
             Debug.Log("SelectedObject: " + SelectedObject);
         }
-
+        else
+        {
+            SavePlayerPrefs();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void RemoveCharacter() 
@@ -207,7 +189,6 @@ public class Selector : MonoBehaviour
         {
             SelectedCharacters.RemoveAt(SelectedCharacters.Count - 1);
             listEnum.RemoveAt(listEnum.Count - 1);
-            RemoveItemDropbox();
             Debug.Log("RemovedObject:" + SelectedObject);
         }
         else 
@@ -232,41 +213,4 @@ public class Selector : MonoBehaviour
         }
         Debug.Log("Count " + SelectedCharacters.Count);
     }
-
-    public void Options()
-    {
-        DropdownOptions.Clear();
-        DropdownOptions.Add(SelectedObject.GetComponent<Character>().Data.Name);
-        CharacterDropdown.AddOptions(DropdownOptions);
-        CharacterDropdown.RefreshShownValue();
-
-        
-    }
-
-    private void RemoveItemDropbox() 
-    {
-        for (int i = 0; i < DropdownOptions.Count; i++)
-        {
-            if (DropdownOptions[i] == CharacterDropdown.options[CharacterDropdown.value].text)
-            {
-                Debug.Log(CharacterDropdown.options[CharacterDropdown.value].text);
-                DropdownOptions.RemoveAt(i);
-               
-               
-                break;
-            }
-        }
-        for (int i = 0; i < CharacterDropdown.options.Count; i++)
-        {
-            if (CharacterDropdown.options[CharacterDropdown.value].text == CharacterDropdown.options[i].text)
-            {             
-               CharacterDropdown.options.RemoveAt(i);
-                CharacterDropdown.RefreshShownValue();
-                break;
-            }
-}
-    }
-
-
-
 }

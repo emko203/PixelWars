@@ -17,5 +17,3 @@ MonoBehaviour:
   damage: 1
   speed: 1
   range: 0
-  name: Knight
-  abilityTemplates: {fileID: 0}
