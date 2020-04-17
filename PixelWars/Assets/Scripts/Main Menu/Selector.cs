@@ -16,42 +16,49 @@ public class Selector : MonoBehaviour
 
     public Dropdown CharacterDropdown;
 
+    public GameObject ConfirmBt;
+    public GameObject AddBt;
+    public GameObject RemoveBt;
+
+    public Text CharacterCount;
+
     public static List<GameObject> SelectedCharacters = new List<GameObject>();
 
     public static List<enumUnit> listEnum = new List<enumUnit>();
 
     public static List<string> DropdownOptions = new List<string>();
- 
+
     private Vector3 CharacterPosition;
     private Vector3 OffScreenPosition;
 
     private int CharacterInt = 1;
 
     private SpriteRenderer ArcherRender, KnightRender, MageRender, RogueRender;
-    
-    private void Awake() 
+
+    private void Awake()
     {
         CharacterPosition = Archer.transform.position;
         OffScreenPosition = Knight.transform.position;
 
+        ConfirmBt.GetComponent<Button>();
+        AddBt.GetComponent<Button>();
+        RemoveBt.GetComponent<Button>();
+
+        CharacterCount.GetComponent<Text>();
 
         ArcherRender = Archer.GetComponent<SpriteRenderer>();
         KnightRender = Knight.GetComponent<SpriteRenderer>();
         MageRender = Mage.GetComponent<SpriteRenderer>();
         RogueRender = Rogue.GetComponent<SpriteRenderer>();
-
-        
-
-
     }
 
-    private void Start() 
+    private void Start()
     {
         CharacterDropdown.ClearOptions();
         SelectedObject = Archer;
     }
 
-    public void NextCharacter() 
+    public void NextCharacter()
     {
         switch (CharacterInt)
         {
@@ -94,19 +101,19 @@ public class Selector : MonoBehaviour
         }
     }
 
-    private void ResetInt() 
+    private void ResetInt()
     {
         if (CharacterInt >= 4)
         {
             CharacterInt = 1;
         }
-        else 
+        else
         {
             CharacterInt = 4;
         }
     }
 
-    public void PreviousCharacter() 
+    public void PreviousCharacter()
     {
         switch (CharacterInt)
         {
@@ -115,6 +122,7 @@ public class Selector : MonoBehaviour
                 Archer.transform.position = OffScreenPosition;
                 Rogue.transform.position = CharacterPosition;
                 RogueRender.enabled = true;
+                SelectedObject = Rogue;
                 ResetInt();
                 break;
             case 2:
@@ -122,6 +130,7 @@ public class Selector : MonoBehaviour
                 Knight.transform.position = OffScreenPosition;
                 Archer.transform.position = CharacterPosition;
                 ArcherRender.enabled = true;
+                SelectedObject = Archer;
                 CharacterInt--;
                 break;
             case 3:
@@ -129,6 +138,7 @@ public class Selector : MonoBehaviour
                 Mage.transform.position = OffScreenPosition;
                 Knight.transform.position = CharacterPosition;
                 KnightRender.enabled = true;
+                SelectedObject = Knight;
                 CharacterInt--;
                 break;
             case 4:
@@ -136,6 +146,7 @@ public class Selector : MonoBehaviour
                 Rogue.transform.position = OffScreenPosition;
                 Mage.transform.position = CharacterPosition;
                 MageRender.enabled = true;
+                SelectedObject = Mage;
                 CharacterInt--;
                 break;
             default:
@@ -144,87 +155,84 @@ public class Selector : MonoBehaviour
         }
     }
 
-    public void Back() 
+    public void Back()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
-    public void AddCharacter() 
+    public void AddCharacter()
     {
-
         if (SelectedCharacters.Count < 3)
-        {            
+        {
             SelectedCharacters.Add(SelectedObject);
             listEnum.Add(SelectedObject.GetComponent<Character>().UnitType);
             Options();
+            ItemCheck();
+            CharCountText();
             Debug.Log("SelectedObject: " + SelectedObject);
         }
-
-       
     }
 
-    public void Confirm() 
+    public void Confirm()
     {
         if (SelectedCharacters.Count == 3)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
-        else if (SelectedCharacters.Count == 6) 
+        else if (SelectedCharacters.Count == 6)
         {
             SavePlayerPrefs();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
         }
     }
 
-    private void SavePlayerPrefs()    
+    private void SavePlayerPrefs()
     {
         PlayerPrefs.SetInt("SelectionSize", listEnum.Count);
         for (int i = 0; i < listEnum.Count; i++)
         {
             PlayerPrefs.SetInt("Selection_" + i, (int)listEnum[i]);
         }
-
-        
     }
 
     public void AddCharacterP2()
     {
-
         if (SelectedCharacters.Count < 6)
         {
             SelectedCharacters.Add(SelectedObject);
             listEnum.Add(SelectedObject.GetComponent<Character>().UnitType);
             Options();
+            ItemCheck();
+            CharCountText();
             Debug.Log("SelectedObject: " + SelectedObject);
         }
 
     }
 
-    public void RemoveCharacter() 
+    public void RemoveCharacter()
     {
         if (SelectedCharacters.Count >= 1)
         {
-            SelectedCharacters.RemoveAt(SelectedCharacters.Count - 1);
-            listEnum.RemoveAt(listEnum.Count - 1);
             RemoveItemDropbox();
+            ItemCheck();
+            CharCountText();
             Debug.Log("RemovedObject:" + SelectedObject);
         }
-        else 
+        else
         {
             Debug.Log("Character List is Empty");
         }
     }
 
-    public void PrintListConsole() 
+    public void PrintListConsole()
     {
-        foreach (object o in SelectedCharacters) 
+        foreach (object o in SelectedCharacters)
         {
             Debug.Log(o);
         }
     }
 
-    public void DebugLogLog() 
+    public void DebugLogLog()
     {
         for (int i = 0; i < SelectedCharacters.Count; i++)
         {
@@ -239,11 +247,36 @@ public class Selector : MonoBehaviour
         DropdownOptions.Add(SelectedObject.GetComponent<Character>().Data.Name);
         CharacterDropdown.AddOptions(DropdownOptions);
         CharacterDropdown.RefreshShownValue();
-
-        
     }
 
-    private void RemoveItemDropbox() 
+    private void ItemCheck() 
+    {
+        if (SelectedCharacters.Count == 3)
+        {
+            ConfirmBt.SetActive(true);
+            AddBt.SetActive(false);
+        }
+        else if (SelectedCharacters.Count > 0)
+        {
+            RemoveBt.SetActive(true);
+        }
+        else if (SelectedCharacters.Count == 0) 
+        {
+            RemoveBt.SetActive(false);
+        }
+        else
+        {
+            ConfirmBt.SetActive(false);
+            AddBt.SetActive(true);
+        }       
+    }
+
+    private void CharCountText() 
+    {
+        CharacterCount.text = "Select Characters: " + SelectedCharacters.Count + "/3";
+    }
+
+    private void RemoveItemDropbox()
     {
         for (int i = 0; i < DropdownOptions.Count; i++)
         {
@@ -251,22 +284,27 @@ public class Selector : MonoBehaviour
             {
                 Debug.Log(CharacterDropdown.options[CharacterDropdown.value].text);
                 DropdownOptions.RemoveAt(i);
-               
-               
                 break;
             }
         }
         for (int i = 0; i < CharacterDropdown.options.Count; i++)
         {
             if (CharacterDropdown.options[CharacterDropdown.value].text == CharacterDropdown.options[i].text)
-            {             
-               CharacterDropdown.options.RemoveAt(i);
+            {
+                CharacterDropdown.options.RemoveAt(i);
                 CharacterDropdown.RefreshShownValue();
                 break;
             }
-}
+        }
+        for (int i = 0; i < SelectedCharacters.Count; i++)
+        {
+            if (SelectedCharacters[i].GetComponent<Character>().Data.Name == CharacterDropdown.options[CharacterDropdown.value].text)
+            {
+                Debug.Log(SelectedCharacters[i].GetComponent<Character>().Data.Name);
+                Debug.Log(SelectedCharacters.Count);
+                SelectedCharacters.RemoveAt(i);
+                break;
+            }
+        }
     }
-
-
-
 }
