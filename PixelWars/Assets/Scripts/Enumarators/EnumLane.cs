@@ -1,4 +1,4 @@
-﻿public enum enumLane
+﻿public enum EnumLane
 {
     LEFT_OUTER_LANE = 0,
     LEFT_CENTER_LANE = 1,

@@ -1,4 +1,4 @@
-﻿public enum enumUnit
+﻿public enum EnumUnit
 {
     KNIGHT = 0,
     ARCHER = 1,

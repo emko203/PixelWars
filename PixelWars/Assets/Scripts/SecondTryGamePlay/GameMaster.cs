@@ -16,11 +16,15 @@ public class GameMaster : MonoBehaviour
     private List<GameObject> AvailableCharacters = new List<GameObject>();
     private TurnHandler turnHandler = new TurnHandler();
 
+    private EnumUnit CurrentSelectedUnit;
+    private bool UnitSelected = false;
+
     private void Awake()
     {
         turnHandler.SelectRandomStartPlayer();
         //TODO: fill availablecharacters and replace allcharacters with it.
         selectorManager.SetupNewRound(turnHandler.CurrentPlayerTurn, AllCharacterPrefabs);
+        selectorManager.HideLaneSelector();
     }
 
     private void Update()
@@ -33,20 +37,44 @@ public class GameMaster : MonoBehaviour
         switch (inputManager.CheckKeyInput(turnHandler.CurrentPlayerTurn))
         {
             case EnumPressedKeyAction.UP:
-                selectorManager.MoveCharacterSelectorSpriteUp(turnHandler.CurrentPlayerTurn);
+                if (UnitSelected)
+                {
+                    selectorManager.MoveLaneSelectorSpriteUp(turnHandler.CurrentPlayerTurn,battlefieldHandler);
+                }
+                else
+                {
+                    selectorManager.MoveCharacterSelectorSpriteUp(turnHandler.CurrentPlayerTurn);
+                }
                 break;
 
             case EnumPressedKeyAction.DOWN:
-                //TODO: make sure to move right sprite according to Lane Selection or Character selection
-                selectorManager.MoveCharacterSelectorSpriteDown(turnHandler.CurrentPlayerTurn);
+                if (UnitSelected)
+                {
+                    selectorManager.MoveLaneSelectorSpriteDown(turnHandler.CurrentPlayerTurn, battlefieldHandler);
+                }
+                else
+                {
+                    selectorManager.MoveCharacterSelectorSpriteDown(turnHandler.CurrentPlayerTurn);
+                }
                 break;
 
             case EnumPressedKeyAction.SELECT:
-                enumUnit SelectedUnit = selectorManager.SelectCharacter(turnHandler.CurrentPlayerTurn, battlefieldHandler);
-                CharacterAnimator.SetBool("IsOrange", true);
+                if (UnitSelected)
+                {
+                    battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
+                }
+                else
+                {
+                    CurrentSelectedUnit = selectorManager.SelectCharacter(turnHandler.CurrentPlayerTurn, battlefieldHandler);
+                    CharacterAnimator.SetBool("IsOrange", true);
+                    UnitSelected = true;
+                }
                 break;
 
             case EnumPressedKeyAction.DESELECT:
+                selectorManager.HideLaneSelector();
+                CharacterAnimator.SetBool("IsOrange", false);
+                UnitSelected = false;
                 break;
 
             case EnumPressedKeyAction.NO_ACTION:
@@ -57,15 +85,6 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    //Do on button click
-    public void SpawnUnit(int laneNumber)
-    {
-        enumUnit unitToSpawn = 0;
-        enumLane laneToSpawnIn = (enumLane)laneNumber;
-
-        battlefieldHandler.SpawnUnit(laneToSpawnIn, turnHandler.CurrentPlayerTurn, unitToSpawn);
-    }
-    
     private void InitializeBattlefield()
     {
         SmartTile[] smartTiles = battlefield.GetComponentsInChildren<SmartTile>() as SmartTile[];

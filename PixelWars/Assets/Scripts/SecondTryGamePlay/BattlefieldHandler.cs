@@ -24,7 +24,7 @@ public class BattlefieldHandler : MonoBehaviour
     #endregion
 
     #region public Functions
-    public void SpawnUnit(enumLane laneToSpawnIn, EnumTeams teamToSpawnFor, enumUnit unitToSpawn)
+    public void SpawnUnit(EnumLane laneToSpawnIn, EnumTeams teamToSpawnFor, EnumUnit unitToSpawn)
     {
         Vector3 spawnPos = GetSpawnFromLane(laneToSpawnIn, teamToSpawnFor);
         spawnPos.z = -1;
@@ -43,7 +43,7 @@ public class BattlefieldHandler : MonoBehaviour
         }
     }
 
-    public Vector3 GetSpawnFromLane(enumLane lane, EnumTeams team)
+    public Vector3 GetSpawnFromLane(EnumLane lane, EnumTeams team)
     {
         //Set pos y according to lane
         int posY = GetYSpawn(lane);
@@ -164,17 +164,17 @@ public class BattlefieldHandler : MonoBehaviour
         return maxArray;
     }
 
-    private int GetYSpawn(enumLane lane)
+    private int GetYSpawn(EnumLane lane)
     {
         switch (lane)
         {
-            case enumLane.LEFT_OUTER_LANE:
+            case EnumLane.LEFT_OUTER_LANE:
                 return GetMaximum()[1];
-            case enumLane.LEFT_CENTER_LANE:
+            case EnumLane.LEFT_CENTER_LANE:
                 return GetMaximum()[1] - 1;
-            case enumLane.RIGHT_OUTER_LANE:
+            case EnumLane.RIGHT_OUTER_LANE:
                 return GetMaximum()[1] - 3;
-            case enumLane.RIGHT_CENTER_LANE:
+            case EnumLane.RIGHT_CENTER_LANE:
                 return GetMaximum()[1] - 2;
             default:
                 return 0;

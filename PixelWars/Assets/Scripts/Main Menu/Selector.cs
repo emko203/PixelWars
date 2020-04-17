@@ -14,7 +14,7 @@ public class Selector : MonoBehaviour
 
     public static List<GameObject> SelectedCharacters = new List<GameObject>();
 
-    public static List<enumUnit> listEnum = new List<enumUnit>();
+    public static List<EnumUnit> listEnum = new List<EnumUnit>();
 
 
     

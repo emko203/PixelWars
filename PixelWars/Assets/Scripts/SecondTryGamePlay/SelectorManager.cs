@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,14 +8,17 @@ public class SelectorManager : MonoBehaviour
     [SerializeField] private List<SpriteRenderer> blueTeam;
     [SerializeField] private List<SpriteRenderer> redTeam;
 
-    [SerializeField] private float xOffset;
-    [SerializeField] private float yOffset;
+    [SerializeField] private float xCharacterOffset;
+    [SerializeField] private float yCharacterOffset;
+
+    [SerializeField] private float xLaneOffset;
+    [SerializeField] private float yLaneOffset;
 
     [SerializeField] private GameObject characterSelector;
-    [SerializeField] private GameObject LineSelector;
+    [SerializeField] private GameObject LaneSelector;
 
     private int SelectorPosInCharacterSelect = 0;
-    private int SelectorPosInLaneSelect = 0;
+    private EnumLane CurrentSelectedLane = EnumLane.LEFT_OUTER_LANE;
 
     private float zSpacing = -1;
 
@@ -22,10 +26,10 @@ public class SelectorManager : MonoBehaviour
 
     private List<int> lstLastRandoms = new List<int>();
 
-    private void ResetSelector(EnumTeams currentPlayerTurn)
+    private void ResetSelectors(EnumTeams currentPlayerTurn)
     {
         SelectorPosInCharacterSelect = 0;
-        SelectorPosInLaneSelect = 0;
+        CurrentSelectedLane = GetMinLaneAmount();
 
         UpdateCharacterSelectorPos(currentPlayerTurn);
     }
@@ -34,11 +38,10 @@ public class SelectorManager : MonoBehaviour
     /// Selects the current unit and return it so we can spawn him
     /// </summary>
     /// <returns>enumUnit</returns>
-    public enumUnit SelectCharacter(EnumTeams currentPlayerTurn, BattlefieldHandler battlefieldHandler)
+    public EnumUnit SelectCharacter(EnumTeams currentPlayerTurn, BattlefieldHandler battlefieldHandler)
     {
-        //TODO: Show LaneSelector
-
-        //TODO: update character SelectorColor
+        ShowLaneSelector();
+        UpdateLaneSelectorPos(currentPlayerTurn,battlefieldHandler);
         return lstCurrentSelectedCharacters[SelectorPosInCharacterSelect].GetComponent<Character>().UnitType;
     }
 
@@ -57,18 +60,129 @@ public class SelectorManager : MonoBehaviour
         }
     }
 
-    private Vector3 UpdateOffsetSelectorPositioning(Vector3 pos)
+    private Vector3 UpdateOffsetLaneSelectorPositioning(Vector3 pos, EnumTeams team)
     {
         pos.z = zSpacing;
-        pos.x += xOffset;
-        pos.y += yOffset;
+        switch (team)
+        {
+            case EnumTeams.Red:
+                pos.x += xLaneOffset;
+                pos.y += yLaneOffset;
+                break;
+            case EnumTeams.Blue:
+                pos.x -= xLaneOffset;
+                pos.y -= yLaneOffset;
+                break;
+            default:
+                break;
+        }
+        
         return pos;
+    }
+
+    private Vector3 UpdateOffsetCharacterSelectorPositioning(Vector3 pos)
+    {
+        pos.z = zSpacing;
+        pos.x += xCharacterOffset;
+        pos.y += yCharacterOffset;
+        return pos;
+    }
+
+    public EnumLane GetSelectedLane()
+    {
+        return CurrentSelectedLane;
+    }
+
+    private EnumLane GetMaxLaneAmount()
+    {
+        return EnumLane.RIGHT_OUTER_LANE;
+    }
+
+    private EnumLane GetNextLane()
+    {
+        switch (CurrentSelectedLane)
+        {
+            case EnumLane.LEFT_OUTER_LANE:
+                return EnumLane.RIGHT_OUTER_LANE;
+
+            case EnumLane.LEFT_CENTER_LANE:
+                return EnumLane.LEFT_OUTER_LANE;
+
+            case EnumLane.RIGHT_OUTER_LANE:
+                return EnumLane.RIGHT_CENTER_LANE;
+
+            case EnumLane.RIGHT_CENTER_LANE:
+                return EnumLane.LEFT_CENTER_LANE;
+            default:
+                return EnumLane.LEFT_OUTER_LANE;
+        }
+    }
+
+    private EnumLane GetPreviousLane()
+    {
+        switch (CurrentSelectedLane)
+        {
+            case EnumLane.LEFT_OUTER_LANE:
+                return EnumLane.LEFT_CENTER_LANE;
+
+            case EnumLane.LEFT_CENTER_LANE:
+                return EnumLane.RIGHT_CENTER_LANE;
+
+            case EnumLane.RIGHT_OUTER_LANE:
+                return EnumLane.LEFT_OUTER_LANE;
+
+            case EnumLane.RIGHT_CENTER_LANE:
+                return EnumLane.RIGHT_OUTER_LANE;
+            default:
+                return EnumLane.LEFT_OUTER_LANE;
+        }
+    }
+
+    private EnumLane GetMinLaneAmount()
+    {
+        return EnumLane.LEFT_OUTER_LANE;
+    }
+
+    private void UpdateLaneSelectorPos(EnumTeams currentPlayerTurn, BattlefieldHandler battlefieldHandler)
+    {
+        Vector3 pos = battlefieldHandler.GetSpawnFromLane(CurrentSelectedLane, currentPlayerTurn);
+        LaneSelector.transform.position = UpdateOffsetLaneSelectorPositioning(pos,currentPlayerTurn);
     }
 
     private void UpdateCharacterSelectorPos(EnumTeams currentPlayerTurn)
     {
         Vector3 pos = GetSelectorTeam(currentPlayerTurn)[SelectorPosInCharacterSelect].transform.position;
-        characterSelector.transform.position = UpdateOffsetSelectorPositioning(pos);
+        characterSelector.transform.position = UpdateOffsetCharacterSelectorPositioning(pos);
+    }
+
+    public void HideLaneSelector()
+    {
+        LaneSelector.SetActive(false);
+    }
+
+    public void ShowLaneSelector()
+    {
+        LaneSelector.SetActive(true);
+    }
+
+    /// <summary>
+    /// Moves the characterselector sprite up one space
+    /// </summary>
+    /// <param name="currentPlayerTurn">Current turns player</param>
+    public void MoveLaneSelectorSpriteUp(EnumTeams currentPlayerTurn, BattlefieldHandler battlefieldHandler)
+    {
+        CurrentSelectedLane = GetNextLane();
+
+        UpdateLaneSelectorPos(currentPlayerTurn, battlefieldHandler);
+    }
+    /// <summary>
+    /// Moves the characterselector sprite down one space
+    /// </summary>
+    /// <param name="currentPlayerTurn">Current turns player</param>
+    public void MoveLaneSelectorSpriteDown(EnumTeams currentPlayerTurn, BattlefieldHandler battlefieldHandler)
+    {
+        CurrentSelectedLane = GetPreviousLane();
+        UpdateLaneSelectorPos(currentPlayerTurn,battlefieldHandler);
     }
 
     /// <summary>
@@ -107,7 +221,7 @@ public class SelectorManager : MonoBehaviour
     public void SetupNewRound(EnumTeams currentPlayerTurn, List<GameObject> charactersToPickFrom)
     {
         SpawnNewPlayerhand(currentPlayerTurn, charactersToPickFrom);
-        ResetSelector(currentPlayerTurn);
+        ResetSelectors(currentPlayerTurn);
     }
 
     private List<GameObject> SpawnNewPlayerhand(EnumTeams currentPlayerTurn, List<GameObject> charactersToPickFrom)
@@ -143,7 +257,7 @@ public class SelectorManager : MonoBehaviour
 
     private GameObject GetRandomUniqueCharacter(List<GameObject> charactersToPickFrom)
     {
-        int randomInt = Random.Range(0, charactersToPickFrom.Count);
+        int randomInt = UnityEngine.Random.Range(0, charactersToPickFrom.Count);
         bool AlreadyUsed = false;
         bool FirstTry = true;
 
@@ -154,7 +268,7 @@ public class SelectorManager : MonoBehaviour
                 AlreadyUsed = false;
             }
 
-            randomInt = Random.Range(0, charactersToPickFrom.Count);
+            randomInt = UnityEngine.Random.Range(0, charactersToPickFrom.Count);
 
             foreach (int i in lstLastRandoms)
             {
