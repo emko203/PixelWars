@@ -11,6 +11,7 @@ public class Character_Template : ScriptableObject
     [SerializeField] private float damage;
     [SerializeField] private float speed;
     [SerializeField] private float range;
+    [SerializeField] private string name;
 
     [SerializeField] private AbilityTemplate abilityTemplates;
 
@@ -22,4 +23,5 @@ public class Character_Template : ScriptableObject
     public float Range { get => range; set => range = value; }
 
     public AbilityTemplate AbilityTemplate { get => abilityTemplates; set => abilityTemplates = value; }
+    public string Name { get => name; set => name = value; }
 }
