@@ -15,6 +15,233 @@ public class SmartTile : MonoBehaviour
     [SerializeField] private Transform redTeamPlacement;
     [SerializeField] private Transform blueTeamPlacement;
 
+    private Character blueCharacterOnTile = null;
+    private Character redCharacterOnTile = null;
+
+    private GameObject redCharacterGameObject = null;
+    private GameObject blueCharacterGameObject = null;
+    /// <summary>
+    /// Link and move character to space in given direction Returns True if Succesfull and False if unsuccesfull
+    /// </summary>
+    /// <param name="directionToMove">Direction to move to</param>
+    /// <param name="teamToMove">Team that moves from this tile</param>
+    /// <returns>True if Succesfull and False if unsuccesfull</returns>
+    public bool MoveDirection(EnumDirection directionToMove, EnumTeams teamToMove)
+    {
+        GameObject tileToMoveTo = GetTileFromDirection(directionToMove);
+        SmartTile smartTileToMoveTo = GetSmartTileFromDirection(directionToMove);
+
+        GameObject characterObjectToMove = GetCharacterObject(teamToMove);
+        Character characterData = GetCharacter(teamToMove);
+
+        if (tileToMoveTo != null)
+        {
+            if (smartTileToMoveTo.IsEmpty(teamToMove))
+            {
+                smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
+                this.RemoveCharacterFromSpace(characterData);
+                return true;
+            }
+        }
+      
+        return false;
+    }
+    /// <summary>
+    /// Check if tile in given direction is empty/available for given team return true if empty / false if not empty
+    /// </summary>
+    /// <param name="team">Given team</param>
+    /// <param name="direction">Given direction</param>
+    /// <returns>true if empty / false if not empty</returns>
+    public bool IsEmpty(EnumTeams team, EnumDirection direction)
+    {
+        return GetSmartTileFromDirection(direction).IsEmpty(team);
+    }
+    /// <summary>
+    /// Check if tile is empty/available for given team return true if empty / false if not empty
+    /// </summary>
+    /// <param name="team">Given team</param>
+    /// <returns>true if empty / false if not empty</returns>
+    public bool IsEmpty(EnumTeams team)
+    {
+        if (team == EnumTeams.Blue)
+        {
+            if (blueCharacterOnTile == null)
+                return true;
+        }else if(team == EnumTeams.Red)
+        {
+            if (redCharacterOnTile == null)
+                return true;
+        }
+        
+
+        return false;
+    }
+    /// <summary>
+    /// Draw character on tile and also link it to this tile
+    /// </summary>
+    /// <param name="cToAdd">character to link</param>
+    /// <param name="goToAdd">object to draw</param>
+    public void AddCharacterToSpace(Character cToAdd, GameObject goToAdd)
+    {
+        goToAdd.transform.position = GetPlacement(cToAdd.TeamColor).position;
+
+        switch (cToAdd.TeamColor)
+        {
+            case EnumTeams.Red:
+                this.redCharacterGameObject = goToAdd;
+                this.redCharacterOnTile = cToAdd;
+                break;
+            case EnumTeams.Blue:
+                this.blueCharacterGameObject = goToAdd;
+                this.blueCharacterOnTile = cToAdd;
+                break;
+            default:
+                break;
+        }
+    }
+    /// <summary>
+    /// Destroys the game object and unlinks the character from this space this way fully deleting the character
+    /// </summary>
+    /// <param name="cToRemove">character to remove</param>
+    /// <param name="goToRemove">character game object to destroy</param>
+    public void DestroyCharacterFromSpace(Character cToRemove, GameObject goToRemove)
+    {
+        GameObject.Destroy(goToRemove);
+
+        switch (cToRemove.TeamColor)
+        {
+            case EnumTeams.Red:
+                this.redCharacterGameObject = null;
+                this.redCharacterOnTile = null;
+                break;
+            case EnumTeams.Blue:
+                this.blueCharacterGameObject = null;
+                this.blueCharacterOnTile = null;
+                break;
+            default:
+                break;
+        }
+    }
+    /// <summary>
+    /// Unlink the character from this space
+    /// </summary>
+    /// <param name="cToRemove">Character to unlink</param>
+    public void RemoveCharacterFromSpace(Character cToRemove)
+    {
+        switch (cToRemove.TeamColor)
+        {
+            case EnumTeams.Red:
+                this.redCharacterGameObject = null;
+                this.redCharacterOnTile = null;
+                break;
+            case EnumTeams.Blue:
+                this.blueCharacterGameObject = null;
+                this.blueCharacterOnTile = null;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private GameObject GetTileFromDirection(EnumDirection direction)
+    {
+        switch (direction)
+        {
+            case EnumDirection.UP:
+                return TileTop;
+            case EnumDirection.DOWN:
+                return tileBottom;
+            case EnumDirection.LEFT:
+                return tileLeft;
+            case EnumDirection.RIGHT:
+                return tileRight;
+            default:
+                return null;
+        }
+    }
+
+    /// <summary>
+    /// get the drawable transform from tile according to given team
+    /// </summary>
+    /// <param name="team">Given team</param>
+    /// <returns>Transform according to given team</returns>
+    public Transform GetPlacement(EnumTeams team)
+    {
+        switch (team)
+        {
+            case EnumTeams.Red:
+                return redTeamPlacement;
+            case EnumTeams.Blue:
+                return blueTeamPlacement;
+            default:
+                return null;
+        }
+    }
+    /// <summary>
+    /// Get the Character GameObject from tile according to given team
+    /// </summary>
+    /// <param name="team">Given team</param>
+    /// <returns>Transform according to given team</returns>
+    private GameObject GetCharacterObject(EnumTeams team)
+    {
+        switch (team)
+        {
+            case EnumTeams.Red:
+                return redCharacterGameObject;
+            case EnumTeams.Blue:
+                return blueCharacterGameObject;
+            default:
+                return null;
+        }
+    }
+    /// <summary>
+    /// Get the Character object from tile according to given team
+    /// </summary>
+    /// <param name="team">Given team</param>
+    /// <returns>Character object from tile according to given team</returns>
+    private Character GetCharacter(EnumTeams team)
+    {
+        switch (team)
+        {
+            case EnumTeams.Red:
+                return redCharacterOnTile;
+            case EnumTeams.Blue:
+                return blueCharacterOnTile;
+            default:
+                return null;
+        }
+    }
+
+    private SmartTile GetSmartTileFromDirection(EnumDirection direction)
+    {
+        GameObject go = null;
+
+        switch (direction)
+        {
+            case EnumDirection.UP:
+                go = tileTop;
+                break;
+            case EnumDirection.DOWN:
+                go = tileTop;
+                break;
+            case EnumDirection.LEFT:
+                go = tileTop;
+                break;
+            case EnumDirection.RIGHT:
+                go = tileTop;
+                break;
+            default:
+                return null;
+        }
+
+        if (go != null)
+        {
+            return go.GetComponent<SmartTile>();
+        }
+
+        return null;
+    }
+
     public int PositionNumberX { get => positionNumberX; set => positionNumberX = value; }
     public int PositionNumberY { get => positionNumberY; set => positionNumberY = value; }
     public GameObject TileLeft { get => tileLeft; set => tileLeft = value; }
@@ -23,4 +250,8 @@ public class SmartTile : MonoBehaviour
     public GameObject TileTop { get => tileTop; set => tileTop = value; }
     public Transform RedTeamPlacement { get => redTeamPlacement; set => redTeamPlacement = value; }
     public Transform BlueTeamPlacement { get => blueTeamPlacement; set => blueTeamPlacement = value; }
+    public Character BlueCharacterOnTile { get => blueCharacterOnTile; set => blueCharacterOnTile = value; }
+    public Character RedCharacterOnTile { get => redCharacterOnTile; set => redCharacterOnTile = value; }
+    public GameObject RedCharacterGameObject { get; internal set; }
+    public GameObject BlueCharacterGameObject { get; internal set; }
 }

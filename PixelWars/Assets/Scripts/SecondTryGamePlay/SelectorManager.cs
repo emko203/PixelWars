@@ -4,52 +4,144 @@ using UnityEngine;
 
 public class SelectorManager : MonoBehaviour
 {
-    [SerializeField] private List<SpriteRenderer> BlueTeam;
-    [SerializeField] private List<SpriteRenderer> RedTeam;
+    [SerializeField] private List<SpriteRenderer> blueTeam;
+    [SerializeField] private List<SpriteRenderer> redTeam;
 
-    private List<int> LastRandoms = new List<int>();
+    [SerializeField] private float xOffset;
+    [SerializeField] private float yOffset;
 
-    public void SpawnSelectableCharacterSet(EnumTeams currentPlayerTurn, List<GameObject> charactersToPickFrom)
+    [SerializeField] private GameObject characterSelector;
+    [SerializeField] private GameObject LineSelector;
+
+    private int SelectorPosInCharacterSelect = 0;
+    private int SelectorPosInLaneSelect = 0;
+
+    private float zSpacing = -1;
+
+    private List<GameObject> lstCurrentSelectedCharacters = new List<GameObject>();
+
+    private List<int> lstLastRandoms = new List<int>();
+
+    private void ResetSelector(EnumTeams currentPlayerTurn)
     {
-        List<Sprite> spriteList = GetSpritesFromGameObjects(charactersToPickFrom);
+        SelectorPosInCharacterSelect = 0;
+        SelectorPosInLaneSelect = 0;
 
+        UpdateCharacterSelectorPos(currentPlayerTurn);
+    }
+
+    /// <summary>
+    /// Selects the current unit and return it so we can spawn him
+    /// </summary>
+    /// <returns>enumUnit</returns>
+    public enumUnit SelectCharacter(EnumTeams currentPlayerTurn, BattlefieldHandler battlefieldHandler)
+    {
+        //TODO: Show LaneSelector
+
+        //TODO: update character SelectorColor
+        return lstCurrentSelectedCharacters[SelectorPosInCharacterSelect].GetComponent<Character>().UnitType;
+    }
+
+    private List<SpriteRenderer> GetSelectorTeam(EnumTeams currentPlayerTurn)
+    {
         switch (currentPlayerTurn)
         {
             case EnumTeams.Red:
-                RenderRandomsForTeam(BlueTeam, spriteList);
+                return redTeam;
+
+            case EnumTeams.Blue:
+                return blueTeam;
+
+            default:
+                return null;
+        }
+    }
+
+    private Vector3 UpdateOffsetSelectorPositioning(Vector3 pos)
+    {
+        pos.z = zSpacing;
+        pos.x += xOffset;
+        pos.y += yOffset;
+        return pos;
+    }
+
+    private void UpdateCharacterSelectorPos(EnumTeams currentPlayerTurn)
+    {
+        Vector3 pos = GetSelectorTeam(currentPlayerTurn)[SelectorPosInCharacterSelect].transform.position;
+        characterSelector.transform.position = UpdateOffsetSelectorPositioning(pos);
+    }
+
+    /// <summary>
+    /// Moves the characterselector sprite up one space
+    /// </summary>
+    /// <param name="currentPlayerTurn">Current turns player</param>
+    public void MoveCharacterSelectorSpriteUp(EnumTeams currentPlayerTurn)
+    {
+        if (SelectorPosInCharacterSelect > 0)
+        {
+            SelectorPosInCharacterSelect -= 1;
+        }
+        else
+        {
+            SelectorPosInCharacterSelect = GetSelectorTeam(currentPlayerTurn).Count - 1;
+        }
+        UpdateCharacterSelectorPos(currentPlayerTurn);
+    }
+    /// <summary>
+    /// Moves the characterselector sprite down one space
+    /// </summary>
+    /// <param name="currentPlayerTurn">Current turns player</param>
+    public void MoveCharacterSelectorSpriteDown(EnumTeams currentPlayerTurn)
+    {
+        if (SelectorPosInCharacterSelect < GetSelectorTeam(currentPlayerTurn).Count - 1)
+        {
+            SelectorPosInCharacterSelect += 1;
+        }
+        else
+        {
+            SelectorPosInCharacterSelect = 0;
+        }
+        UpdateCharacterSelectorPos(currentPlayerTurn);
+    }
+
+    public void SetupNewRound(EnumTeams currentPlayerTurn, List<GameObject> charactersToPickFrom)
+    {
+        SpawnNewPlayerhand(currentPlayerTurn, charactersToPickFrom);
+        ResetSelector(currentPlayerTurn);
+    }
+
+    private List<GameObject> SpawnNewPlayerhand(EnumTeams currentPlayerTurn, List<GameObject> charactersToPickFrom)
+    {
+        switch (currentPlayerTurn)
+        {
+            case EnumTeams.Red:
+                RenderRandomsForTeam(redTeam, charactersToPickFrom);
                 break;
             case EnumTeams.Blue:
-                RenderRandomsForTeam(RedTeam, spriteList);
+                RenderRandomsForTeam(blueTeam, charactersToPickFrom);
                 break;
             default:
                 break;
         }
-        
+
+        return lstCurrentSelectedCharacters;
     }
 
-    public List<Sprite> GetSpritesFromGameObjects(List<GameObject> lstObjects)
+    private void RenderRandomsForTeam(List<SpriteRenderer> listToFill, List<GameObject> charactersToPickFrom)
     {
-        List<Sprite> toreturn = new List<Sprite>();
+        lstCurrentSelectedCharacters = new List<GameObject>();
 
-        foreach (GameObject gameObject in lstObjects)
-        {
-            toreturn.Add(gameObject.GetComponent<SpriteRenderer>().sprite);
-        }
-
-        return toreturn;
-    }
-
-    private void RenderRandomsForTeam(List<SpriteRenderer> listToFill,List<Sprite> charactersToPickFrom)
-    {
         foreach (SpriteRenderer renderer in listToFill)
         {
-            renderer.sprite = GetRandomCharacterSprite(charactersToPickFrom);
+            GameObject tempOb = GetRandomUniqueCharacter(charactersToPickFrom);
+            renderer.sprite = tempOb.GetComponent<SpriteRenderer>().sprite;
+            lstCurrentSelectedCharacters.Add(tempOb);
         }
 
-        LastRandoms.Clear();
+        lstLastRandoms.Clear();
     }
 
-    private Sprite GetRandomCharacterSprite(List<Sprite> charactersToPickFrom)
+    private GameObject GetRandomUniqueCharacter(List<GameObject> charactersToPickFrom)
     {
         int randomInt = Random.Range(0, charactersToPickFrom.Count);
         bool AlreadyUsed = false;
@@ -64,7 +156,7 @@ public class SelectorManager : MonoBehaviour
 
             randomInt = Random.Range(0, charactersToPickFrom.Count);
 
-            foreach (int i in LastRandoms)
+            foreach (int i in lstLastRandoms)
             {
                 if (i == randomInt)
                 {
@@ -79,7 +171,7 @@ public class SelectorManager : MonoBehaviour
             }
         }
 
-        LastRandoms.Add(randomInt);
+        lstLastRandoms.Add(randomInt);
 
         return charactersToPickFrom[randomInt];
     }

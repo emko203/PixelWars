@@ -8,11 +8,10 @@ public class BattlefieldHandler : MonoBehaviour
     [SerializeField] private GameObject battlefield;
     [SerializeField] private List<GameObject> characterPool;
 
-
     private List<Character> availableCharacters = new List<Character>();
     private List<SmartTile> smartTiles = new List<SmartTile>();
 
-    
+
 
     #region Monobehaviour funtions
 
@@ -37,6 +36,9 @@ public class BattlefieldHandler : MonoBehaviour
                 GameObject go = Instantiate(character);
 
                 go.transform.position = spawnPos;
+
+                //Connect character to smart tile
+                PlaceUnitOnTile(GetXSpawn(character.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), character);
             }
         }
     }
@@ -58,15 +60,7 @@ public class BattlefieldHandler : MonoBehaviour
         {
             if (tile.PositionNumberX == x && tile.PositionNumberY == y)
             {
-                switch (team)
-                {
-                    case EnumTeams.Red:
-                        return tile.RedTeamPlacement.position;
-                    case EnumTeams.Blue:
-                        return tile.BlueTeamPlacement.position;
-                    default:
-                       break;
-                }
+                return tile.GetPlacement(team).position;
             }
         }
 
@@ -76,6 +70,53 @@ public class BattlefieldHandler : MonoBehaviour
     #endregion
 
     #region Private funtions
+    /// <summary>
+    /// Place unit on tile if possible and return false if it is occupied
+    /// </summary>
+    /// <param name="x">x coordinates of tile</param>
+    /// <param name="y">y coordinates of tile</param>
+    /// <param name="characterObject">GameObject with character prefab to connect to tile</param>
+    /// <returns>True if character has been placed, false if unit is already there</returns>
+    private bool PlaceUnitOnTile(int x, int y, GameObject characterObject)
+    {
+        Character characterToPlace = characterObject.GetComponent<Character>();
+
+        foreach (SmartTile tile in smartTiles)
+        {
+            if (tile.PositionNumberX == x && tile.PositionNumberY == y)
+            {
+                if (tile.IsEmpty(characterToPlace.TeamColor))
+                {
+                    tile.AddCharacterToSpace(characterToPlace, characterObject);
+                }
+
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Remove a unit from a tile
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="characterToRemove"></param>
+    /// <returns></returns>
+    private void RemoveUnitOnTile(int x, int y, Character characterToRemove)
+    {
+        foreach (SmartTile tile in smartTiles)
+        {
+            if (!tile.IsEmpty(characterToRemove.TeamColor))
+            {
+                if (tile.PositionNumberX == x && tile.PositionNumberY == y)
+                {
+                    tile.RemoveCharacterFromSpace(characterToRemove);
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// Initialize map
@@ -113,7 +154,7 @@ public class BattlefieldHandler : MonoBehaviour
             {
                 maximumX = tile.PositionNumberX;
             }
-            else if(tile.PositionNumberY > maximumY)
+            else if (tile.PositionNumberY > maximumY)
             {
                 maximumY = tile.PositionNumberY;
             }
