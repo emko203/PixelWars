@@ -28,7 +28,7 @@ public class SmartTile : MonoBehaviour
     /// <returns>True if Succesfull and False if unsuccesfull</returns>
     public bool MoveDirection(EnumDirection directionToMove, EnumTeams teamToMove)
     {
-        GameObject tileToMoveTo = GetTileFromDirection(directionToMove);
+        GameObject tileToMoveTo = GetTileFromDirection(directionToMove,teamToMove);
         SmartTile smartTileToMoveTo = GetSmartTileFromDirection(directionToMove);
 
         GameObject characterObjectToMove = GetCharacterObject(teamToMove);
@@ -143,21 +143,42 @@ public class SmartTile : MonoBehaviour
         }
     }
 
-    private GameObject GetTileFromDirection(EnumDirection direction)
+    private GameObject GetTileFromDirection(EnumDirection direction, EnumTeams teamToMove)
     {
-        switch (direction)
+        switch (teamToMove)
         {
-            case EnumDirection.UP:
-                return TileTop;
-            case EnumDirection.DOWN:
-                return tileBottom;
-            case EnumDirection.LEFT:
-                return tileLeft;
-            case EnumDirection.RIGHT:
-                return tileRight;
+            case EnumTeams.Red:
+                switch (direction)
+                {
+                    case EnumDirection.UP:
+                        return TileTop;
+                    case EnumDirection.DOWN:
+                        return tileBottom;
+                    case EnumDirection.LEFT:
+                        return tileLeft;
+                    case EnumDirection.RIGHT:
+                        return tileRight;
+                    default:
+                        return null;
+                }
+            case EnumTeams.Blue:
+                switch (direction)
+                {
+                    case EnumDirection.UP:
+                        return tileBottom;
+                    case EnumDirection.DOWN:
+                        return tileTop;
+                    case EnumDirection.LEFT:
+                        return tileRight;
+                    case EnumDirection.RIGHT:
+                        return tileLeft;
+                    default:
+                        return null;
+                }
             default:
                 return null;
         }
+        
     }
 
     /// <summary>
