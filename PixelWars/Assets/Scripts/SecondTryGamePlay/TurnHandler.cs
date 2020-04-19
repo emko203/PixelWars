@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurnHandler
 {
     private  EnumTeams[] validTeams = { EnumTeams.Blue, EnumTeams.Red };
-    private EnumTeams currentPlayerTurn;
+    private static EnumTeams  currentPlayerTurn;
 
     private EnumState currentGameState = EnumState.WAIT;
 
@@ -66,6 +66,44 @@ public class TurnHandler
     public void SelectRandomStartPlayer()
     { 
         currentPlayerTurn = validTeams[Random.Range(0, validTeams.Length)];
+    }
+
+    public static EnumTeams GetOtherTeam(EnumTeams currentTeam)
+    {
+        switch (currentTeam)
+        {
+            case EnumTeams.Red:
+                return EnumTeams.Blue;
+            case EnumTeams.Blue:
+                return EnumTeams.Red;
+            default:
+                return currentTeam;
+        }
+    }
+
+    public static EnumDirection GetDirectionFromTeam(EnumDirection directionToGet)
+    {
+        switch (currentPlayerTurn)
+        {
+            case EnumTeams.Red:
+                return directionToGet;
+            case EnumTeams.Blue:
+                switch (directionToGet)
+                {
+                    case EnumDirection.UP:
+                        return EnumDirection.DOWN;
+                    case EnumDirection.DOWN:
+                        return EnumDirection.UP;
+                    case EnumDirection.LEFT:
+                        return EnumDirection.RIGHT;
+                    case EnumDirection.RIGHT:
+                        return EnumDirection.LEFT;
+                    default:
+                        return EnumDirection.DOWN;
+                }
+            default:
+                return directionToGet;
+        }
     }
 
     public EnumTeams CurrentPlayerTurn { get => currentPlayerTurn; }

@@ -255,6 +255,21 @@ public class BattlefieldHandler : MonoBehaviour
 
     #endregion
 
+    public static SmartTile GetTileFromDirectionAhead(int amountToLookAhead, SmartTile whereToStart, EnumTeams currentTeam, EnumDirection directionToLookIn)
+    {
+        List<SmartTile> TempList = new List<SmartTile>();
+        SmartTile lastTile;
+        lastTile = whereToStart.GetTileFromDirection(directionToLookIn, currentTeam).GetComponent<SmartTile>();
+
+        for (int i = 0; i < amountToLookAhead; i++)
+        {
+            TempList.Add(lastTile);
+            lastTile = TempList[i].GetTileFromDirection(directionToLookIn, currentTeam).GetComponent<SmartTile>();
+        }
+
+        return TempList[TempList.Count];
+    }
+
     public bool Done { get => done; set => done = value; }
     public bool Busy { get => busy; set => busy = value; }
 }

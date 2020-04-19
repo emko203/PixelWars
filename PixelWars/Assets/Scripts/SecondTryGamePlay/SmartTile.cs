@@ -28,7 +28,7 @@ public class SmartTile : MonoBehaviour
     /// <returns>True if Succesfull and False if unsuccesfull</returns>
     public bool MoveDirection(EnumDirection directionToMove, EnumTeams teamToMove)
     {
-        GameObject tileToMoveTo = GetTileFromDirection(directionToMove,teamToMove);
+        GameObject tileToMoveTo = GetTileFromDirection(directionToMove, teamToMove);
         SmartTile smartTileToMoveTo = GetSmartTileFromDirection(directionToMove, teamToMove);
 
         GameObject characterObjectToMove = GetCharacterObject(teamToMove);
@@ -38,14 +38,25 @@ public class SmartTile : MonoBehaviour
         {
             if (smartTileToMoveTo.IsEmpty(teamToMove))
             {
-                smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
-                this.RemoveCharacterFromSpace(characterData);
+                //if there is no fight on this tile then we move to next tile
+                if (FightHandler.IsFight(this, teamToMove))
+                {
+                    smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
+                    this.RemoveCharacterFromSpace(characterData);
+                }
+
+                HandleFight(teamToMove);
+
                 return true;
             }
-            //TODO: Add Battlefunctionality here
         }
-      
+
         return false;
+    }
+
+    private void HandleFight(EnumTeams teamToMove)
+    {
+        FightHandler.FightWithClosestEnemy(this, teamToMove);
     }
 
     /// <summary>
@@ -146,7 +157,7 @@ public class SmartTile : MonoBehaviour
         }
     }
 
-    private GameObject GetTileFromDirection(EnumDirection direction, EnumTeams teamToMove)
+    public GameObject GetTileFromDirection(EnumDirection direction, EnumTeams teamToMove)
     {
         switch (teamToMove)
         {
