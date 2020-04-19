@@ -39,7 +39,7 @@ public class SmartTile : MonoBehaviour
             if (smartTileToMoveTo.IsEmpty(teamToMove))
             {
                 //if there is no fight on this tile then we move to next tile
-                if (FightHandler.IsFight(this, teamToMove))
+                if (!FightHandler.IsFight(this, teamToMove))
                 {
                     smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
                     this.RemoveCharacterFromSpace(characterData);

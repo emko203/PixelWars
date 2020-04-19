@@ -27,7 +27,7 @@ public static class FightHandler
             //we check each tile in range if there is an enemy in this range we start attacking the closesed enemy unit
             for (int i = 0; i <= actualRange; i++)
             {
-                tempTile = BattlefieldHandler.GetTileFromDirectionAhead(i, tileToCheck, currentMovingTeam, TurnHandler.GetDirectionFromTeam(EnumDirection.UP));
+                tempTile = BattlefieldHandler.GetTileFromDirectionAhead(i, tileToCheck, currentMovingTeam, EnumDirection.UP);
                 
                 if (!tempTile.IsEmpty(TurnHandler.GetOtherTeam(currentMovingTeam)))
                 {
@@ -57,7 +57,7 @@ public static class FightHandler
             //we check each tile in range if there is an enemy in this range we start attacking the closesed enemy unit
             for (int i = 0; i <= AttackingCharacter.Data.Range; i++)
             {
-                tempTile = BattlefieldHandler.GetTileFromDirectionAhead(i, TileToStartCheckingFrom, currentMovingTeam, TurnHandler.GetDirectionFromTeam(EnumDirection.UP));
+                tempTile = BattlefieldHandler.GetTileFromDirectionAhead(i, TileToStartCheckingFrom, currentMovingTeam,EnumDirection.UP);
 
                 if (!tempTile.IsEmpty(TurnHandler.GetOtherTeam(currentMovingTeam)))
                 {

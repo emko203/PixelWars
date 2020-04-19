@@ -261,13 +261,13 @@ public class BattlefieldHandler : MonoBehaviour
         SmartTile lastTile;
         lastTile = whereToStart.GetTileFromDirection(directionToLookIn, currentTeam).GetComponent<SmartTile>();
 
-        for (int i = 0; i < amountToLookAhead; i++)
+        for (int i = 0; i <= amountToLookAhead; i++)
         {
             TempList.Add(lastTile);
             lastTile = TempList[i].GetTileFromDirection(directionToLookIn, currentTeam).GetComponent<SmartTile>();
         }
 
-        return TempList[TempList.Count];
+        return TempList[TempList.Count - 1];
     }
 
     public bool Done { get => done; set => done = value; }
