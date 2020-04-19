@@ -7,6 +7,8 @@ public class SmartTile : MonoBehaviour
     [SerializeField] private int positionNumberX;
     [SerializeField] private int positionNumberY;
 
+    [SerializeField] private GameObject thisTileObject = null;
+
     [SerializeField] private GameObject tileLeft = null;
     [SerializeField] private GameObject tileRight = null;
     [SerializeField] private GameObject tileBottom = null;
@@ -36,27 +38,36 @@ public class SmartTile : MonoBehaviour
 
         if (tileToMoveTo != null && smartTileToMoveTo != null)
         {
-            if (smartTileToMoveTo.IsEmpty(teamToMove))
+           
+            Character enemy = FightHandler.IsFight(this, teamToMove);
+
+            //if there is no fight on this tile withtin range then we move to next tile
+            if (enemy == null)
             {
-                //if there is no fight on this tile then we move to next tile
-                if (!FightHandler.IsFight(this, teamToMove))
+                if (smartTileToMoveTo.IsEmpty(teamToMove))
                 {
+                    Debug.Log("Just moved " + characterData.TeamColor + characterData.Data.Name + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
                     smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
                     this.RemoveCharacterFromSpace(characterData);
                 }
-
-                HandleFight(teamToMove);
-
-                return true;
             }
+            else
+            {
+                Debug.Log(characterData.TeamColor + characterData.Data.Name + " Just started a fight with " + enemy.TeamColor + enemy.Data.Name);
+
+                HandleFight(teamToMove, enemy);
+            }
+
+            return true;
+            
         }
 
         return false;
     }
 
-    private void HandleFight(EnumTeams teamToMove)
+    private void HandleFight(EnumTeams teamToMove, Character enemy)
     {
-        FightHandler.FightWithClosestEnemy(this, teamToMove);
+        FightHandler.FightWithClosestEnemy(this, teamToMove, enemy);
     }
 
     /// <summary>
@@ -247,7 +258,7 @@ public class SmartTile : MonoBehaviour
         }
     }
 
-    private SmartTile GetSmartTileFromDirection(EnumDirection direction,EnumTeams currentTeam)
+    public SmartTile GetSmartTileFromDirection(EnumDirection direction,EnumTeams currentTeam)
     {
         GameObject go = null;
         switch (currentTeam)
@@ -314,4 +325,5 @@ public class SmartTile : MonoBehaviour
     public Character RedCharacterOnTile { get => redCharacterOnTile; set => redCharacterOnTile = value; }
     public GameObject RedCharacterGameObject { get; internal set; }
     public GameObject BlueCharacterGameObject { get; internal set; }
+    public GameObject ThisTileObject { get => thisTileObject; set => thisTileObject = value; }
 }

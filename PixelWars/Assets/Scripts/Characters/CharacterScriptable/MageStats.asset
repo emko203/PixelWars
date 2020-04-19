@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40247f84859960c47baa17c50db726f8, type: 3}
   m_Name: MageStats
   m_EditorClassIdentifier: 
-  health: 3
+  maxHealth: 3
   manaCost: 2
   damage: 2
   speed: 1
   range: 1
-  name: Mage
+  CharacterName: Mage
   abilityTemplates: {fileID: 0}

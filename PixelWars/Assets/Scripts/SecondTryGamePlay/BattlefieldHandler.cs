@@ -93,8 +93,15 @@ public class BattlefieldHandler : MonoBehaviour
         {
             if (!smartTiles[i].IsEmpty(teamToMove))
             {
+                Color cRevert = new Color();
+                cRevert = smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color ;
+                smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r, Color.cyan.g, Color.cyan.b, Color.cyan.a);
+
                 yield return new WaitForSeconds(TimeBetweenMoves);
                 smartTiles[i].MoveDirection(EnumDirection.UP, teamToMove);
+
+                smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color = cRevert;
+
             }
         }
         IsDone();
@@ -102,14 +109,21 @@ public class BattlefieldHandler : MonoBehaviour
 
     IEnumerator RedMove(EnumTeams teamToMove)
     {
+
         IsBusy();
         foreach (SmartTile tile in smartTiles)
         {
             if (!tile.IsEmpty(teamToMove))
             {
+                Color cRevert = new Color();
+                cRevert = tile.ThisTileObject.GetComponent<SpriteRenderer>().color;
+                tile.ThisTileObject.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r, Color.cyan.g, Color.cyan.b, Color.cyan.a);
+                
                 yield return new WaitForSeconds(TimeBetweenMoves);
 
                 tile.MoveDirection(EnumDirection.UP, teamToMove);
+
+                tile.ThisTileObject.GetComponent<SpriteRenderer>().color = cRevert;
             }
         }
         IsDone();
@@ -257,17 +271,44 @@ public class BattlefieldHandler : MonoBehaviour
 
     public static SmartTile GetTileFromDirectionAhead(int amountToLookAhead, SmartTile whereToStart, EnumTeams currentTeam, EnumDirection directionToLookIn)
     {
-        List<SmartTile> TempList = new List<SmartTile>();
-        SmartTile lastTile;
-        lastTile = whereToStart.GetTileFromDirection(directionToLookIn, currentTeam).GetComponent<SmartTile>();
+        SmartTile TileToReturn = whereToStart;
 
-        for (int i = 0; i <= amountToLookAhead; i++)
+        if (amountToLookAhead != 0)
         {
-            TempList.Add(lastTile);
-            lastTile = TempList[i].GetTileFromDirection(directionToLookIn, currentTeam).GetComponent<SmartTile>();
+            for (int i = 1; i <= amountToLookAhead; i++)
+            {
+                TileToReturn = TileToReturn.GetSmartTileFromDirection(directionToLookIn, currentTeam);
+            }
         }
 
-        return TempList[TempList.Count - 1];
+        return TileToReturn;
+
+        List<SmartTile> TempList = new List<SmartTile>();
+
+        SmartTile OneForward = whereToStart.GetSmartTileFromDirection(directionToLookIn, currentTeam);
+        SmartTile TwoForward;
+        if (OneForward.GetSmartTileFromDirection(directionToLookIn, currentTeam) != null)
+        {
+            TwoForward = OneForward.GetSmartTileFromDirection(directionToLookIn, currentTeam);
+        }
+        else
+        {
+            return OneForward;
+        }
+
+        if (amountToLookAhead == 0)
+        {
+            return whereToStart;
+        }
+        else if (amountToLookAhead == 1)
+        {
+            return OneForward;
+        }
+        else
+        {
+            return TwoForward;
+        }
+
     }
 
     public bool Done { get => done; set => done = value; }

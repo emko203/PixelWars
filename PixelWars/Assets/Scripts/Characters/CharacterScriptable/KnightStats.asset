@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40247f84859960c47baa17c50db726f8, type: 3}
   m_Name: KnightStats
   m_EditorClassIdentifier: 
-  health: 4
+  maxHealth: 4
   manaCost: 1
   damage: 1
   speed: 1
   range: 0
-  name: Knight
+  CharacterName: Knight
   abilityTemplates: {fileID: 0}
