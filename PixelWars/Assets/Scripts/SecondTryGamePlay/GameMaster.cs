@@ -12,27 +12,32 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private SelectorManager selectorManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Animator CharacterAnimator;
+    [SerializeField] private GameObject blueArrow;
+    [SerializeField] private GameObject redArrow;
+    [SerializeField] private Animator arrowAnimator;
 
     private Player Player1 = new Player();
     private Player Player2 = new Player();
 
     private List<SmartTile> mapping = new List<SmartTile>();
     private List<GameObject> AvailableCharacters = new List<GameObject>();
-    private TurnHandler turnHandler = new TurnHandler();
+    private TurnHandler turnHandler;
 
     private EnumUnit CurrentSelectedUnit = EnumUnit.NONE;
 
     #region Monobehaviour funtions
     private void Awake()
     {
-        turnHandler.SelectRandomStartPlayer();
-        
         selectorManager.HideLaneSelector();
+
+        turnHandler = new TurnHandler(redArrow,blueArrow, arrowAnimator);
+        turnHandler.SelectRandomStartPlayer();
     }
 
     private void Start()
     {
         turnHandler.SetNextState();
+        turnHandler.SetTurnArrows();
     }
 
     private void Update()
@@ -88,6 +93,8 @@ public class GameMaster : MonoBehaviour
     //Do this at the end of turn
     private void UpdateEndOfTurn()
     {
+        selectorManager.HideLaneSelector();
+        selectorManager.HideCharacterSelector();
         turnHandler.SetNextState();
     }
 

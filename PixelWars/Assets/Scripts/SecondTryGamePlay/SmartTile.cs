@@ -107,8 +107,10 @@ public class SmartTile : MonoBehaviour
     /// <param name="goToAdd">object to draw</param>
     public void AddCharacterToSpace(Character cToAdd, GameObject goToAdd)
     {
-        Vector3 tempPos = GetPlacement(cToAdd.TeamColor).position;
-        goToAdd.transform.position = new Vector3(tempPos.x,tempPos.y,-1);
+        Transform tempPos = GetPlacement(cToAdd.TeamColor);
+        Transform StartMarker = goToAdd.transform;
+        //goToAdd.transform.position = new Vector3(tempPos.x,tempPos.y,-1);
+        StartCoroutine(handleAnimation(StartMarker, tempPos,goToAdd.transform,cToAdd.TeamColor));
         
         switch (cToAdd.TeamColor)
         {
@@ -124,6 +126,56 @@ public class SmartTile : MonoBehaviour
                 break;
         }
     }
+
+    IEnumerator handleAnimation(Transform startpos, Transform endpos, Transform toMove, EnumTeams currentTeam)
+    {
+        // Transforms to act as start and end markers for the journey.
+        Transform startMarker = startpos;
+        Transform endMarker = endpos;
+
+        endMarker.position = new Vector3(endMarker.position.x, endMarker.position.y, -2);
+        startMarker.position = new Vector3(startMarker.position.x, startMarker.position.y, -2);
+        toMove.position = new Vector3(toMove.position.x,toMove.position.y,-2);
+
+        // Time when the movement started.
+        float startTime = Time.time;
+        float lerpTime = 1;
+
+        bool notdone = true;
+
+        while (notdone)
+        {
+            // Distance moved equals elapsed time times speed..
+            float timeSinceStarted = Time.time - startTime;
+            // Fraction of journey completed equals current distance divided by total distance.
+            float precentageComplete = timeSinceStarted / lerpTime;
+
+            // Set our position as a fraction of the distance between the markers.
+            toMove.position = Vector3.Lerp(toMove.position, endMarker.position, precentageComplete);
+
+            yield return null;
+            if (currentTeam == EnumTeams.Red)
+            {
+                if (toMove.position.x >= endMarker.position.x)
+                {
+                    notdone = false;
+                }
+            }
+            else
+            {
+                if (toMove.position.x <= endMarker.position.x)
+                {
+                    notdone = false;
+                }
+            }
+        }
+
+        toMove.position = endMarker.position;
+
+        yield return null;
+    }
+
+
     /// <summary>
     /// Destroys the game object and unlinks the character from this space this way fully deleting the character
     /// </summary>

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnHandler
 {
@@ -8,6 +9,17 @@ public class TurnHandler
     private static EnumTeams  currentPlayerTurn;
 
     private EnumState currentGameState = EnumState.WAIT;
+
+    private GameObject RedTurnArrow;
+    private GameObject BlueTurnArrow;
+    private Animator ArrowAnimator;
+
+    public TurnHandler(GameObject RedArrow, GameObject BlueArrow, Animator arrowAnimator)
+    {
+        RedTurnArrow = RedArrow;
+        BlueTurnArrow = BlueArrow;
+        ArrowAnimator = arrowAnimator;
+    }
 
     public void SetNextState()
     {
@@ -48,6 +60,29 @@ public class TurnHandler
                 break;
             default:
                 return;
+        }
+
+        SetTurnArrows();
+    }
+
+    public void SetTurnArrows()
+    {
+        switch (currentPlayerTurn)
+        {
+            case EnumTeams.Red:
+                RedTurnArrow.SetActive(true);
+                BlueTurnArrow.SetActive(false);
+                ArrowAnimator.SetBool("BlueArrow", false);
+                break;
+            case EnumTeams.Blue:
+                RedTurnArrow.SetActive(false);
+                BlueTurnArrow.SetActive(true);
+                ArrowAnimator.SetBool("BlueArrow", true);
+                break;
+            default:
+                RedTurnArrow.SetActive(false);
+                BlueTurnArrow.SetActive(false);
+                break;
         }
     }
 

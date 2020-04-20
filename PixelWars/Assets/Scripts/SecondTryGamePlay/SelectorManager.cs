@@ -155,6 +155,16 @@ public class SelectorManager : MonoBehaviour
         characterSelector.transform.position = UpdateOffsetCharacterSelectorPositioning(pos);
     }
 
+    public void HideCharacterSelector()
+    {
+        characterSelector.SetActive(false);
+    }
+
+    public void ShowCharacterSelector()
+    {
+        characterSelector.SetActive(true);
+    }
+
     public void HideLaneSelector()
     {
         LaneSelector.SetActive(false);
@@ -220,6 +230,7 @@ public class SelectorManager : MonoBehaviour
 
     public void SetupNewRound(EnumTeams currentPlayerTurn, List<GameObject> charactersToPickFrom)
     {
+        ShowCharacterSelector();
         SpawnNewPlayerhand(currentPlayerTurn, charactersToPickFrom);
         ResetSelectors(currentPlayerTurn);
     }
