@@ -7,6 +7,8 @@ public class SelectorManager : MonoBehaviour
 {
     [SerializeField] private List<SpriteRenderer> blueTeam;
     [SerializeField] private List<SpriteRenderer> redTeam;
+    [SerializeField] private SpriteRenderer endTurnRed;
+    [SerializeField] private SpriteRenderer endTurnBlue;
 
     [SerializeField] private float xCharacterOffset;
     [SerializeField] private float yCharacterOffset;
@@ -32,6 +34,11 @@ public class SelectorManager : MonoBehaviour
         CurrentSelectedLane = GetMinLaneAmount();
 
         UpdateCharacterSelectorPos(currentPlayerTurn);
+    }
+
+    public Character GetCurrentHoveringCharacter()
+    {
+        return lstCurrentSelectedCharacters[SelectorPosInCharacterSelect].GetComponent<Character>();
     }
 
     /// <summary>

@@ -16,6 +16,11 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private GameObject redArrow;
     [SerializeField] private Animator arrowAnimator;
 
+    [SerializeField] private List<GameObject> blueCrystalsEmpty = new List<GameObject>();
+    [SerializeField] private List<GameObject> blueCrystalsFull = new List<GameObject>();
+    [SerializeField] private List<GameObject> redCrystalsFull = new List<GameObject>();
+    [SerializeField] private List<GameObject> redCrystalsEmpty = new List<GameObject>();
+
     private Player Player1 = new Player();
     private Player Player2 = new Player();
 
@@ -79,6 +84,8 @@ public class GameMaster : MonoBehaviour
         {
             turnHandler.SetNextState();
             selectorManager.SetupNewRound(turnHandler.CurrentPlayerTurn, GetCharactersFromCurrentTeam());
+            GetPlayerFromTurn().GainMana();
+            UpdateManaSprites();
             battlefieldHandler.Busy = false;
         }
         
@@ -101,6 +108,51 @@ public class GameMaster : MonoBehaviour
     #endregion
 
     #region Private functions
+    private void UpdateManaSprites()
+    {
+        GetPlayerFromTurn().UpdateManaSprites(GetCrystalsFromTeam(false), GetCrystalsFromTeam(true));
+    }
+
+    private List<GameObject> GetCrystalsFromTeam( bool emptyCrystals)
+    {
+        if (emptyCrystals)
+        {
+            switch (turnHandler.CurrentPlayerTurn)
+            {
+                case EnumTeams.Red:
+                    return redCrystalsEmpty;
+                case EnumTeams.Blue:
+                    return blueCrystalsEmpty;
+                default:
+                    return null;
+            }
+        }
+        else
+        {
+            switch (turnHandler.CurrentPlayerTurn)
+            {
+                case EnumTeams.Red:
+                    return redCrystalsFull;
+                case EnumTeams.Blue:
+                    return blueCrystalsFull;
+                default:
+                    return null;
+            }
+        }
+    }
+
+    private Player GetPlayerFromTurn()
+    {
+        if (turnHandler.CurrentPlayerTurn == EnumTeams.Blue)
+        {
+            return Player2;
+        }
+        else
+        {
+            return Player1;
+        }
+    }
+
     private List<GameObject> GetCharactersFromCurrentTeam()
     {
         switch (turnHandler.CurrentPlayerTurn)
@@ -147,6 +199,10 @@ public class GameMaster : MonoBehaviour
                 HandleDeselectKey();
                 break;
 
+            case EnumPressedKeyAction.END_TURN:
+                HandleEndTurn();
+                break;
+
             //Break Because no action is assigned
             case EnumPressedKeyAction.NO_ACTION:
             case EnumPressedKeyAction.LEFT:
@@ -159,6 +215,11 @@ public class GameMaster : MonoBehaviour
     #endregion
 
     #region HandelingKeys
+
+    private void HandleEndTurn()
+    {
+        turnHandler.SetNextState();
+    }
 
     private void HandleDeselectKey()
     {
@@ -177,15 +238,23 @@ public class GameMaster : MonoBehaviour
                 //We Spawn in the selected unit in the currently selected lane and then pass the turn to the other player
                 battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
                 DeselectUnit();
+                GetPlayerFromTurn().PayMana(selectorManager.GetCurrentHoveringCharacter().Data.ManaCost);
+                UpdateManaSprites();
 
-                //TODO: Add mana to this so that we only end the turn if we dont have mana or if we end the turn by button
-                turnHandler.SetNextState();
+                if (GetPlayerFromTurn().CurrentMana <= 0)
+                {
+                    turnHandler.SetNextState();
+                }
             }
         }
         else
         {
-            CurrentSelectedUnit = selectorManager.SelectCharacter(turnHandler.CurrentPlayerTurn, battlefieldHandler);
-            CharacterAnimator.SetBool("IsOrange", true);
+            if (GetPlayerFromTurn().CurrentMana >= selectorManager.GetCurrentHoveringCharacter().Data.ManaCost)
+            {
+                
+                CurrentSelectedUnit = selectorManager.SelectCharacter(turnHandler.CurrentPlayerTurn, battlefieldHandler);
+                CharacterAnimator.SetBool("IsOrange", true);
+            }
         }
     }
 

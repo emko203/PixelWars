@@ -1,21 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player
+public class Player:MonoBehaviour
 {
-    private int maxMana = 10;
-    private int maxHealth = 1;
+    private float maxMana = 8;
+    [SerializeField] private float maxHealth = 1;
+    [SerializeField] private float startMana = 2;
 
-    private int ManaRegen = 2;
+    private float ManaRegen = 2;
 
-    private int currentMana = 0;
-    private int currentHealth = 1;
+    private float currentMana = 0;
+    private float currentHealth = 1;
 
     public Player()
     {
         this.currentHealth = maxHealth;
-        this.currentMana = maxMana;
+        this.currentMana = startMana;
+    }
+
+    public void UpdateManaSprites(List<GameObject> fullCrystals, List<GameObject> emptyCrystals)
+    {
+        foreach (GameObject emptyCrystal in emptyCrystals)
+        {
+            emptyCrystal.SetActive(true);
+        }
+        foreach (GameObject fullCrystal in fullCrystals)
+        {
+            fullCrystal.SetActive(false);
+        }
+
+        for (int i = 0; i < currentMana; i++)
+        {
+            fullCrystals[i].SetActive(true);
+            emptyCrystals[i].SetActive(false);
+        }
     }
 
     public void GainMana()
@@ -26,7 +46,7 @@ public class Player
         }
     }
 
-    public void PayMana(int ManaCost)
+    public void PayMana(float ManaCost)
     {
         currentMana -= ManaCost;
     }
@@ -60,6 +80,6 @@ public class Player
         }
     }
 
-    public int CurrentMana { get => currentMana;}
-    public int CurrentHealth { get => currentHealth;}
+    public float CurrentMana { get => currentMana;}
+    public float CurrentHealth { get => currentHealth;}
 }
