@@ -124,7 +124,7 @@ public class BattlefieldHandler : MonoBehaviour
     IEnumerator BlueMove(EnumTeams teamToMove)
     {
         IsBusy();
-        for (int i = smartTiles.Count - 1; i > 0; i--)
+        for (int i = smartTiles.Count -1; i >= 0; i--)
         {
             if (!smartTiles[i].IsEmpty(teamToMove))
             {
