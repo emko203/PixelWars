@@ -139,7 +139,7 @@ public class SmartTile : MonoBehaviour
 
         // Time when the movement started.
         float startTime = Time.time;
-        float lerpTime = 1;
+        float lerpTime = 2;
 
         bool notdone = true;
 
