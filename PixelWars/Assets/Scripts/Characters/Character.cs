@@ -9,6 +9,10 @@ public class Character : MonoBehaviour
     [SerializeField] private EnumUnit unitType;
     [SerializeField] private HealthBar healthbar;
 
+    private void Start()
+    {
+        healthbar.SetMaxHealth(data.MaxHealth);
+    }
 
     /// <summary>
     /// Substract damage from this character and destoys it on death
@@ -17,6 +21,7 @@ public class Character : MonoBehaviour
     public void TakeDamage(float amount)
     {
         data.CurrentHealth -= amount;
+        healthbar.UpdateHealth(data.CurrentHealth);
         //healthbar.UpdateHealth(data.CurrentHealth);
 
         CheckDeath();
