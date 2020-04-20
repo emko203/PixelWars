@@ -23,11 +23,15 @@ public static class FightHandler
             for (int i = 0; i <= actualRange; i++)
             {
                 tempTile = BattlefieldHandler.GetTileFromDirectionAhead(i, tileToCheck, currentMovingTeam, EnumDirection.UP);
-                
-                if (!tempTile.IsEmpty(TurnHandler.GetOtherTeam(currentMovingTeam)))
+
+                //check if tile actualy exists
+                if (tempTile != null)
                 {
-                    Debug.Log("Found enemy " + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).TeamColor + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).Data.Name + " at range " + i);
-                    return tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam));
+                    if (!tempTile.IsEmpty(TurnHandler.GetOtherTeam(currentMovingTeam)))
+                    {
+                        Debug.Log("Found enemy " + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).TeamColor + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).Data.Name + " at range " + i);
+                        return tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam));
+                    }
                 }
             }
         }
