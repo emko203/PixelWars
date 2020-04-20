@@ -22,6 +22,7 @@ public class GameMaster : MonoBehaviour
 
     private EnumUnit CurrentSelectedUnit = EnumUnit.NONE;
 
+    #region Monobehaviour funtions
     private void Awake()
     {
         turnHandler.SelectRandomStartPlayer();
@@ -54,6 +55,8 @@ public class GameMaster : MonoBehaviour
                 break;
         }
     }
+
+    #endregion
 
     #region TURN UPDATES (MAIN GAME LOOP)
 
@@ -90,6 +93,7 @@ public class GameMaster : MonoBehaviour
 
     #endregion
 
+    #region Private functions
     private List<GameObject> GetCharactersFromCurrentTeam()
     {
         switch (turnHandler.CurrentPlayerTurn)
@@ -102,6 +106,18 @@ public class GameMaster : MonoBehaviour
                 return null;
         }
     }
+
+    private void DeselectUnit()
+    {
+        //Deselect the unit and then make the character selector available again so we can select a different character
+        selectorManager.HideLaneSelector();
+        CharacterAnimator.SetBool("IsOrange", false);
+        CurrentSelectedUnit = EnumUnit.NONE;
+    }
+
+    #endregion
+
+    #region InputHandlers
 
     private void HandleInput()
     {
@@ -133,13 +149,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    private void DeselectUnit()
-    {
-        //Deselect the unit and then make the character selector available again so we can select a different character
-        selectorManager.HideLaneSelector();
-        CharacterAnimator.SetBool("IsOrange", false);
-        CurrentSelectedUnit = EnumUnit.NONE;
-    }
+    #endregion
 
     #region HandelingKeys
 
@@ -154,13 +164,16 @@ public class GameMaster : MonoBehaviour
         //do this if there is already a unit selected
         if (CurrentSelectedUnit != EnumUnit.NONE)
         {
+            //If no friendly unit is in spawn we can spawn a unit
+            if (battlefieldHandler.CanSpawn(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn))
+            {
+                //We Spawn in the selected unit in the currently selected lane and then pass the turn to the other player
+                battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
+                DeselectUnit();
 
-            //We Spawn in the selected unit in the currently selected lane and then pass the turn to the other player
-            battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
-            DeselectUnit();
-
-            //TODO: Add mana to this so that we only end the turn if we dont have mana or if we end the turn by button
-            turnHandler.SetNextState();
+                //TODO: Add mana to this so that we only end the turn if we dont have mana or if we end the turn by button
+                turnHandler.SetNextState();
+            }
         }
         else
         {
@@ -205,6 +218,8 @@ public class GameMaster : MonoBehaviour
 
     #endregion
 
+    #region Initialization
+
     private void InitializeBattlefield()
     {
         SmartTile[] smartTiles = battlefield.GetComponentsInChildren<SmartTile>() as SmartTile[];
@@ -214,4 +229,6 @@ public class GameMaster : MonoBehaviour
             mapping.Add(tile);
         }
     }
+
+    #endregion
 }

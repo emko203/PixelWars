@@ -17,7 +17,7 @@ public class Character_Template : ScriptableObject
 
     private float currentHealth;
 
-    public Character_Template()
+    public void SetNewCharacter()
     {
         currentHealth = maxHealth;
     }
@@ -31,5 +31,5 @@ public class Character_Template : ScriptableObject
 
     public AbilityTemplate AbilityTemplate { get => abilityTemplates; set => abilityTemplates = value; }
     public string Name { get => CharacterName; set => CharacterName = value; }
-    public float MaxHealth { get => maxHealth; set => maxHealth = value; }
+    public float MaxHealth { get => maxHealth;}
 }

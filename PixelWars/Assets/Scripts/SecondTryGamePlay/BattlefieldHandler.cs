@@ -41,8 +41,10 @@ public class BattlefieldHandler : MonoBehaviour
 
                 go.transform.position = spawnPos;
 
+                go.GetComponent<Character>().Data.SetNewCharacter();
+                
                 //Connect character to smart tile
-                bool placed = PlaceUnitOnTile(GetXSpawn(character.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), go);
+                bool placed = PlaceUnitOnTile(GetXSpawn(go.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), go);
             }
         }
     }
@@ -56,6 +58,39 @@ public class BattlefieldHandler : MonoBehaviour
         int posX = GetXSpawn(team);
 
         return GetDrawPosWithCoordinates(posX, posY, team);
+    }
+
+    public bool CanSpawn(EnumLane laneToCheck, EnumTeams currentTeam)
+    {
+        //Set pos y according to lane
+        int posY = GetYSpawn(laneToCheck);
+
+        //set xpos according to team
+        int posX = GetXSpawn(currentTeam);
+
+        SmartTile tempTile = GetSmartTileWithCoordinates(posX,posY,currentTeam);
+
+        if (tempTile.IsEmpty(currentTeam))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public SmartTile GetSmartTileWithCoordinates(int x, int y, EnumTeams team)
+    {
+        foreach (SmartTile tile in smartTiles)
+        {
+            if (tile.PositionNumberX == x && tile.PositionNumberY == y)
+            {
+                return tile;
+            }
+        }
+
+        return null;
     }
 
     public Vector3 GetDrawPosWithCoordinates(int x, int y, EnumTeams team)
@@ -282,33 +317,6 @@ public class BattlefieldHandler : MonoBehaviour
         }
 
         return TileToReturn;
-
-        List<SmartTile> TempList = new List<SmartTile>();
-
-        SmartTile OneForward = whereToStart.GetSmartTileFromDirection(directionToLookIn, currentTeam);
-        SmartTile TwoForward;
-        if (OneForward.GetSmartTileFromDirection(directionToLookIn, currentTeam) != null)
-        {
-            TwoForward = OneForward.GetSmartTileFromDirection(directionToLookIn, currentTeam);
-        }
-        else
-        {
-            return OneForward;
-        }
-
-        if (amountToLookAhead == 0)
-        {
-            return whereToStart;
-        }
-        else if (amountToLookAhead == 1)
-        {
-            return OneForward;
-        }
-        else
-        {
-            return TwoForward;
-        }
-
     }
 
     public bool Done { get => done; set => done = value; }
