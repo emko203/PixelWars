@@ -49,26 +49,19 @@ public class GameMaster : MonoBehaviour
     private void LoadPlayerPrefs()
     {
         int AmountOfUnits = PlayerPrefs.GetInt("SelectionSize");
-        int teamsize = AmountOfUnits / 2;
 
         for (int i = 0; i < AmountOfUnits; i++)
         {
-            GameObject UnitToAddToPool = null;
+            GameObject RedUnitToAddToPool = null;
+            GameObject BlueUnitToAddToPool = null;
+
             EnumUnit SelectedUnit = IntToUnitEnum(PlayerPrefs.GetInt("Selection_" + i));
 
-            if (i < teamsize)
-            {
-                
-                UnitToAddToPool = GetUnitObjectFromEnum(SelectedUnit, EnumTeams.Red);
-                AvailableRedCharacters.Add(UnitToAddToPool);
-            }
-            else
-            {
-                UnitToAddToPool = GetUnitObjectFromEnum(SelectedUnit, EnumTeams.Blue);
-                AvailableBlueCharacters.Add(UnitToAddToPool);
-            }
+            RedUnitToAddToPool = GetUnitObjectFromEnum(SelectedUnit, EnumTeams.Red);
+            BlueUnitToAddToPool = GetUnitObjectFromEnum(SelectedUnit, EnumTeams.Blue);
 
-            
+            AvailableBlueCharacters.Add(BlueUnitToAddToPool);
+            AvailableRedCharacters.Add(RedUnitToAddToPool);
         }
     }
 
