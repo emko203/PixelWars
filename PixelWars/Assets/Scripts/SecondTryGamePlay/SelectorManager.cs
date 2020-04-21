@@ -304,6 +304,7 @@ public class SelectorManager : MonoBehaviour
             GameObject tempOb = GetRandomUniqueCharacter(charactersToPickFrom);
             renderer.sprite = tempOb.GetComponent<SpriteRenderer>().sprite;
             tempOb.GetComponent<SpriteRenderer>().color = DefaultColor;
+            tempOb.GetComponent<Character>().InitCharacter();
             lstCurrentSelectedCharacters.Add(tempOb);
         }
 

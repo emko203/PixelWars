@@ -46,14 +46,14 @@ public class SmartTile : MonoBehaviour
             {
                 if (smartTileToMoveTo.IsEmpty(teamToMove))
                 {
-                    Debug.Log("Just moved " + characterData.TeamColor + characterData.Data.Name + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
+                    Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
                     smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
                     this.RemoveCharacterFromSpace(characterData);
                 }
             }
             else
             {
-                Debug.Log(characterData.TeamColor + characterData.Data.Name + " Just started a fight with " + enemy.TeamColor + enemy.Data.Name);
+                Debug.Log(characterData.TeamColor + characterData.CharacterName + " Just started a fight with " + enemy.TeamColor + enemy.CharacterName);
 
                 HandleFight(teamToMove, enemy);
             }

@@ -17,5 +17,5 @@ MonoBehaviour:
   damage: 2
   speed: 1
   range: 1
-  CharacterName: Mage
+  characterName: Mage
   abilityTemplates: {fileID: 0}

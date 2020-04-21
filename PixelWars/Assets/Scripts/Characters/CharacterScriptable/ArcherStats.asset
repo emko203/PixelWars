@@ -17,5 +17,5 @@ MonoBehaviour:
   damage: 1
   speed: 1
   range: 2
-  CharacterName: Archer
+  characterName: Archer
   abilityTemplates: {fileID: 0}

@@ -15,7 +15,7 @@ public static class FightHandler
         Character AttackingCharacter = tileToCheck.GetCharacter(currentMovingTeam);
         SmartTile tempTile;
 
-        float actualRange = AttackingCharacter.Data.Range;
+        float actualRange = AttackingCharacter.Range;
 
         if (AttackingCharacter != null)
         {
@@ -29,7 +29,7 @@ public static class FightHandler
                 {
                     if (!tempTile.IsEmpty(TurnHandler.GetOtherTeam(currentMovingTeam)))
                     {
-                        Debug.Log("Found enemy " + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).TeamColor + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).Data.Name + " at range " + i);
+                        Debug.Log("Found enemy " + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).TeamColor + tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam)).CharacterName + " at range " + i);
                         return tempTile.GetCharacter(TurnHandler.GetOtherTeam(currentMovingTeam));
                     }
                 }

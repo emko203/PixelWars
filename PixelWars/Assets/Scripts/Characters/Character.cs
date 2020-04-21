@@ -9,11 +9,40 @@ public class Character : MonoBehaviour
     [SerializeField] private EnumUnit unitType;
     [SerializeField] private HealthBar healthbar;
 
-    private void Start()
+    private float maxHealth;
+    private float manaCost;
+    private float damage;
+    private float speed;
+    private float range;
+    private string characterName;
+    private float currentHealth;
+
+    private AbilityTemplate abilityTemplate;
+    
+    public void InitCharacter()
     {
+        this.maxHealth = data.MaxHealth;
+        this.manaCost = data.ManaCost;
+        this.damage = data.Damage;
+        this.speed = data.Speed;
+        this.range = data.Range;
+        this.characterName = data.CharacterName;
+        this.abilityTemplate = data.AbilityTemplate;
+        currentHealth = maxHealth;
+
         if (healthbar != null)
         {
-            healthbar.SetMaxHealth(data.MaxHealth);
+            healthbar.SetMaxHealth(maxHealth);
+        }
+    }
+
+    private void Start()
+    {
+        InitCharacter();
+
+        if (healthbar != null)
+        {
+            healthbar.SetMaxHealth(MaxHealth);
         }
     }
 
@@ -23,8 +52,8 @@ public class Character : MonoBehaviour
     /// <param name="amount">amount of damage to substract</param>
     public void TakeDamage(float amount)
     {
-        data.CurrentHealth -= amount;
-        healthbar.UpdateHealth(data.CurrentHealth);
+        CurrentHealth -= amount;
+        healthbar.UpdateHealth(CurrentHealth);
         //healthbar.UpdateHealth(data.CurrentHealth);
 
         CheckDeath();
@@ -36,8 +65,8 @@ public class Character : MonoBehaviour
     /// <param name="target">Character to deal damage to</param>
     public void DealDamageTo(Character target) 
     {
-        target.TakeDamage(data.Damage);
-        Debug.Log("Dealt " + data.Damage + " damage to " + target.Data.Name + " (HpLeft:" + target.data.CurrentHealth);
+        target.TakeDamage(Damage);
+        Debug.Log("Dealt " + Damage + " damage to " + name + " (HpLeft:" + CurrentHealth);
     }
 
     /// <summary>
@@ -45,7 +74,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void CheckDeath()
     {
-        if (data.CurrentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             //TODO: kill character
             GameObject.Destroy(gameObject);
@@ -53,6 +82,13 @@ public class Character : MonoBehaviour
     }
 
     public EnumTeams TeamColor { get => teamColor; set => teamColor = value; }
-    public Character_Template Data { get => data; set => data = value; }
     public EnumUnit UnitType { get => unitType; set => unitType = value; }
+    public float MaxHealth { get => maxHealth; set => maxHealth = value; }
+    public float ManaCost { get => manaCost; set => manaCost = value; }
+    public float Damage { get => damage; set => damage = value; }
+    public float Speed { get => speed; set => speed = value; }
+    public float Range { get => range; set => range = value; }
+    public string CharacterName { get => characterName; set => characterName = value; }
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
+    public AbilityTemplate AbilityTemplate { get => abilityTemplate; set => abilityTemplate = value; }
 }

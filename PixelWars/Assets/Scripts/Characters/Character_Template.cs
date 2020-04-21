@@ -11,7 +11,7 @@ public class Character_Template : ScriptableObject
     [SerializeField] private float damage;
     [SerializeField] private float speed;
     [SerializeField] private float range;
-    [SerializeField] private string CharacterName;
+    [SerializeField] private string characterName;
 
     [SerializeField] private AbilityTemplate abilityTemplates;
 
@@ -23,13 +23,13 @@ public class Character_Template : ScriptableObject
     }
 
 
-    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
-    public float ManaCost { get => manaCost; set => manaCost = value; }
-    public float Damage { get => damage; set => damage = value; }
-    public float Speed { get => speed; set => speed = value; }  
-    public float Range { get => range; set => range = value; }
+    public float CurrentHealth { get => currentHealth; }
+    public float ManaCost { get => manaCost; }
+    public float Damage { get => damage;}
+    public float Speed { get => speed;}  
+    public float Range { get => range;}
 
-    public AbilityTemplate AbilityTemplate { get => abilityTemplates; set => abilityTemplates = value; }
-    public string Name { get => CharacterName; set => CharacterName = value; }
+    public AbilityTemplate AbilityTemplate { get => abilityTemplates;}
+    public string CharacterName { get => characterName;}
     public float MaxHealth { get => maxHealth;}
 }

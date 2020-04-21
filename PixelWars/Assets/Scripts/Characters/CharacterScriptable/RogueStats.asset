@@ -17,5 +17,5 @@ MonoBehaviour:
   damage: 2
   speed: 1
   range: 0
-  CharacterName: Rogue
+  characterName: Rogue
   abilityTemplates: {fileID: 0}
