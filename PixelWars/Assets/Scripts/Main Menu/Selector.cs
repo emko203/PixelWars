@@ -279,7 +279,14 @@ public class Selector : MonoBehaviour
 
     private void CharCountText() 
     {
-        CharacterCount.text = "Select Characters: " + SelectedCharacters.Count + "/3";
+        if (SelectedCharacters.Count > 3)
+        {
+            CharacterCount.text = "Select Characters: " + (SelectedCharacters.Count - 3) + "/3";
+        }
+        else
+        {
+            CharacterCount.text = "Select Characters: " + (SelectedCharacters.Count) + "/3";
+        }
     }
 
     private void RemoveItemDropbox()
