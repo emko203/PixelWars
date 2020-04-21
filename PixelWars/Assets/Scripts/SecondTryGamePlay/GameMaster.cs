@@ -5,17 +5,23 @@ using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
+    [Header("Managers and Handlers")]
     [SerializeField] private GameObject battlefield;
-    [SerializeField] private List<GameObject> RedCharacterPrefabs;
-    [SerializeField] private List<GameObject> BlueCharacterPrefabs;
     [SerializeField] private BattlefieldHandler battlefieldHandler;
-    [SerializeField] private SelectorManager selectorManager;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private SelectorManager selectorManager;
+    [Space]
+    [Header("Animations")]
     [SerializeField] private Animator CharacterAnimator;
     [SerializeField] private GameObject blueArrow;
     [SerializeField] private GameObject redArrow;
     [SerializeField] private Animator arrowAnimator;
-
+    [Space]
+    [Header("AllCharacterPrefabs")]
+    [SerializeField] private List<GameObject> RedCharacterPrefabs;
+    [SerializeField] private List<GameObject> BlueCharacterPrefabs;
+    [Space]
+    [Header("ManaCrystals")]
     [SerializeField] private List<GameObject> blueCrystalsEmpty = new List<GameObject>();
     [SerializeField] private List<GameObject> blueCrystalsFull = new List<GameObject>();
     [SerializeField] private List<GameObject> redCrystalsFull = new List<GameObject>();

@@ -5,17 +5,18 @@ using UnityEngine;
 
 public class SelectorManager : MonoBehaviour
 {
+    [Header("Player hand locations")]
     [SerializeField] private List<SpriteRenderer> blueTeam;
     [SerializeField] private List<SpriteRenderer> redTeam;
-    [SerializeField] private SpriteRenderer endTurnRed;
-    [SerializeField] private SpriteRenderer endTurnBlue;
-
+    [Space]
+    [Header("Offsets")]
     [SerializeField] private float xCharacterOffset;
     [SerializeField] private float yCharacterOffset;
 
     [SerializeField] private float xLaneOffset;
     [SerializeField] private float yLaneOffset;
-
+    [Space]
+    [Header("Selectors")]
     [SerializeField] private GameObject characterSelector;
     [SerializeField] private GameObject LaneSelector;
 
