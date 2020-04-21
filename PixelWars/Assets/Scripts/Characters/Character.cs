@@ -66,7 +66,7 @@ public class Character : MonoBehaviour
     public void DealDamageTo(Character target) 
     {
         target.TakeDamage(Damage);
-        Debug.Log("Dealt " + Damage + " damage to " + name + " (HpLeft:" + CurrentHealth);
+        Debug.Log("Dealt " + Damage + " damage to " + name + " (HpLeft:" + CurrentHealth,this);
     }
 
     /// <summary>

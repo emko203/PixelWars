@@ -36,13 +36,15 @@ public class SmartTile : MonoBehaviour
         GameObject characterObjectToMove = GetCharacterObject(teamToMove);
         Character characterData = GetCharacter(teamToMove);
 
-        if (tileToMoveTo != null && smartTileToMoveTo != null)
-        {
-           
-            Character enemy = FightHandler.IsFight(this, teamToMove);
 
-            //if there is no fight on this tile withtin range then we move to next tile
-            if (enemy == null)
+
+        Character enemy = FightHandler.IsFight(this, teamToMove);
+
+        //if there is no fight on this tile withtin range then we move to next tile
+        if (enemy == null)
+        {
+            //only move if the next tile excists
+            if (tileToMoveTo != null && smartTileToMoveTo != null)
             {
                 if (smartTileToMoveTo.IsEmpty(teamToMove))
                 {
@@ -50,17 +52,21 @@ public class SmartTile : MonoBehaviour
                     smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
                     this.RemoveCharacterFromSpace(characterData);
                 }
+                return true;
             }
-            else
-            {
-                Debug.Log(characterData.TeamColor + characterData.CharacterName + " Just started a fight with " + enemy.TeamColor + enemy.CharacterName);
 
-                HandleFight(teamToMove, enemy);
-            }
+        }
+        else
+        {
+            Debug.Log(characterData.TeamColor + characterData.CharacterName + " Just started a fight with " + enemy.TeamColor + enemy.CharacterName);
+
+            HandleFight(teamToMove, enemy);
+        }
 
             return true;
             
         }
+
 
         return false;
     }
