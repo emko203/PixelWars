@@ -129,6 +129,7 @@ public class GameMaster : MonoBehaviour
         selectorManager.HideLaneSelector();
         selectorManager.HideCharacterSelector();
         turnHandler.SetNextState();
+        StopAllCoroutines();
     }
 
     #endregion

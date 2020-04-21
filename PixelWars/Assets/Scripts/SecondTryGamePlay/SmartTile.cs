@@ -36,13 +36,15 @@ public class SmartTile : MonoBehaviour
         GameObject characterObjectToMove = GetCharacterObject(teamToMove);
         Character characterData = GetCharacter(teamToMove);
 
-        if (tileToMoveTo != null && smartTileToMoveTo != null)
-        {
-           
-            Character enemy = FightHandler.IsFight(this, teamToMove);
 
-            //if there is no fight on this tile withtin range then we move to next tile
-            if (enemy == null)
+
+        Character enemy = FightHandler.IsFight(this, teamToMove);
+
+        //if there is no fight on this tile withtin range then we move to next tile
+        if (enemy == null)
+        {
+            //only move if the next tile excists
+            if (tileToMoveTo != null && smartTileToMoveTo != null)
             {
                 if (smartTileToMoveTo.IsEmpty(teamToMove))
                 {
@@ -50,17 +52,34 @@ public class SmartTile : MonoBehaviour
                     smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
                     this.RemoveCharacterFromSpace(characterData);
                 }
-            }
-            else
-            {
-                Debug.Log(characterData.TeamColor + characterData.CharacterName + " Just started a fight with " + enemy.TeamColor + enemy.CharacterName);
-
-                HandleFight(teamToMove, enemy);
+                return true;
             }
 
-            return true;
-            
         }
+        else
+        {
+            Debug.Log(characterData.TeamColor + characterData.CharacterName + " Just started a fight with " + enemy.TeamColor + enemy.CharacterName);
+
+            HandleFight(teamToMove, enemy);
+        }
+
+        //Check for victory
+        switch ((teamToMove))
+        {
+            case EnumTeams.Red:
+                if (this.positionNumberX == 5 && this.IsEmpty(EnumTeams.Blue))
+                {
+                    Debug.Log("RED TEAM WINS");
+                }
+                break;
+            case EnumTeams.Blue:
+                if (this.positionNumberX == 1 && this.IsEmpty(EnumTeams.Red))
+                {
+                    Debug.Log("BLUE TEAM WINS");
+                }
+                break;
+        }
+
 
         return false;
     }
