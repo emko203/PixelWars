@@ -29,11 +29,18 @@ public class SelectorManager : MonoBehaviour
 
     private List<int> lstLastRandoms = new List<int>();
 
+    private Color DefaultColor;
+    private Color GrayColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, Color.gray.a);
+
+    private void Awake()
+    {
+        DefaultColor = redTeam[0].color;
+    }
+
     private void ResetSelectors(EnumTeams currentPlayerTurn)
     {
         SelectorPosInCharacterSelect = 0;
         CurrentSelectedLane = GetMinLaneAmount();
-
         UpdateCharacterSelectorPos(currentPlayerTurn);
     }
 
@@ -293,8 +300,10 @@ public class SelectorManager : MonoBehaviour
 
         foreach (SpriteRenderer renderer in listToFill)
         {
+            renderer.color = DefaultColor;
             GameObject tempOb = GetRandomUniqueCharacter(charactersToPickFrom);
             renderer.sprite = tempOb.GetComponent<SpriteRenderer>().sprite;
+            tempOb.GetComponent<SpriteRenderer>().color = DefaultColor;
             lstCurrentSelectedCharacters.Add(tempOb);
         }
 
@@ -334,5 +343,45 @@ public class SelectorManager : MonoBehaviour
         lstLastRandoms.Add(randomInt);
 
         return charactersToPickFrom[randomInt];
+    }
+
+    public bool IsAlreadySelected(EnumTeams currentTeam)
+    {
+        switch (currentTeam)
+        {
+            case EnumTeams.Red:
+                if (redTeam[SelectorPosInCharacterSelect].color == GrayColor)
+                {
+                    return true;
+                }
+                break;
+            case EnumTeams.Blue:
+                if(blueTeam[SelectorPosInCharacterSelect].color == GrayColor)
+                {
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return false;
+    }
+
+    public void GrayOutCurrentHoveringCharacter()
+    {
+        Character c = lstCurrentSelectedCharacters[SelectorPosInCharacterSelect].GetComponent<Character>();
+
+        switch(c.TeamColor)
+        {
+            case EnumTeams.Red:
+                redTeam[SelectorPosInCharacterSelect].color = GrayColor;
+                break;
+            case EnumTeams.Blue:
+                blueTeam[SelectorPosInCharacterSelect].color = GrayColor;
+                break;
+            default:
+                break;
+        }
     }
 }
