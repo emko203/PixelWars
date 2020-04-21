@@ -300,6 +300,7 @@ public class GameMaster : MonoBehaviour
                 battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
                 DeselectUnit();
                 GetPlayerFromTurn().PayMana(selectorManager.GetCurrentHoveringCharacter().Data.ManaCost);
+                selectorManager.GrayOutCurrentHoveringCharacter();
                 UpdateManaSprites();
 
                 if (GetPlayerFromTurn().CurrentMana <= 0)
@@ -310,9 +311,8 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
-            if (GetPlayerFromTurn().CurrentMana >= selectorManager.GetCurrentHoveringCharacter().Data.ManaCost)
+            if (GetPlayerFromTurn().CurrentMana >= selectorManager.GetCurrentHoveringCharacter().Data.ManaCost && !selectorManager.IsAlreadySelected(turnHandler.CurrentPlayerTurn))
             {
-                
                 CurrentSelectedUnit = selectorManager.SelectCharacter(turnHandler.CurrentPlayerTurn, battlefieldHandler);
                 CharacterAnimator.SetBool("IsOrange", true);
             }
