@@ -37,6 +37,11 @@ public class Character : MonoBehaviour
     {
         InitCharacter();
 
+        SetupHealthBar();
+    }
+
+    private void SetupHealthBar()
+    {
         HealthBar bar = this.GetComponentInChildren<HealthBar>();
 
         if (bar != null)
