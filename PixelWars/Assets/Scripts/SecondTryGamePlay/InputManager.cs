@@ -16,6 +16,9 @@ public class InputManager : MonoBehaviour
     [SerializeField] private KeyCode Player2_DeSelect = KeyCode.RightArrow;
     [SerializeField] private KeyCode Player1_DeSelect = KeyCode.A;
 
+    [SerializeField] private KeyCode Player2_EndTurn = KeyCode.LeftShift;
+    [SerializeField] private KeyCode Player1_EndTurn = KeyCode.RightShift;
+
     public EnumPressedKeyAction CheckKeyInput(EnumTeams currentTeam)
     {
         switch (currentTeam)
@@ -31,15 +34,15 @@ public class InputManager : MonoBehaviour
 
     private EnumPressedKeyAction CheckPressedKeyPlayer2()
     {
-        return CheckPressedKey(Player2_Up, Player2_Down, Player2_Select, Player2_DeSelect);
+        return CheckPressedKey(Player2_Up, Player2_Down, Player2_Select, Player2_DeSelect, Player2_EndTurn);
     }
 
     private EnumPressedKeyAction CheckPressedKeyPlayer1()
     {
-        return CheckPressedKey(Player1_Up, Player1_Down, Player1_Select, Player1_DeSelect);
+        return CheckPressedKey(Player1_Up, Player1_Down, Player1_Select, Player1_DeSelect, Player1_EndTurn);
     }
 
-    private EnumPressedKeyAction CheckPressedKey(KeyCode Up, KeyCode Down, KeyCode Select, KeyCode Deselect)
+    private EnumPressedKeyAction CheckPressedKey(KeyCode Up, KeyCode Down, KeyCode Select, KeyCode Deselect, KeyCode EndTurn)
     {
         if (Input.GetKeyDown(Up))
             return EnumPressedKeyAction.UP;
@@ -49,6 +52,8 @@ public class InputManager : MonoBehaviour
             return EnumPressedKeyAction.SELECT;
         else if (Input.GetKeyDown(Deselect))
             return EnumPressedKeyAction.DESELECT;
+        else if (Input.GetKeyDown(EndTurn))
+            return EnumPressedKeyAction.END_TURN;
         else
             return EnumPressedKeyAction.NO_ACTION;
     }

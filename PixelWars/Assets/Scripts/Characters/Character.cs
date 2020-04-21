@@ -7,6 +7,15 @@ public class Character : MonoBehaviour
     [SerializeField] private Character_Template data;
     [SerializeField] private EnumTeams teamColor;
     [SerializeField] private EnumUnit unitType;
+    [SerializeField] private HealthBar healthbar;
+
+    private void Start()
+    {
+        if (healthbar != null)
+        {
+            healthbar.SetMaxHealth(data.MaxHealth);
+        }
+    }
 
     /// <summary>
     /// Substract damage from this character and destoys it on death
@@ -14,7 +23,9 @@ public class Character : MonoBehaviour
     /// <param name="amount">amount of damage to substract</param>
     public void TakeDamage(float amount)
     {
-        data.Health -= amount;
+        data.CurrentHealth -= amount;
+        healthbar.UpdateHealth(data.CurrentHealth);
+        //healthbar.UpdateHealth(data.CurrentHealth);
 
         CheckDeath();
     }
@@ -23,16 +34,21 @@ public class Character : MonoBehaviour
     /// Deal damage to character and destroys it on death
     /// </summary>
     /// <param name="target">Character to deal damage to</param>
-    public void DealDamageTo(Character target) { target.TakeDamage(data.Damage); }
+    public void DealDamageTo(Character target) 
+    {
+        target.TakeDamage(data.Damage);
+        Debug.Log("Dealt " + data.Damage + " damage to " + target.Data.Name + " (HpLeft:" + target.data.CurrentHealth);
+    }
 
     /// <summary>
     /// Checks if health is <= 0 if true destroys the character
     /// </summary>
     public void CheckDeath()
     {
-        if (data.Health <= 0)
+        if (data.CurrentHealth <= 0)
         {
             //TODO: kill character
+            GameObject.Destroy(gameObject);
         }
     }
 

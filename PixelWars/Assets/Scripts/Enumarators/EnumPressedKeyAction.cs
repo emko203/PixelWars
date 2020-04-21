@@ -6,5 +6,6 @@
     RIGHT,
     SELECT,
     DESELECT,
+    END_TURN,
     NO_ACTION
 }

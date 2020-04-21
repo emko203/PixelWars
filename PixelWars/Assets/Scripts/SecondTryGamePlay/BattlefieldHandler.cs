@@ -11,7 +11,10 @@ public class BattlefieldHandler : MonoBehaviour
     private List<Character> availableCharacters = new List<Character>();
     private List<SmartTile> smartTiles = new List<SmartTile>();
 
+    private float TimeBetweenMoves = 1f;
 
+    private bool done = false;
+    private bool busy = false;
 
     #region Monobehaviour funtions
 
@@ -27,19 +30,22 @@ public class BattlefieldHandler : MonoBehaviour
     public void SpawnUnit(EnumLane laneToSpawnIn, EnumTeams teamToSpawnFor, EnumUnit unitToSpawn)
     {
         Vector3 spawnPos = GetSpawnFromLane(laneToSpawnIn, teamToSpawnFor);
-        spawnPos.z = -1;
+        spawnPos.z = -2;
 
         foreach (GameObject character in characterPool)
         {
-            if (character.GetComponent<Character>().UnitType == unitToSpawn)
+            if (character.GetComponent<Character>().UnitType == unitToSpawn && character.GetComponent<Character>().TeamColor == teamToSpawnFor)
             {
+
+                GameObject go = Instantiate(character);
+
+                go.transform.position = spawnPos;
+
+                go.GetComponent<Character>().Data.SetNewCharacter();
+                
                 //Connect character to smart tile
-                bool placed = PlaceUnitOnTile(GetXSpawn(character.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), character);
-
-                    GameObject go = Instantiate(character);
-
-                    go.transform.position = spawnPos;
-}
+                bool placed = PlaceUnitOnTile(GetXSpawn(go.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), go);
+            }
         }
     }
 
@@ -54,6 +60,39 @@ public class BattlefieldHandler : MonoBehaviour
         return GetDrawPosWithCoordinates(posX, posY, team);
     }
 
+    public bool CanSpawn(EnumLane laneToCheck, EnumTeams currentTeam)
+    {
+        //Set pos y according to lane
+        int posY = GetYSpawn(laneToCheck);
+
+        //set xpos according to team
+        int posX = GetXSpawn(currentTeam);
+
+        SmartTile tempTile = GetSmartTileWithCoordinates(posX,posY,currentTeam);
+
+        if (tempTile.IsEmpty(currentTeam))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public SmartTile GetSmartTileWithCoordinates(int x, int y, EnumTeams team)
+    {
+        foreach (SmartTile tile in smartTiles)
+        {
+            if (tile.PositionNumberX == x && tile.PositionNumberY == y)
+            {
+                return tile;
+            }
+        }
+
+        return null;
+    }
+
     public Vector3 GetDrawPosWithCoordinates(int x, int y, EnumTeams team)
     {
         foreach (SmartTile tile in smartTiles)
@@ -65,6 +104,75 @@ public class BattlefieldHandler : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    public void MoveAllUnitsOnBattlefield(EnumTeams teamToMove)
+    {
+        switch (teamToMove)
+        {
+            case EnumTeams.Red:
+                StartCoroutine(RedMove(teamToMove));
+                break;
+            case EnumTeams.Blue:
+                StartCoroutine(BlueMove(teamToMove));
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator BlueMove(EnumTeams teamToMove)
+    {
+        IsBusy();
+        for (int i = smartTiles.Count -1; i >= 0; i--)
+        {
+            if (!smartTiles[i].IsEmpty(teamToMove))
+            {
+                Color cRevert = new Color();
+                cRevert = smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color ;
+                smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r, Color.cyan.g, Color.cyan.b, Color.cyan.a);
+
+                yield return new WaitForSeconds(TimeBetweenMoves);
+                smartTiles[i].MoveDirection(EnumDirection.UP, teamToMove);
+
+                smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color = cRevert;
+
+            }
+        }
+        IsDone();
+    }
+
+    IEnumerator RedMove(EnumTeams teamToMove)
+    {
+
+        IsBusy();
+        foreach (SmartTile tile in smartTiles)
+        {
+            if (!tile.IsEmpty(teamToMove))
+            {
+                Color cRevert = new Color();
+                cRevert = tile.ThisTileObject.GetComponent<SpriteRenderer>().color;
+                tile.ThisTileObject.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r, Color.cyan.g, Color.cyan.b, Color.cyan.a);
+                
+                yield return new WaitForSeconds(TimeBetweenMoves);
+
+                tile.MoveDirection(EnumDirection.UP, teamToMove);
+
+                tile.ThisTileObject.GetComponent<SpriteRenderer>().color = cRevert;
+            }
+        }
+        IsDone();
+    }
+
+    private void IsDone()
+    {
+        Done = true;
+    }
+
+    private void IsBusy()
+    {
+        Busy = true;
+        Done = false;
     }
 
     #endregion
@@ -195,4 +303,22 @@ public class BattlefieldHandler : MonoBehaviour
     }
 
     #endregion
+
+    public static SmartTile GetTileFromDirectionAhead(int amountToLookAhead, SmartTile whereToStart, EnumTeams currentTeam, EnumDirection directionToLookIn)
+    {
+        SmartTile TileToReturn = whereToStart;
+
+        if (amountToLookAhead != 0)
+        {
+            for (int i = 1; i <= amountToLookAhead; i++)
+            {
+                TileToReturn = TileToReturn.GetSmartTileFromDirection(directionToLookIn, currentTeam);
+            }
+        }
+
+        return TileToReturn;
+    }
+
+    public bool Done { get => done; set => done = value; }
+    public bool Busy { get => busy; set => busy = value; }
 }

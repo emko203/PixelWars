@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class SelectorManager : MonoBehaviour
 {
+    [Header("Player hand locations")]
     [SerializeField] private List<SpriteRenderer> blueTeam;
     [SerializeField] private List<SpriteRenderer> redTeam;
-
+    [Space]
+    [Header("Offsets")]
     [SerializeField] private float xCharacterOffset;
     [SerializeField] private float yCharacterOffset;
 
     [SerializeField] private float xLaneOffset;
     [SerializeField] private float yLaneOffset;
-
+    [Space]
+    [Header("Selectors")]
     [SerializeField] private GameObject characterSelector;
     [SerializeField] private GameObject LaneSelector;
 
@@ -32,6 +35,11 @@ public class SelectorManager : MonoBehaviour
         CurrentSelectedLane = GetMinLaneAmount();
 
         UpdateCharacterSelectorPos(currentPlayerTurn);
+    }
+
+    public Character GetCurrentHoveringCharacter()
+    {
+        return lstCurrentSelectedCharacters[SelectorPosInCharacterSelect].GetComponent<Character>();
     }
 
     /// <summary>
@@ -155,6 +163,16 @@ public class SelectorManager : MonoBehaviour
         characterSelector.transform.position = UpdateOffsetCharacterSelectorPositioning(pos);
     }
 
+    public void HideCharacterSelector()
+    {
+        characterSelector.SetActive(false);
+    }
+
+    public void ShowCharacterSelector()
+    {
+        characterSelector.SetActive(true);
+    }
+
     public void HideLaneSelector()
     {
         LaneSelector.SetActive(false);
@@ -220,6 +238,7 @@ public class SelectorManager : MonoBehaviour
 
     public void SetupNewRound(EnumTeams currentPlayerTurn, List<GameObject> charactersToPickFrom)
     {
+        ShowCharacterSelector();
         SpawnNewPlayerhand(currentPlayerTurn, charactersToPickFrom);
         ResetSelectors(currentPlayerTurn);
     }
@@ -239,6 +258,33 @@ public class SelectorManager : MonoBehaviour
         }
 
         return lstCurrentSelectedCharacters;
+    }
+
+    private void RemoveSprites(EnumTeams currentTeam)
+    {
+        List<SpriteRenderer> ListToEmpty;
+
+        switch (currentTeam)
+        {
+            case EnumTeams.Red:
+                ListToEmpty = redTeam;
+                break;
+            case EnumTeams.Blue:
+                ListToEmpty = blueTeam;
+                break;
+            default:
+                ListToEmpty = null;
+                break;
+        }
+
+
+        if (ListToEmpty != null)
+        {
+            foreach (SpriteRenderer renderer in ListToEmpty)
+            {
+                renderer.sprite = null;
+            }
+        }
     }
 
     private void RenderRandomsForTeam(List<SpriteRenderer> listToFill, List<GameObject> charactersToPickFrom)

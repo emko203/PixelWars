@@ -7,6 +7,8 @@ public class SmartTile : MonoBehaviour
     [SerializeField] private int positionNumberX;
     [SerializeField] private int positionNumberY;
 
+    [SerializeField] private GameObject thisTileObject = null;
+
     [SerializeField] private GameObject tileLeft = null;
     [SerializeField] private GameObject tileRight = null;
     [SerializeField] private GameObject tileBottom = null;
@@ -28,24 +30,46 @@ public class SmartTile : MonoBehaviour
     /// <returns>True if Succesfull and False if unsuccesfull</returns>
     public bool MoveDirection(EnumDirection directionToMove, EnumTeams teamToMove)
     {
-        GameObject tileToMoveTo = GetTileFromDirection(directionToMove);
-        SmartTile smartTileToMoveTo = GetSmartTileFromDirection(directionToMove);
+        GameObject tileToMoveTo = GetTileFromDirection(directionToMove, teamToMove);
+        SmartTile smartTileToMoveTo = GetSmartTileFromDirection(directionToMove, teamToMove);
 
         GameObject characterObjectToMove = GetCharacterObject(teamToMove);
         Character characterData = GetCharacter(teamToMove);
 
-        if (tileToMoveTo != null)
+        if (tileToMoveTo != null && smartTileToMoveTo != null)
         {
-            if (smartTileToMoveTo.IsEmpty(teamToMove))
+           
+            Character enemy = FightHandler.IsFight(this, teamToMove);
+
+            //if there is no fight on this tile withtin range then we move to next tile
+            if (enemy == null)
             {
-                smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
-                this.RemoveCharacterFromSpace(characterData);
-                return true;
+                if (smartTileToMoveTo.IsEmpty(teamToMove))
+                {
+                    Debug.Log("Just moved " + characterData.TeamColor + characterData.Data.Name + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
+                    smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
+                    this.RemoveCharacterFromSpace(characterData);
+                }
             }
+            else
+            {
+                Debug.Log(characterData.TeamColor + characterData.Data.Name + " Just started a fight with " + enemy.TeamColor + enemy.Data.Name);
+
+                HandleFight(teamToMove, enemy);
+            }
+
+            return true;
+            
         }
-      
+
         return false;
     }
+
+    private void HandleFight(EnumTeams teamToMove, Character enemy)
+    {
+        FightHandler.FightWithClosestEnemy(this, teamToMove, enemy);
+    }
+
     /// <summary>
     /// Check if tile in given direction is empty/available for given team return true if empty / false if not empty
     /// </summary>
@@ -54,7 +78,7 @@ public class SmartTile : MonoBehaviour
     /// <returns>true if empty / false if not empty</returns>
     public bool IsEmpty(EnumTeams team, EnumDirection direction)
     {
-        return GetSmartTileFromDirection(direction).IsEmpty(team);
+        return GetSmartTileFromDirection(direction,team).IsEmpty(team);
     }
     /// <summary>
     /// Check if tile is empty/available for given team return true if empty / false if not empty
@@ -83,8 +107,11 @@ public class SmartTile : MonoBehaviour
     /// <param name="goToAdd">object to draw</param>
     public void AddCharacterToSpace(Character cToAdd, GameObject goToAdd)
     {
-        goToAdd.transform.position = GetPlacement(cToAdd.TeamColor).position;
-
+        Transform tempPos = GetPlacement(cToAdd.TeamColor);
+        Transform StartMarker = goToAdd.transform;
+        //goToAdd.transform.position = new Vector3(tempPos.x,tempPos.y,-1);
+        StartCoroutine(handleAnimation(StartMarker, tempPos,goToAdd.transform,cToAdd.TeamColor));
+        
         switch (cToAdd.TeamColor)
         {
             case EnumTeams.Red:
@@ -99,6 +126,56 @@ public class SmartTile : MonoBehaviour
                 break;
         }
     }
+
+    IEnumerator handleAnimation(Transform startpos, Transform endpos, Transform toMove, EnumTeams currentTeam)
+    {
+        // Transforms to act as start and end markers for the journey.
+        Transform startMarker = startpos;
+        Transform endMarker = endpos;
+
+        endMarker.position = new Vector3(endMarker.position.x, endMarker.position.y, -2);
+        startMarker.position = new Vector3(startMarker.position.x, startMarker.position.y, -2);
+        toMove.position = new Vector3(toMove.position.x,toMove.position.y,-2);
+
+        // Time when the movement started.
+        float startTime = Time.time;
+        float lerpTime = 2;
+
+        bool notdone = true;
+
+        while (notdone)
+        {
+            // Distance moved equals elapsed time times speed..
+            float timeSinceStarted = Time.time - startTime;
+            // Fraction of journey completed equals current distance divided by total distance.
+            float precentageComplete = timeSinceStarted / lerpTime;
+
+            // Set our position as a fraction of the distance between the markers.
+            toMove.position = Vector3.Lerp(toMove.position, endMarker.position, precentageComplete);
+
+            yield return null;
+            if (currentTeam == EnumTeams.Red)
+            {
+                if (toMove.position.x >= endMarker.position.x)
+                {
+                    notdone = false;
+                }
+            }
+            else
+            {
+                if (toMove.position.x <= endMarker.position.x)
+                {
+                    notdone = false;
+                }
+            }
+        }
+
+        toMove.position = endMarker.position;
+
+        yield return null;
+    }
+
+
     /// <summary>
     /// Destroys the game object and unlinks the character from this space this way fully deleting the character
     /// </summary>
@@ -143,21 +220,42 @@ public class SmartTile : MonoBehaviour
         }
     }
 
-    private GameObject GetTileFromDirection(EnumDirection direction)
+    public GameObject GetTileFromDirection(EnumDirection direction, EnumTeams teamToMove)
     {
-        switch (direction)
+        switch (teamToMove)
         {
-            case EnumDirection.UP:
-                return TileTop;
-            case EnumDirection.DOWN:
-                return tileBottom;
-            case EnumDirection.LEFT:
-                return tileLeft;
-            case EnumDirection.RIGHT:
-                return tileRight;
+            case EnumTeams.Red:
+                switch (direction)
+                {
+                    case EnumDirection.UP:
+                        return TileTop;
+                    case EnumDirection.DOWN:
+                        return tileBottom;
+                    case EnumDirection.LEFT:
+                        return tileLeft;
+                    case EnumDirection.RIGHT:
+                        return tileRight;
+                    default:
+                        return null;
+                }
+            case EnumTeams.Blue:
+                switch (direction)
+                {
+                    case EnumDirection.UP:
+                        return tileBottom;
+                    case EnumDirection.DOWN:
+                        return tileTop;
+                    case EnumDirection.LEFT:
+                        return tileRight;
+                    case EnumDirection.RIGHT:
+                        return tileLeft;
+                    default:
+                        return null;
+                }
             default:
                 return null;
         }
+        
     }
 
     /// <summary>
@@ -199,7 +297,7 @@ public class SmartTile : MonoBehaviour
     /// </summary>
     /// <param name="team">Given team</param>
     /// <returns>Character object from tile according to given team</returns>
-    private Character GetCharacter(EnumTeams team)
+    public Character GetCharacter(EnumTeams team)
     {
         switch (team)
         {
@@ -212,28 +310,53 @@ public class SmartTile : MonoBehaviour
         }
     }
 
-    private SmartTile GetSmartTileFromDirection(EnumDirection direction)
+    public SmartTile GetSmartTileFromDirection(EnumDirection direction,EnumTeams currentTeam)
     {
         GameObject go = null;
-
-        switch (direction)
+        switch (currentTeam)
         {
-            case EnumDirection.UP:
-                go = tileTop;
+            case EnumTeams.Red:
+                switch (direction)
+                {
+                    case EnumDirection.UP:
+                        go = tileTop;
+                        break;
+                    case EnumDirection.DOWN:
+                        go = tileBottom;
+                        break;
+                    case EnumDirection.LEFT:
+                        go = tileLeft;
+                        break;
+                    case EnumDirection.RIGHT:
+                        go = TileRight;
+                        break;
+                    default:
+                        return null;
+                }
                 break;
-            case EnumDirection.DOWN:
-                go = tileTop;
-                break;
-            case EnumDirection.LEFT:
-                go = tileTop;
-                break;
-            case EnumDirection.RIGHT:
-                go = tileTop;
+            case EnumTeams.Blue:
+                switch (direction)
+                {
+                    case EnumDirection.UP:
+                        go = TileBottom;
+                        break;
+                    case EnumDirection.DOWN:
+                        go = TileTop;
+                        break;
+                    case EnumDirection.LEFT:
+                        go = TileRight;
+                        break;
+                    case EnumDirection.RIGHT:
+                        go = tileLeft;
+                        break;
+                    default:
+                        return null;
+                }
                 break;
             default:
-                return null;
+                break;
         }
-
+        
         if (go != null)
         {
             return go.GetComponent<SmartTile>();
@@ -254,4 +377,5 @@ public class SmartTile : MonoBehaviour
     public Character RedCharacterOnTile { get => redCharacterOnTile; set => redCharacterOnTile = value; }
     public GameObject RedCharacterGameObject { get; internal set; }
     public GameObject BlueCharacterGameObject { get; internal set; }
+    public GameObject ThisTileObject { get => thisTileObject; set => thisTileObject = value; }
 }
