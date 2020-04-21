@@ -17,8 +17,17 @@ public class GUI_Handler : MonoBehaviour
     [SerializeField] private Text characterInfoText;
     [SerializeField] private GameObject Menu;
 
+    private bool DoneFillingText = false;
+
     public void InitMenu(List<GameObject> characters)
     {
+        StartCoroutine(FillText(characters));
+    }
+
+    IEnumerator FillText(List<GameObject> characters)
+    {
+        yield return new WaitForSeconds(1f);
+
         StringBuilder builder = new StringBuilder();
         List<EnumUnit> unitsInText = new List<EnumUnit>();
         builder.Append("-------------------------------------------------------");
@@ -32,16 +41,16 @@ public class GUI_Handler : MonoBehaviour
                 builder.Append(CharacterInfo.CharacterName);
                 builder.Append(":");
                 builder.AppendLine();
-                builder.Append("ManaCost/");
+                builder.Append("ManaCost:");
                 builder.Append(CharacterInfo.ManaCost);
-                builder.Append("  MaxHealth/");
+                builder.Append(" | MaxHealth:");
                 builder.Append(CharacterInfo.MaxHealth);
                 builder.AppendLine();
-                builder.Append("  Range/");
+                builder.Append("Range: ");
                 builder.Append(CharacterInfo.Range);
-                builder.Append("  Speed/");
+                builder.Append(" | Speed: ");
                 builder.Append(CharacterInfo.Speed);
-                builder.Append("  Damage/");
+                builder.Append(" | Damage: ");
                 builder.Append(CharacterInfo.Damage);
                 builder.AppendLine();
                 builder.Append("-----------------------------------");
@@ -52,17 +61,21 @@ public class GUI_Handler : MonoBehaviour
         }
 
         characterInfoText.text = builder.ToString();
+        DoneFillingText = true;
     }
 
     public void FlipMenuState()
     {
-        if (Menu.activeSelf)
+        if (DoneFillingText)
         {
-            Menu.SetActive(false);
-        }
-        else
-        {
-            Menu.SetActive(true);
+            if (Menu.activeSelf)
+            {
+                Menu.SetActive(false);
+            }
+            else
+            {
+                Menu.SetActive(true);
+            }
         }
     }
 
