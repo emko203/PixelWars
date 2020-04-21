@@ -11,7 +11,10 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-        healthbar.SetMaxHealth(data.MaxHealth);
+        if (healthbar != null)
+        {
+            healthbar.SetMaxHealth(data.MaxHealth);
+        }
     }
 
     /// <summary>

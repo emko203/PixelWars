@@ -31,7 +31,8 @@ public class GameMaster : MonoBehaviour
     private Player Player2 = new Player();
 
     private List<SmartTile> mapping = new List<SmartTile>();
-    private List<GameObject> AvailableCharacters = new List<GameObject>();
+    private List<GameObject> AvailableRedCharacters = new List<GameObject>();
+    private List<GameObject> AvailableBlueCharacters = new List<GameObject>();
     private TurnHandler turnHandler;
 
     private EnumUnit CurrentSelectedUnit = EnumUnit.NONE;
@@ -40,9 +41,35 @@ public class GameMaster : MonoBehaviour
     private void Awake()
     {
         selectorManager.HideLaneSelector();
-
+        LoadPlayerPrefs();
         turnHandler = new TurnHandler(redArrow,blueArrow, arrowAnimator);
         turnHandler.SelectRandomStartPlayer();
+    }
+
+    private void LoadPlayerPrefs()
+    {
+        int AmountOfUnits = PlayerPrefs.GetInt("SelectionSize");
+        int teamsize = AmountOfUnits / 2;
+
+        for (int i = 0; i < AmountOfUnits; i++)
+        {
+            GameObject UnitToAddToPool = null;
+            EnumUnit SelectedUnit = IntToUnitEnum(PlayerPrefs.GetInt("Selection_" + i));
+
+            if (i < teamsize)
+            {
+                
+                UnitToAddToPool = GetUnitObjectFromEnum(SelectedUnit, EnumTeams.Red);
+                AvailableRedCharacters.Add(UnitToAddToPool);
+            }
+            else
+            {
+                UnitToAddToPool = GetUnitObjectFromEnum(SelectedUnit, EnumTeams.Blue);
+                AvailableBlueCharacters.Add(UnitToAddToPool);
+            }
+
+            
+        }
     }
 
     private void Start()
@@ -114,6 +141,41 @@ public class GameMaster : MonoBehaviour
     #endregion
 
     #region Private functions
+
+    private GameObject GetUnitObjectFromEnum(EnumUnit tempUnit, EnumTeams tempUnitTeam)
+    {
+        switch (tempUnitTeam)
+        {
+            case EnumTeams.Red:
+                foreach (GameObject obUnit in RedCharacterPrefabs)
+                {
+                    if (obUnit.GetComponent<Character>().UnitType == tempUnit)
+                    {
+                        return obUnit;
+                    }
+                }
+                break;
+            case EnumTeams.Blue:
+                foreach (GameObject obUnit in BlueCharacterPrefabs)
+                {
+                    if (obUnit.GetComponent<Character>().UnitType == tempUnit)
+                    {
+                        return obUnit;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        return null;
+    }
+
+    private EnumUnit IntToUnitEnum(int i)
+    {
+        return (EnumUnit)i;
+    }
+
     private void UpdateManaSprites()
     {
         GetPlayerFromTurn().UpdateManaSprites(GetCrystalsFromTeam(false), GetCrystalsFromTeam(true));
@@ -164,9 +226,9 @@ public class GameMaster : MonoBehaviour
         switch (turnHandler.CurrentPlayerTurn)
         {
             case EnumTeams.Red:
-                return RedCharacterPrefabs;
+                return AvailableRedCharacters;
             case EnumTeams.Blue:
-                return BlueCharacterPrefabs;
+                return AvailableBlueCharacters;
             default:
                 return null;
         }
