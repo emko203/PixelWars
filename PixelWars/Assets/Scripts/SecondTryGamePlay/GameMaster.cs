@@ -72,6 +72,7 @@ public class GameMaster : MonoBehaviour
         turnHandler.SetNextState();
         turnHandler.SetTurnArrows();
         LoadGuiMenu();
+        FloatingTextController.Initialize();
     }
 
     private void Update()
