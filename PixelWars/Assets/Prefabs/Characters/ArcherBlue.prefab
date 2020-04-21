@@ -98,7 +98,9 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: beebb34ad13517a41a7a8bd0692216b8, type: 2}
   teamColor: 1
   unitType: 1
-  healthbar: {fileID: 9054250114707098629}
+  UpdateHealthbar:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &6243722910336080527
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -199,15 +201,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6243722910336080527}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9054250114707098629 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3098758473876559498, guid: ce35578997b5e5847967a5a5b4b3ba28,
-    type: 3}
-  m_PrefabInstance: {fileID: 6243722910336080527}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2e1e36a6b362374bb98e828b2c4673e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

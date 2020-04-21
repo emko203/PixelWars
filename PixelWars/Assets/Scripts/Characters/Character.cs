@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
     [SerializeField] private Character_Template data;
     [SerializeField] private EnumTeams teamColor;
     [SerializeField] private EnumUnit unitType;
-    [SerializeField] private HealthBar healthbar;
+
+    private UnityEvent UpdateHealthbar = new UnityEvent();
 
     private float maxHealth;
     private float manaCost;
@@ -29,20 +31,18 @@ public class Character : MonoBehaviour
         this.characterName = data.CharacterName;
         this.abilityTemplate = data.AbilityTemplate;
         currentHealth = maxHealth;
-
-        if (healthbar != null)
-        {
-            healthbar.SetMaxHealth(maxHealth);
-        }
     }
 
     private void Start()
     {
         InitCharacter();
 
-        if (healthbar != null)
+        HealthBar bar = this.GetComponentInChildren<HealthBar>();
+
+        if (bar != null)
         {
-            healthbar.SetMaxHealth(MaxHealth);
+            bar.SetMaxHealth(maxHealth);
+            UpdateHealthbar.AddListener(() => bar.UpdateHealth(currentHealth));
         }
     }
 
@@ -53,7 +53,8 @@ public class Character : MonoBehaviour
     public void TakeDamage(float amount)
     {
         CurrentHealth -= amount;
-        healthbar.UpdateHealth(CurrentHealth);
+
+        UpdateHealthbar.Invoke();
         //healthbar.UpdateHealth(data.CurrentHealth);
 
         CheckDeath();
