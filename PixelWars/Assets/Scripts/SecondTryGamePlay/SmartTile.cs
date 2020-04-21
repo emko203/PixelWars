@@ -36,25 +36,31 @@ public class SmartTile : MonoBehaviour
         GameObject characterObjectToMove = GetCharacterObject(teamToMove);
         Character characterData = GetCharacter(teamToMove);
 
-
-
         Character enemy = FightHandler.IsFight(this, teamToMove);
 
-        //if there is no fight on this tile withtin range then we move to next tile
-        if (enemy == null)
+        if (characterData.AbilityTemplate.AbilityType == EnumAbilityType.MOVE)
         {
-            //only move if the next tile excists
-            if (tileToMoveTo != null && smartTileToMoveTo != null)
-            {
-                if (smartTileToMoveTo.IsEmpty(teamToMove))
-                {
-                    Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
-                    smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
-                    this.RemoveCharacterFromSpace(characterData);
-                }
-                return true;
-            }
+            characterData.AbilityTemplate.HandleAbility(this, directionToMove, teamToMove);
+        }
 
+        if (!characterData.AbilityTemplate.CanHandle)
+        {
+            //if there is no fight on this tile withtin range then we move to next tile
+            if (enemy == null)
+            {
+
+                //only move if the next tile excists
+                if (tileToMoveTo != null && smartTileToMoveTo != null)
+                {
+                    if (smartTileToMoveTo.IsEmpty(teamToMove))
+                    {
+                        Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
+                        smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
+                        this.RemoveCharacterFromSpace(characterData);
+                    }
+                    return true;
+                }
+            }
         }
         else
         {
@@ -299,7 +305,7 @@ public class SmartTile : MonoBehaviour
     /// </summary>
     /// <param name="team">Given team</param>
     /// <returns>Transform according to given team</returns>
-    private GameObject GetCharacterObject(EnumTeams team)
+    public GameObject GetCharacterObject(EnumTeams team)
     {
         switch (team)
         {

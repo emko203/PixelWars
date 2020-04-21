@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
     private string characterName;
     private float currentHealth;
 
-    private AbilityTemplate abilityTemplate;
+    private AbilityTemplate abilityTemplate = new NoAbility();
     
     public void InitCharacter()
     {
@@ -30,8 +30,35 @@ public class Character : MonoBehaviour
         this.speed = data.Speed;
         this.range = data.Range;
         this.characterName = data.CharacterName;
-        this.abilityTemplate = data.AbilityTemplate;
         currentHealth = maxHealth;
+
+        InitAbility();
+    }
+
+    //Set ability according to class
+    private void InitAbility()
+    {
+        switch (unitType)
+        {
+            case EnumUnit.KNIGHT:
+                abilityTemplate = new NoAbility();
+                break;
+            case EnumUnit.ARCHER:
+                abilityTemplate = new NoAbility();
+                break;
+            case EnumUnit.MAGE:
+                abilityTemplate = new NoAbility();
+                break;
+            case EnumUnit.ROGUE:
+                abilityTemplate = new RogueAbility();
+                break;
+            case EnumUnit.NONE:
+                abilityTemplate = new NoAbility();
+                break;
+            default:
+                abilityTemplate = new NoAbility();
+                break;
+        }
     }
 
     private void Start()
@@ -97,5 +124,5 @@ public class Character : MonoBehaviour
     public float Range { get => range; set => range = value; }
     public string CharacterName { get => characterName; set => characterName = value; }
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
-    public AbilityTemplate AbilityTemplate { get => abilityTemplate; set => abilityTemplate = value; }
+    public AbilityTemplate AbilityTemplate { get => abilityTemplate; }
 }
