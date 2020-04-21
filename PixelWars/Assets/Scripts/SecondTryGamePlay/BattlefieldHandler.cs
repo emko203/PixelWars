@@ -41,7 +41,7 @@ public class BattlefieldHandler : MonoBehaviour
 
                 go.transform.position = spawnPos;
 
-                go.GetComponent<Character>().Data.SetNewCharacter();
+                go.GetComponent<Character>().InitCharacter();
                 
                 //Connect character to smart tile
                 bool placed = PlaceUnitOnTile(GetXSpawn(go.GetComponent<Character>().TeamColor), GetYSpawn(laneToSpawnIn), go);

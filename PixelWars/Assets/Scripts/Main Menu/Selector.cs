@@ -248,7 +248,7 @@ public class Selector : MonoBehaviour
     public void Options()
     {
         DropdownOptions.Clear();
-        DropdownOptions.Add(SelectedObject.GetComponent<Character>().Data.Name);
+        DropdownOptions.Add(SelectedObject.GetComponent<Character>().CharacterName);
         CharacterDropdown.AddOptions(DropdownOptions);
         CharacterDropdown.RefreshShownValue();
     }
@@ -298,9 +298,9 @@ public class Selector : MonoBehaviour
         {
             if (CharacterDropdown.options.Count > 0)
             {
-                if (SelectedCharacters[i].GetComponent<Character>().Data.Name == CharacterDropdown.options[CharacterDropdown.value].text)
+                if (SelectedCharacters[i].GetComponent<Character>().CharacterName == CharacterDropdown.options[CharacterDropdown.value].text)
                 {
-                    Debug.Log(SelectedCharacters[i].GetComponent<Character>().Data.Name);
+                    Debug.Log(SelectedCharacters[i].GetComponent<Character>().CharacterName);
                     Debug.Log(SelectedCharacters.Count);
                     SelectedCharacters.RemoveAt(i);
                     break;

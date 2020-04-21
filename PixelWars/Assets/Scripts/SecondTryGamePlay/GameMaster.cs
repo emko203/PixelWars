@@ -299,7 +299,7 @@ public class GameMaster : MonoBehaviour
                 //We Spawn in the selected unit in the currently selected lane and then pass the turn to the other player
                 battlefieldHandler.SpawnUnit(selectorManager.GetSelectedLane(), turnHandler.CurrentPlayerTurn, CurrentSelectedUnit);
                 DeselectUnit();
-                GetPlayerFromTurn().PayMana(selectorManager.GetCurrentHoveringCharacter().Data.ManaCost);
+                GetPlayerFromTurn().PayMana(selectorManager.GetCurrentHoveringCharacter().ManaCost);
                 selectorManager.GrayOutCurrentHoveringCharacter();
                 UpdateManaSprites();
 
@@ -311,7 +311,7 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
-            if (GetPlayerFromTurn().CurrentMana >= selectorManager.GetCurrentHoveringCharacter().Data.ManaCost && !selectorManager.IsAlreadySelected(turnHandler.CurrentPlayerTurn))
+            if (GetPlayerFromTurn().CurrentMana >= selectorManager.GetCurrentHoveringCharacter().ManaCost && !selectorManager.IsAlreadySelected(turnHandler.CurrentPlayerTurn))
             {
                 CurrentSelectedUnit = selectorManager.SelectCharacter(turnHandler.CurrentPlayerTurn, battlefieldHandler);
                 CharacterAnimator.SetBool("IsOrange", true);
