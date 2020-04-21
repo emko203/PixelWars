@@ -12,10 +12,6 @@ public class RogueAbility : AbilityTemplate
 
     private bool canHandle = true;
 
-    private bool DoNormalMove = true;
-
-
-
     public override void HandleAbility()
     {
         
@@ -27,7 +23,6 @@ public class RogueAbility : AbilityTemplate
         {
             //cant handle because we already used rogue ability
             canHandle = false;
-            DoNormalMove = true;
         }
         else
         {
@@ -55,22 +50,31 @@ public class RogueAbility : AbilityTemplate
                         Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + actualSmartTileToMoveTo.PositionNumberX + "_Y-" + actualSmartTileToMoveTo.PositionNumberY);
                         actualSmartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
                         smartTile.RemoveCharacterFromSpace(characterData);
+
+                        HasAlreadyUsed = true;
+                        canHandle = true;
+                    }
+                    else
+                    {
+                        //friendly unit already there so we cant handle
+                        canHandle = false;
                     }
                 }
-
-                DoNormalMove = false;
-
-                HasAlreadyUsed = true;
-
-                characterData.Range = 0;
+                else
+                {
+                    //tile == null so we cant handle
+                    canHandle = false;
+                }
             }
             else
             {
                 //no enemy so we cant handle movement with this ability
-                DoNormalMove = true;
                 canHandle = false;
             }
+            //set range back to 0 because we dont teleport anymore
+            characterData.Range = 0;
         }
+
     }
 
     public override string Name { get => abilityName; }

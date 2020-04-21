@@ -49,7 +49,7 @@ public static class FightHandler
     {
         Character AttackingCharacter = TileToStartCheckingFrom.GetCharacter(currentMovingTeam);
 
-        if (enemy != null)
+        if (enemy != null && AttackingCharacter != null)
         {
             AttackingCharacter.DealDamageTo(enemy);
         }

@@ -61,13 +61,12 @@ public class SmartTile : MonoBehaviour
                     return true;
                 }
             }
+            else
+            {
+                HandleFight(teamToMove, enemy);
+            }
         }
-        else
-        {
-            Debug.Log(characterData.TeamColor + characterData.CharacterName + " Just started a fight with " + enemy.TeamColor + enemy.CharacterName);
-
-            HandleFight(teamToMove, enemy);
-        }
+        
 
         //Check for victory
         switch ((teamToMove))
