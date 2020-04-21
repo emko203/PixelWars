@@ -63,8 +63,21 @@ public class SmartTile : MonoBehaviour
             HandleFight(teamToMove, enemy);
         }
 
-            return true;
-            
+        //Check for victory
+        switch ((teamToMove))
+        {
+            case EnumTeams.Red:
+                if (this.positionNumberX == 5 && this.IsEmpty(EnumTeams.Blue))
+                {
+                    Debug.Log("RED TEAM WINS");
+                }
+                break;
+            case EnumTeams.Blue:
+                if (this.positionNumberX == 1 && this.IsEmpty(EnumTeams.Red))
+                {
+                    Debug.Log("BLUE TEAM WINS");
+                }
+                break;
         }
 
 
