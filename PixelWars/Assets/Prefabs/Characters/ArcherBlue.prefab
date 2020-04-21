@@ -98,9 +98,6 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: beebb34ad13517a41a7a8bd0692216b8, type: 2}
   teamColor: 1
   unitType: 1
-  UpdateHealthbar:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &6243722910336080527
 PrefabInstance:
   m_ObjectHideFlags: 0

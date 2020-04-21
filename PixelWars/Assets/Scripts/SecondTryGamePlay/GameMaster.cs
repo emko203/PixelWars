@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
@@ -10,12 +11,8 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private BattlefieldHandler battlefieldHandler;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private SelectorManager selectorManager;
-    [Space]
-    [Header("Animations")]
-    [SerializeField] private Animator CharacterAnimator;
-    [SerializeField] private GameObject blueArrow;
-    [SerializeField] private GameObject redArrow;
-    [SerializeField] private Animator arrowAnimator;
+    [SerializeField] private GUI_Handler guiHandler;
+    
     [Space]
     [Header("AllCharacterPrefabs")]
     [SerializeField] private List<GameObject> RedCharacterPrefabs;
@@ -42,8 +39,13 @@ public class GameMaster : MonoBehaviour
     {
         selectorManager.HideLaneSelector();
         LoadPlayerPrefs();
-        turnHandler = new TurnHandler(redArrow,blueArrow, arrowAnimator);
+        turnHandler = new TurnHandler(guiHandler.RedArrow, guiHandler.BlueArrow, guiHandler.ArrowAnimator);
         turnHandler.SelectRandomStartPlayer();
+    }
+
+    private void LoadGuiMenu()
+    {
+        guiHandler.InitMenu(GetCharactersFromCurrentTeam());
     }
 
     private void LoadPlayerPrefs()
@@ -69,6 +71,7 @@ public class GameMaster : MonoBehaviour
     {
         turnHandler.SetNextState();
         turnHandler.SetTurnArrows();
+        LoadGuiMenu();
     }
 
     private void Update()
@@ -228,11 +231,24 @@ public class GameMaster : MonoBehaviour
         }
     }
 
+    private List<GameObject> GetCharactersFromOtherTeam()
+    {
+        switch (turnHandler.CurrentPlayerTurn)
+        {
+            case EnumTeams.Red:
+                return AvailableBlueCharacters;
+            case EnumTeams.Blue:
+                return AvailableRedCharacters;
+            default:
+                return null;
+        }
+    }
+
     private void DeselectUnit()
     {
         //Deselect the unit and then make the character selector available again so we can select a different character
         selectorManager.HideLaneSelector();
-        CharacterAnimator.SetBool("IsOrange", false);
+        guiHandler.CharacterAnimator.SetBool("IsOrange", false);
         CurrentSelectedUnit = EnumUnit.NONE;
     }
 
@@ -264,6 +280,9 @@ public class GameMaster : MonoBehaviour
             case EnumPressedKeyAction.END_TURN:
                 HandleEndTurn();
                 break;
+            case EnumPressedKeyAction.OPEN_MENU:
+                HandleMenu();
+                break;
 
             //Break Because no action is assigned
             case EnumPressedKeyAction.NO_ACTION:
@@ -277,6 +296,11 @@ public class GameMaster : MonoBehaviour
     #endregion
 
     #region HandelingKeys
+
+    private void HandleMenu()
+    {
+        guiHandler.FlipMenuState();
+    }
 
     private void HandleEndTurn()
     {
@@ -315,7 +339,7 @@ public class GameMaster : MonoBehaviour
             if (GetPlayerFromTurn().CurrentMana >= selectorManager.GetCurrentHoveringCharacter().ManaCost && !selectorManager.IsAlreadySelected(turnHandler.CurrentPlayerTurn))
             {
                 CurrentSelectedUnit = selectorManager.SelectCharacter(turnHandler.CurrentPlayerTurn, battlefieldHandler);
-                CharacterAnimator.SetBool("IsOrange", true);
+                guiHandler.CharacterAnimator.SetBool("IsOrange", true);
             }
         }
     }

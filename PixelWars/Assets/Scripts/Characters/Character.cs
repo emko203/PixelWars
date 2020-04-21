@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     [SerializeField] private EnumUnit unitType;
 
     private UnityEvent UpdateHealthbar = new UnityEvent();
+    private HealthBar bar;
 
     private float maxHealth;
     private float manaCost;
@@ -42,7 +43,7 @@ public class Character : MonoBehaviour
 
     private void SetupHealthBar()
     {
-        HealthBar bar = this.GetComponentInChildren<HealthBar>();
+        bar = this.GetComponentInChildren<HealthBar>();
 
         if (bar != null)
         {
@@ -60,7 +61,6 @@ public class Character : MonoBehaviour
         CurrentHealth -= amount;
 
         UpdateHealthbar.Invoke();
-        //healthbar.UpdateHealth(data.CurrentHealth);
 
         CheckDeath();
     }
@@ -83,6 +83,7 @@ public class Character : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             //TODO: kill character
+            UpdateHealthbar.RemoveListener(() => bar.UpdateHealth(currentHealth));
             GameObject.Destroy(gameObject);
         }
     }
