@@ -21,6 +21,8 @@ public class GUI_Handler : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         List<EnumUnit> unitsInText = new List<EnumUnit>();
+        builder.Append("-------------------------------------------------------");
+        builder.AppendLine();
 
         foreach (GameObject ob in characters)
         {
@@ -42,6 +44,7 @@ public class GUI_Handler : MonoBehaviour
                 builder.Append("  Damage/");
                 builder.Append(CharacterInfo.Damage);
                 builder.AppendLine();
+                builder.Append("-----------------------------------");
                 builder.AppendLine();
 
                 unitsInText.Add(CharacterInfo.UnitType);
