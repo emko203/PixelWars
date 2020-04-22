@@ -103,7 +103,6 @@ public class GameMaster : MonoBehaviour
     //Do this at the start of turn
     private void UpdateStartOfTurn()
     {
-        //TODO: fill availablecharacters with data from other scene and replace allcharacters with it.
         if (!battlefieldHandler.Busy)
         {
             selectorManager.HideLaneSelector();
