@@ -6,6 +6,8 @@ TagManager:
   tags:
   - MAIN_UI
   - PopUpText
+  - BlueVictory
+  - RedVictory
   layers:
   - Default
   - TransparentFX

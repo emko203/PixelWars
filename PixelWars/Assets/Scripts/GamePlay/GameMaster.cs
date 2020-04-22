@@ -20,8 +20,10 @@ public class GameMaster : MonoBehaviour
 
     private PlayerHandler playerHandler = new PlayerHandler();
     private TurnHandler turnHandler;
-    private KeyHandler keyHandler = new KeyHandler(); 
+    private KeyHandler keyHandler = new KeyHandler();
 
+    private static GameObject RedTeamVictory;
+    private static GameObject BlueTeamVictory;
 
     private List<SmartTile> mapping = new List<SmartTile>();
     private List<GameObject> AvailableRedCharacters = new List<GameObject>();
@@ -36,6 +38,30 @@ public class GameMaster : MonoBehaviour
         LoadPlayerPrefs();
         turnHandler = new TurnHandler(guiHandler.RedArrow, guiHandler.BlueArrow, guiHandler.ArrowAnimator);
         turnHandler.SelectRandomStartPlayer();
+    }
+
+    public static void ShowVictoryScreen(EnumTeams WinningTeam)
+    {
+        switch (WinningTeam)
+        {
+            case EnumTeams.Red:
+                RedTeamVictory.SetActive(true);
+                break;
+            case EnumTeams.Blue:
+                BlueTeamVictory.SetActive(true);
+                break;
+            default:
+                return;
+        }
+    }
+
+    private void LoadVictoryScreens()
+    {
+        RedTeamVictory = GameObject.FindWithTag("RedVictory");
+        BlueTeamVictory = GameObject.FindWithTag("BlueVictory");
+
+        RedTeamVictory.SetActive(false);
+        BlueTeamVictory.SetActive(false);
     }
 
     private void LoadGuiMenu()
@@ -68,6 +94,7 @@ public class GameMaster : MonoBehaviour
         turnHandler.SetTurnArrows();
         LoadGuiMenu();
         FloatingTextController.Initialize();
+        LoadVictoryScreens();
     }
 
     private void Update()

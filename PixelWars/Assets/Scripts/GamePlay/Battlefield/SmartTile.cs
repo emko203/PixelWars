@@ -68,10 +68,11 @@ public class SmartTile : MonoBehaviour
                         this.RemoveCharacterFromSpace(characterData);
                         return true;
                     }
-                    else
-                    {
-                        
-                    }
+                }
+                else
+                {
+                    //if no tile excists we are at the end and this team has won
+                    GameMaster.ShowVictoryScreen(teamToMove);
                 }
             }
             else
