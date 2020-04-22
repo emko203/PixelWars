@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9e02f9d4814bf054abc5522f45905dab, type: 2}
   teamColor: 1
-  unitType: 0
+  unitType: 1
 --- !u!1001 &7045737345800591445
 PrefabInstance:
   m_ObjectHideFlags: 0

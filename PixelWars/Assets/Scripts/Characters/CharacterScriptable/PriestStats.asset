@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40247f84859960c47baa17c50db726f8, type: 3}
-  m_Name: Characters
+  m_Name: PriestStats
   m_EditorClassIdentifier: 
-  health: 0
-  manaCost: 0
+  maxHealth: 2
+  manaCost: 1
   damage: 0
-  speed: 0
-  range: 0
+  speed: 1
+  range: 1
+  characterName: Priest
   abilityTemplates: {fileID: 0}

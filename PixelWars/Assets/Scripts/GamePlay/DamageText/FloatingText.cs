@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FloatingText : MonoBehaviour
 {
     public Animator textAnimator;
-    private Text DamageText;
+    public Text DamageText;
 
     private void OnEnable()
     {

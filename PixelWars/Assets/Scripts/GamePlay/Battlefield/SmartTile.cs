@@ -38,9 +38,18 @@ public class SmartTile : MonoBehaviour
 
         Character enemy = FightHandler.IsFight(this, teamToMove);
 
+        //if there is a friendly in front of us we handle healing ability
+        if (characterData.AbilityTemplate.AbilityType == EnumAbilityType.HEAL)
+        {
+            if (smartTileToMoveTo != null)
+            {
+                characterData.AbilityTemplate.HandleHealAbility(smartTileToMoveTo.GetCharacter(teamToMove));
+            }
+        }
+
         if (characterData.AbilityTemplate.AbilityType == EnumAbilityType.MOVE)
         {
-            characterData.AbilityTemplate.HandleAbility(this, directionToMove, teamToMove);
+            characterData.AbilityTemplate.HandleMoveAbility(this, directionToMove, teamToMove);
         }
 
         if (!characterData.AbilityTemplate.CanHandle)
@@ -57,14 +66,19 @@ public class SmartTile : MonoBehaviour
                         Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
                         smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
                         this.RemoveCharacterFromSpace(characterData);
+                        return true;
                     }
-                    return true;
+                    else
+                    {
+                        
+                    }
                 }
             }
             else
             {
                 HandleFight(teamToMove, enemy);
             }
+            return false;
         }
         
 

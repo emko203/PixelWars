@@ -17,7 +17,7 @@ public class RogueAbility : AbilityTemplate
         
     }
 
-    public override void HandleAbility(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
+    public override void HandleMoveAbility(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
     {
         if (HasAlreadyUsed)
         {
@@ -92,6 +92,11 @@ public class RogueAbility : AbilityTemplate
             //friendly unit already there so we cant handle
             canHandle = false;
         }
+    }
+
+    public override void HandleHealAbility(Character toHeal)
+    {
+        throw new System.NotImplementedException();
     }
 
     public override string Name { get => abilityName; }

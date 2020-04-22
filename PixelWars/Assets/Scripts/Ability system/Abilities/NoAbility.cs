@@ -17,7 +17,12 @@ public class NoAbility : AbilityTemplate
         return;
     }
 
-    public override void HandleAbility(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
+    public override void HandleHealAbility(Character toHeal)
+    {
+        return;
+    }
+
+    public override void HandleMoveAbility(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
     {
         return;
     }

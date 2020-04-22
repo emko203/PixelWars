@@ -12,5 +12,6 @@ public abstract class AbilityTemplate : MonoBehaviour
     public abstract bool CanHandle { get; }
 
     public abstract void HandleAbility();
-    public abstract void HandleAbility(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove);
+    public abstract void HandleMoveAbility(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove);
+    public abstract void HandleHealAbility(Character toHeal);
 }

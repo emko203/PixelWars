@@ -55,6 +55,12 @@ public class Character : MonoBehaviour
             case EnumUnit.NONE:
                 abilityTemplate = new NoAbility();
                 break;
+            case EnumUnit.PRIEST:
+                abilityTemplate = new PriestAbility();
+                break;
+            case EnumUnit.GHOST:
+                abilityTemplate = new NoAbility();
+                break;
             default:
                 abilityTemplate = new NoAbility();
                 break;
@@ -76,6 +82,15 @@ public class Character : MonoBehaviour
         {
             bar.SetMaxHealth(maxHealth);
             UpdateHealthbar.AddListener(() => bar.UpdateHealth(currentHealth));
+        }
+    }
+
+    public void healCharacter(float amount)
+    {
+        if (currentHealth + amount <= maxHealth)
+        {
+            currentHealth += amount;
+            UpdateHealthbar.Invoke();
         }
     }
 

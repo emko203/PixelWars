@@ -6,11 +6,10 @@ using UnityEngine.UI;
 
 public class Selector : MonoBehaviour
 {
-    public GameObject Archer;
-    public GameObject Knight;
-    public GameObject Mage;
-    public GameObject Rogue;
+    [HideInInspector]
     public GameObject SelectedObject;
+
+    public List<GameObject> SelectableAbleCharacters = new List<GameObject>();
 
     public Dropdown CharacterDropdown;
 
@@ -24,134 +23,55 @@ public class Selector : MonoBehaviour
 
     public static List<EnumUnit> listEnum = new List<EnumUnit>();
 
-
     public static List<string> DropdownOptions = new List<string>();
 
-    private Vector3 CharacterPosition;
-    private Vector3 OffScreenPosition;
-
-    private int CharacterInt = 1;
-
-    private SpriteRenderer ArcherRender, KnightRender, MageRender, RogueRender;
-
-    private void Awake()
-    {
-        CharacterPosition = Archer.transform.position;
-        OffScreenPosition = Knight.transform.position;
-
-        ConfirmBt.GetComponent<Button>();
-        AddBt.GetComponent<Button>();
-        RemoveBt.GetComponent<Button>();
-
-        CharacterCount.GetComponent<Text>();
-
-        ArcherRender = Archer.GetComponent<SpriteRenderer>();
-        KnightRender = Knight.GetComponent<SpriteRenderer>();
-        MageRender = Mage.GetComponent<SpriteRenderer>();
-        RogueRender = Rogue.GetComponent<SpriteRenderer>();
-    }
+    private int PosInList = 0;
+    private int teamsize = 3;
 
     private void Start()
     {
         CharacterDropdown.ClearOptions();
-        SelectedObject = Archer;
+        UpdateCurrentSelectableCharacter();
     }
 
     public void NextCharacter()
     {
-        switch (CharacterInt)
+        if (PosInList < SelectableAbleCharacters.Count - 1)
         {
-            case 1:
-                ArcherRender.enabled = false;
-                Archer.transform.position = OffScreenPosition;
-                Knight.transform.position = CharacterPosition;
-                KnightRender.enabled = true;
-                SelectedObject = Knight;
-                CharacterInt++;
-                break;
-            case 2:
-
-                KnightRender.enabled = false;
-                Knight.transform.position = OffScreenPosition;
-                Mage.transform.position = CharacterPosition;
-                MageRender.enabled = true;
-                SelectedObject = Mage;
-                CharacterInt++;
-                break;
-            case 3:
-                MageRender.enabled = false;
-                Mage.transform.position = OffScreenPosition;
-                Rogue.transform.position = CharacterPosition;
-                RogueRender.enabled = true;
-                SelectedObject = Rogue;
-                CharacterInt++;
-                break;
-            case 4:
-                RogueRender.enabled = false;
-                Rogue.transform.position = OffScreenPosition;
-                Archer.transform.position = CharacterPosition;
-                ArcherRender.enabled = true;
-                SelectedObject = Archer;
-                ResetInt();
-                break;
-            default:
-                ResetInt();
-                break;
-        }
-    }
-
-    private void ResetInt()
-    {
-        if (CharacterInt >= 4)
-        {
-            CharacterInt = 1;
+            PosInList++;
         }
         else
         {
-            CharacterInt = 4;
+            PosInList = 0;
         }
+
+        UpdateCurrentSelectableCharacter();
+    }
+
+    private void UpdateCurrentSelectableCharacter()
+    {
+        foreach (GameObject ob in SelectableAbleCharacters)
+        {
+            ob.SetActive(false);
+        }
+
+        SelectableAbleCharacters[PosInList].SetActive(true);
+
+        SelectedObject = SelectableAbleCharacters[PosInList];
     }
 
     public void PreviousCharacter()
     {
-        switch (CharacterInt)
+        if (PosInList > 0)
         {
-            case 1:
-                ArcherRender.enabled = false;
-                Archer.transform.position = OffScreenPosition;
-                Rogue.transform.position = CharacterPosition;
-                RogueRender.enabled = true;
-                SelectedObject = Rogue;
-                ResetInt();
-                break;
-            case 2:
-                KnightRender.enabled = false;
-                Knight.transform.position = OffScreenPosition;
-                Archer.transform.position = CharacterPosition;
-                ArcherRender.enabled = true;
-                SelectedObject = Archer;
-                CharacterInt--;
-                break;
-            case 3:
-                MageRender.enabled = false;
-                Mage.transform.position = OffScreenPosition;
-                Knight.transform.position = CharacterPosition;
-                KnightRender.enabled = true;
-                SelectedObject = Knight;
-                CharacterInt--;
-                break;
-            case 4:
-                RogueRender.enabled = false;
-                Rogue.transform.position = OffScreenPosition;
-                Mage.transform.position = CharacterPosition;
-                MageRender.enabled = true;
-                SelectedObject = Mage;
-                CharacterInt--;
-                break;
-            default:
-                ResetInt();
-                break;
+            PosInList--;
         }
+        else
+        {
+            PosInList = SelectableAbleCharacters.Count -1;
+        }
+
+        UpdateCurrentSelectableCharacter();
     }
 
     public void Back()
@@ -161,7 +81,7 @@ public class Selector : MonoBehaviour
 
     public void AddCharacter()
     {
-        if (SelectedCharacters.Count < 3)
+        if (SelectedCharacters.Count < teamsize)
         {
             SelectedCharacters.Add(SelectedObject);
             listEnum.Add(SelectedObject.GetComponent<Character>().UnitType);
@@ -174,13 +94,12 @@ public class Selector : MonoBehaviour
 
     public void Confirm()
     {
-        if (SelectedCharacters.Count == 3)
+        if (SelectedCharacters.Count == teamsize)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
-        else if (SelectedCharacters.Count == 6)
+        else if (SelectedCharacters.Count == teamsize * 2)
         {
-            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
        
@@ -197,7 +116,7 @@ public class Selector : MonoBehaviour
 
     public void AddCharacterP2()
     {
-        if (SelectedCharacters.Count < 6)
+        if (SelectedCharacters.Count < teamsize * 2)
         {
             SelectedCharacters.Add(SelectedObject);
             listEnum.Add(SelectedObject.GetComponent<Character>().UnitType);
@@ -255,13 +174,13 @@ public class Selector : MonoBehaviour
 
     private void ItemCheck() 
     {
-        if (SelectedCharacters.Count == 3)
+        if (SelectedCharacters.Count == teamsize || SelectedCharacters.Count == teamsize * 2)
         {
             ConfirmBt.SetActive(true);
             AddBt.SetActive(false);
         }
         
-        if(ConfirmBt.activeSelf && SelectedCharacters.Count != 3)
+        if(ConfirmBt.activeSelf && SelectedCharacters.Count != teamsize)
         {
             ConfirmBt.SetActive(false);
             AddBt.SetActive(true);
@@ -279,9 +198,9 @@ public class Selector : MonoBehaviour
 
     private void CharCountText() 
     {
-        if (SelectedCharacters.Count > 3)
+        if (SelectedCharacters.Count > teamsize)
         {
-            CharacterCount.text = "Select Characters: " + (SelectedCharacters.Count - 3) + "/3";
+            CharacterCount.text = "Select Characters: " + (SelectedCharacters.Count - teamsize) + "/3";
         }
         else
         {

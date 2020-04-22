@@ -56,7 +56,7 @@ public class KeyHandler
                 return currentSelectedUnit;
             }
         }
-        return EnumUnit.NONE;
+        return currentSelectedUnit;
     }
 
     private EnumUnit SpawnUnit(EnumTeams currentTeam, Player currentPlayer, EnumUnit currentSelectedUnit, SelectorManager selectorManager, BattlefieldHandler battlefieldHandler, GUI_Handler guihandler, TurnHandler turnHandler)
