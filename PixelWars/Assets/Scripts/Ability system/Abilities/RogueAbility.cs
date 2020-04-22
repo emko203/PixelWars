@@ -36,34 +36,43 @@ public class RogueAbility : AbilityTemplate
             {
                 //enemy in front of us so we skip the unit
                 SmartTile tileToMoveTo = smartTile.GetSmartTileFromDirection(directionToMove, teamToMove);
-                GameObject actualTileToMoveTo = tileToMoveTo.GetTileFromDirection(directionToMove, teamToMove);
-
-                SmartTile smartTileToMoveTo = smartTile.GetSmartTileFromDirection(directionToMove, teamToMove);
-                SmartTile actualSmartTileToMoveTo = smartTileToMoveTo.GetSmartTileFromDirection(directionToMove, teamToMove);
-
-                GameObject characterObjectToMove = smartTile.GetCharacterObject(teamToMove);
-
-                if (actualTileToMoveTo != null && actualSmartTileToMoveTo != null)
+                GameObject actualTileToMoveTo = new GameObject();
+                if (tileToMoveTo != null)
                 {
-                    if (actualSmartTileToMoveTo.IsEmpty(teamToMove))
-                    {
-                        Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + actualSmartTileToMoveTo.PositionNumberX + "_Y-" + actualSmartTileToMoveTo.PositionNumberY);
-                        actualSmartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
-                        smartTile.RemoveCharacterFromSpace(characterData);
+                    actualTileToMoveTo = tileToMoveTo.GetTileFromDirection(directionToMove, teamToMove);
+                    SmartTile smartTileToMoveTo = smartTile.GetSmartTileFromDirection(directionToMove, teamToMove);
+                    SmartTile actualSmartTileToMoveTo = smartTileToMoveTo.GetSmartTileFromDirection(directionToMove, teamToMove);
 
-                        HasAlreadyUsed = true;
-                        canHandle = true;
+                    GameObject characterObjectToMove = smartTile.GetCharacterObject(teamToMove);
+
+                    if (actualTileToMoveTo != null && actualSmartTileToMoveTo != null)
+                    {
+                        if (actualSmartTileToMoveTo.IsEmpty(teamToMove))
+                        {
+                            Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + actualSmartTileToMoveTo.PositionNumberX + "_Y-" + actualSmartTileToMoveTo.PositionNumberY);
+                            actualSmartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
+                            smartTile.RemoveCharacterFromSpace(characterData);
+
+                            HasAlreadyUsed = true;
+                            canHandle = true;
+                            return;
+                        }
+                        else
+                        {
+                            //friendly unit already there so we cant handle
+                            canHandle = false;
+                        }
                     }
                     else
                     {
-                        //friendly unit already there so we cant handle
+                        //tile == null so we cant handle
                         canHandle = false;
                     }
                 }
                 else
                 {
-                    //tile == null so we cant handle
                     canHandle = false;
+                    return;
                 }
             }
             else

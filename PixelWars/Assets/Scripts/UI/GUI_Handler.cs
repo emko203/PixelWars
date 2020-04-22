@@ -4,24 +4,31 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(ManaCrystalsHandler))]
 public class GUI_Handler : MonoBehaviour
 {
     [Space]
-    [Header("Animations")]
-    [SerializeField] private Animator characterAnimator;
+    [Header("Arrows")]
     [SerializeField] private GameObject blueArrow;
     [SerializeField] private GameObject redArrow;
-    [SerializeField] private Animator arrowAnimator;
     [Space]
     [Header("CharacterMenu")]
     [SerializeField] private Text characterInfoText;
     [SerializeField] private GameObject Menu;
+    [Space]
+    [Header("Animations")]
+    [SerializeField] private Animator characterAnimator;
+    [SerializeField] private Animator arrowAnimator;
+
+
+    private ManaCrystalsHandler manaCrystalsHandler;
 
     private bool DoneFillingText = false;
 
-    public void InitMenu(List<GameObject> characters)
+    public void InitUI(List<GameObject> characters)
     {
         StartCoroutine(FillText(characters));
+        manaCrystalsHandler = gameObject.GetComponent<ManaCrystalsHandler>();
     }
 
     IEnumerator FillText(List<GameObject> characters)
@@ -64,6 +71,18 @@ public class GUI_Handler : MonoBehaviour
         DoneFillingText = true;
     }
 
+    public void FlipSelectorState()
+    {
+        if (characterAnimator.GetBool("IsOrange"))
+        {
+            characterAnimator.SetBool("IsOrange", false);
+        }
+        else
+        {
+            characterAnimator.SetBool("IsOrange", true);
+        }
+    }
+
     public void FlipMenuState()
     {
         if (DoneFillingText)
@@ -79,8 +98,10 @@ public class GUI_Handler : MonoBehaviour
         }
     }
 
-    public Animator CharacterAnimator { get => characterAnimator; set => characterAnimator = value; }
-    public GameObject BlueArrow { get => blueArrow; set => blueArrow = value; }
-    public GameObject RedArrow { get => redArrow; set => redArrow = value; }
-    public Animator ArrowAnimator { get => arrowAnimator; set => arrowAnimator = value; }
+    public ManaCrystalsHandler ManaCrystalsHandler { get => manaCrystalsHandler; }
+
+    public Animator CharacterAnimator { get => characterAnimator; }
+    public GameObject BlueArrow { get => blueArrow; }
+    public GameObject RedArrow { get => redArrow; }
+    public Animator ArrowAnimator { get => arrowAnimator; }
 }

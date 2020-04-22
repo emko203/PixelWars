@@ -1786,42 +1786,6 @@ MonoBehaviour:
   - {fileID: 7493910270505690658, guid: 169f82ac61d8add4cb702daa02948b96, type: 3}
   - {fileID: 4122677094853172875, guid: 6dbf6029bf1cdce45a2fcd47949d3ea6, type: 3}
   - {fileID: 3771279655986087872, guid: 2627d26cad661b74f8e34a0a136aa963, type: 3}
-  blueCrystalsEmpty:
-  - {fileID: 759230355}
-  - {fileID: 1579063119}
-  - {fileID: 1992409022}
-  - {fileID: 1523585663}
-  - {fileID: 1915567997}
-  - {fileID: 112056250}
-  - {fileID: 2046182958}
-  - {fileID: 1182736983}
-  blueCrystalsFull:
-  - {fileID: 54498777}
-  - {fileID: 331942655}
-  - {fileID: 301122670}
-  - {fileID: 548629132}
-  - {fileID: 1566973574}
-  - {fileID: 2073306802}
-  - {fileID: 87770928}
-  - {fileID: 1957189350}
-  redCrystalsFull:
-  - {fileID: 321629982}
-  - {fileID: 2118128270}
-  - {fileID: 1771692285}
-  - {fileID: 298710092}
-  - {fileID: 452625413}
-  - {fileID: 318064899}
-  - {fileID: 467861005}
-  - {fileID: 1806957835}
-  redCrystalsEmpty:
-  - {fileID: 1754208852}
-  - {fileID: 760555206}
-  - {fileID: 1854201409}
-  - {fileID: 92226994}
-  - {fileID: 739439825}
-  - {fileID: 233838749}
-  - {fileID: 736619920}
-  - {fileID: 5053874}
 --- !u!212 &629651176
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3203,6 +3167,7 @@ GameObject:
   - component: {fileID: 1627670163}
   - component: {fileID: 1627670167}
   - component: {fileID: 1627670168}
+  - component: {fileID: 1627670169}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: MAIN_UI
@@ -3328,12 +3293,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5a7a4c279845d4ca8eede97fc871bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterAnimator: {fileID: 1576489426}
   blueArrow: {fileID: 2110350551}
   redArrow: {fileID: 1073177776}
   arrowAnimator: {fileID: 1627670167}
   characterInfoText: {fileID: 1543544133}
   Menu: {fileID: 1888148608}
+--- !u!114 &1627670169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627670162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e8abf034d18af428b94b426a1b1d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueCrystalsEmpty:
+  - {fileID: 759230355}
+  - {fileID: 1579063119}
+  - {fileID: 1992409022}
+  - {fileID: 1523585663}
+  - {fileID: 1915567997}
+  - {fileID: 112056250}
+  - {fileID: 2046182958}
+  - {fileID: 1182736983}
+  blueCrystalsFull:
+  - {fileID: 54498777}
+  - {fileID: 331942655}
+  - {fileID: 301122670}
+  - {fileID: 548629132}
+  - {fileID: 1566973574}
+  - {fileID: 2073306802}
+  - {fileID: 87770928}
+  - {fileID: 1957189350}
+  redCrystalsFull:
+  - {fileID: 321629982}
+  - {fileID: 2118128270}
+  - {fileID: 1771692285}
+  - {fileID: 298710092}
+  - {fileID: 452625413}
+  - {fileID: 318064899}
+  - {fileID: 467861005}
+  - {fileID: 1806957835}
+  redCrystalsEmpty:
+  - {fileID: 1754208852}
+  - {fileID: 760555206}
+  - {fileID: 1854201409}
+  - {fileID: 92226994}
+  - {fileID: 739439825}
+  - {fileID: 233838749}
+  - {fileID: 736619920}
+  - {fileID: 5053874}
 --- !u!1 &1645550165
 GameObject:
   m_ObjectHideFlags: 0
