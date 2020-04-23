@@ -4,26 +4,34 @@ using UnityEngine;
 
 public class SoundEffectManager
 {
-    private static AudioSource BasicCloseAttack;
-    private static AudioSource BasicRangedAttack;
-    private static AudioSource BasicMagicAttack;
-    private static AudioSource BasicMove;
+    private static GameObject BasicCloseAttack;
+    private static GameObject BasicRangedAttack;
+    private static GameObject BasicMagicAttack;
+    private static GameObject BasicMove;
 
     private static bool IsInitialized = false;
 
     private static void Init()
     {
-        BasicCloseAttack = Resources.Load<AudioSource>("SoundEffects/BasicCloseAttack.mp3");
-        BasicRangedAttack = Resources.Load<AudioSource>("SoundEffects/BasicRangedAttack");
-        BasicMagicAttack = Resources.Load<AudioSource>("SoundEffects/BasicMagicAttack");
-        BasicMove = Resources.Load<AudioSource>("SoundEffects/BasicMove");
+        BasicCloseAttack = Resources.Load<GameObject>("SoundEffects/BasicCloseAttack");
+        BasicRangedAttack = Resources.Load<GameObject>("SoundEffects/BasicRangedAttack");
+        BasicMagicAttack = Resources.Load<GameObject>("SoundEffects/BasicMagicAttack");
+        BasicMove = Resources.Load<GameObject>("SoundEffects/BasicMove");
+    }
+
+    private static void CreateSound(GameObject source)
+    {
+        GameObject soundPlayerOb = GameObject.Instantiate(source);
+        AudioSource audioSource = soundPlayerOb.GetComponent<AudioSource>();
+        audioSource.Play();
+        GameObject.Destroy(soundPlayerOb, 2f);
     }
 
     public static void PlayBasicMove()
     {
         if (IsNotNull(BasicMove))
         {
-            BasicMove.Play();
+            CreateSound(BasicMove);
         }
     }
 
@@ -31,7 +39,7 @@ public class SoundEffectManager
     {
         if (IsNotNull(BasicMagicAttack))
         {
-            BasicMagicAttack.Play();
+            CreateSound(BasicMagicAttack);
         }
     }
 
@@ -39,7 +47,7 @@ public class SoundEffectManager
     {
         if (IsNotNull(BasicCloseAttack))
         {
-            BasicCloseAttack.Play();
+            CreateSound(BasicCloseAttack);
         }
     }
 
@@ -47,11 +55,11 @@ public class SoundEffectManager
     {
         if (IsNotNull(BasicRangedAttack))
         {
-            BasicRangedAttack.Play();
+            CreateSound(BasicRangedAttack);
         }
     }
 
-    private static bool IsNotNull(AudioSource source)
+    private static bool IsNotNull(GameObject source)
     {
         if (IsInitialized)
         {
