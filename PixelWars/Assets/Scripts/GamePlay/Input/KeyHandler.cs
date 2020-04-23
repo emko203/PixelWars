@@ -9,9 +9,11 @@ public class KeyHandler
         guiHandler.FlipMenuState();
     }
 
-    public void HandleEndTurn(TurnHandler turnHandler)
+    public EnumUnit HandleEndTurn(TurnHandler turnHandler, EnumUnit CurrentSelectedUnit)
     {
         turnHandler.SetNextState();
+        CurrentSelectedUnit = EnumUnit.NONE;
+        return CurrentSelectedUnit;
     }
 
     public EnumUnit HandleDeselectKey(EnumUnit CurrentSelectedUnit, SelectorManager selectorManager, GUI_Handler guihandler)
