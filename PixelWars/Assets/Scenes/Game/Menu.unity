@@ -3024,8 +3024,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618ce32576a3c144694428d340eff298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuMusic: {fileID: 8300000, guid: 8e2faa40cb905f944a8659d08938d22b, type: 3}
-  gameMusic: {fileID: 8300000, guid: b05f7275de1247a45b63d33b6820e26c, type: 3}
+  menuMusic: {fileID: 8300000, guid: 4677bfdc7a5b43b42b9f30114305af74, type: 3}
+  gameMusic: {fileID: 8300000, guid: b406556418932eb4cad6fe686bac94d7, type: 3}
   source: {fileID: 269758664}
 --- !u!4 &1162943943
 Transform:
