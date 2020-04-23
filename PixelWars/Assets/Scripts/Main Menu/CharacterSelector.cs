@@ -217,6 +217,7 @@ public class CharacterSelector : MonoBehaviour
         else if (SelectedCharacters.Count == teamsize * 2)
         {
             SavePlayerPrefs();
+            Audio.PlayGameMusic();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             listEnum.Clear();
             SelectedCharacters.Clear();

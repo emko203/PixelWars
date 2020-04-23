@@ -35,11 +35,7 @@ public class Audio : MonoBehaviour
         }
     }
 
-    protected virtual void Start()
-    {
-       
-        PlayMenuMusic();
-    }
+   
 
 
     static public void PlayMenuMusic()

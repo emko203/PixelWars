@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        Audio.PlayMenuMusic();
         settingsMenu.LoadSettings();
     }
 
