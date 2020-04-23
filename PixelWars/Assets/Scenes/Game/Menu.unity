@@ -1864,6 +1864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: db64c7405f888c54a87734bc77da2390, type: 2}
   audioSource: {fileID: 1162943941}
+  audioSlider: {fileID: 1159558482}
   resolutionDropdown: {fileID: 1901395393}
 --- !u!1 &903286505
 GameObject:
@@ -3673,6 +3674,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 886116467}
+        m_MethodName: SaveSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1425351004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4330,6 +4342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10b6401c9be94740b5dfa8e43193ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingsMenu: {fileID: 886116467}
 --- !u!1 &1901395391
 GameObject:
   m_ObjectHideFlags: 0

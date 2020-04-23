@@ -8,6 +8,7 @@ public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public AudioSource audioSource;
+    public Slider audioSlider;
 
     public Dropdown resolutionDropdown;
 
@@ -36,12 +37,25 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        LoadSettings();
     }
 
     public void SetResolution(int resolutionIndex) 
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void LoadSettings()
+    {
+        audioSource.volume = PlayerPrefs.GetFloat("Volume");
+        audioSlider.SetValueWithoutNotify(audioSource.volume);
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("Volume", audioSource.volume);
     }
 
     public void SetVolume(float volume) 
