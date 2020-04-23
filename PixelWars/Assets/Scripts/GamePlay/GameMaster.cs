@@ -236,7 +236,7 @@ public class GameMaster : MonoBehaviour
 
             case EnumPressedKeyAction.END_TURN:
                 {
-                    keyHandler.HandleEndTurn(turnHandler);
+                    CurrentSelectedUnit = keyHandler.HandleEndTurn(turnHandler, CurrentSelectedUnit);
                     break;
                 }
             case EnumPressedKeyAction.OPEN_MENU:
