@@ -4,23 +4,75 @@ using UnityEngine;
 
 public class Audio : MonoBehaviour
 {
-    private static Audio instance = null;
+    private static Audio instance;
 
-    public static Audio Instance 
+    [SerializeField]
+    private AudioClip menuMusic;
+
+    [SerializeField]
+    private AudioClip gameMusic;
+
+    [SerializeField]
+
+    private AudioSource source;
+
+
+
+    protected virtual void Awake()
     {
-        get{ return instance; }
+        // Singleton enforcement
+        if (instance == null)
+        {
+            // Register as singleton if first
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            // Self-destruct if another instance exists
+            Destroy(this);
+            return;
+        }
     }
 
-    void Awake() 
+    protected virtual void Start()
     {
-        if (instance != null && instance != this)
+       
+        PlayMenuMusic();
+    }
+
+
+    static public void PlayMenuMusic()
+    {
+        if (instance != null)
         {
-            Destroy(this.gameObject);
+            if (instance.source != null)
+            {
+                instance.source.Stop();
+                instance.source.clip = instance.menuMusic;
+                instance.source.Play();
+            }
         }
-        else 
+        else
         {
-            instance = this;
+            Debug.LogError("Unavailable MusicPlayer component");
         }
-        DontDestroyOnLoad(this.gameObject);
+    }
+
+    static public void PlayGameMusic()
+    {
+        if (instance != null)
+        {
+            if (instance.source != null)
+            {
+                instance.source.Stop();
+                instance.source.clip = instance.gameMusic;
+                instance.source.Play();
+            }
+        }
+        else
+        {
+            Debug.LogError("Unavailable MusicPlayer component");
+        }
     }
 }

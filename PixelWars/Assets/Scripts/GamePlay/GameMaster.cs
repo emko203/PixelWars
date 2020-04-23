@@ -36,6 +36,7 @@ public class GameMaster : MonoBehaviour
         LoadPlayerPrefs();
         turnHandler = new TurnHandler(guiHandler.RedArrow, guiHandler.BlueArrow, guiHandler.ArrowAnimator);
         turnHandler.SelectRandomStartPlayer();
+        Audio.PlayGameMusic();
     }
 
     private void LoadGuiMenu()
