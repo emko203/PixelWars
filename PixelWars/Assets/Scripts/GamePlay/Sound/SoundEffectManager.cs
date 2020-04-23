@@ -29,22 +29,27 @@ public class SoundEffectManager
 
     public static void PlayBasicMove()
     {
+        CheckForInit();
         if (IsNotNull(BasicMove))
         {
             CreateSound(BasicMove);
         }
+
     }
 
     public static void PlayBasicMagicAttack()
     {
+        CheckForInit();
         if (IsNotNull(BasicMagicAttack))
         {
             CreateSound(BasicMagicAttack);
         }
+
     }
 
     public static void PlayBasicCloseCombatAttack()
     {
+        CheckForInit();
         if (IsNotNull(BasicCloseAttack))
         {
             CreateSound(BasicCloseAttack);
@@ -53,6 +58,7 @@ public class SoundEffectManager
 
     public static void PlayBasicRangedAttack()
     {
+        CheckForInit();
         if (IsNotNull(BasicRangedAttack))
         {
             CreateSound(BasicRangedAttack);
@@ -61,19 +67,19 @@ public class SoundEffectManager
 
     private static bool IsNotNull(GameObject source)
     {
-        if (IsInitialized)
+        if (source != null)
         {
-            if (source != null)
-            {
-                return true;
-            }
+            return true;
         }
-        else
+        return false;
+    }
+
+    private static void CheckForInit()
+    {
+        if (!IsInitialized)
         {
             Init();
             IsInitialized = true;
-            IsNotNull(source);
         }
-        return false;
     }
 }
