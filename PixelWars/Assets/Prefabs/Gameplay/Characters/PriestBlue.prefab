@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 63722248254818220}
   - component: {fileID: 1076280252094594432}
   - component: {fileID: 5419061345133402297}
+  - component: {fileID: 5656422578011998868}
   m_Layer: 0
   m_Name: PriestBlue
   m_TagString: Untagged
@@ -98,7 +99,26 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: e823121196530db4fa1c5cad6a17e80c, type: 2}
   teamColor: 1
   unitType: 5
-  animator: {fileID: 0}
+  animator: {fileID: 5656422578011998868}
+--- !u!95 &5656422578011998868
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744799076638529293}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ab175a1de345f2499c86a6c2f53c378, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &9068396083184204077
 PrefabInstance:
   m_ObjectHideFlags: 0
