@@ -126,6 +126,15 @@ public class Character : MonoBehaviour
     /// <param name="target">Character to deal damage to</param>
     public void DealDamageTo(Character target) 
     {
+        if (this.range > 0)
+        {
+            SoundEffectManager.PlayBasicRangedAttack();
+        }
+        else
+        {
+            SoundEffectManager.PlayBasicCloseCombatAttack();
+        }
+
         FloatingTextController.CreateFloatingText(Damage.ToString(),target.transform);
         target.TakeDamage(Damage);
         Debug.Log("Dealt " + Damage + " damage to " + name + " (HpLeft:" + CurrentHealth,this);
