@@ -28,10 +28,11 @@ public class AbilityDefault : MonoBehaviour
     public virtual void MoveCharacterOnTile(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
     {
         GameObject tileToMoveTo = smartTile.GetTileFromDirection(directionToMove, teamToMove);
-        SmartTile smartTileToMoveTo = smartTile.GetSmartTileFromDirection(directionToMove, teamToMove);
 
         GameObject characterObjectToMove = smartTile.GetCharacterObject(teamToMove);
         Character characterData = smartTile.GetCharacter(teamToMove);
+
+        SmartTile smartTileToMoveTo = BattlefieldHandler.GetTileFromDirectionAhead(characterData.Speed, smartTile, teamToMove, directionToMove);
 
         //only move if the next tile excists
         if (tileToMoveTo != null && smartTileToMoveTo != null)

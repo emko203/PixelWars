@@ -303,7 +303,7 @@ public class BattlefieldHandler : MonoBehaviour
 
     #endregion
 
-    public static SmartTile GetTileFromDirectionAhead(int amountToLookAhead, SmartTile whereToStart, EnumTeams currentTeam, EnumDirection directionToLookIn)
+    public static SmartTile GetTileFromDirectionAhead(float amountToLookAhead, SmartTile whereToStart, EnumTeams currentTeam, EnumDirection directionToLookIn)
     {
         SmartTile TileToReturn = whereToStart;
 

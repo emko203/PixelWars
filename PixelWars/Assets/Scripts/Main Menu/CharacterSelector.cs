@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,21 +9,23 @@ using static UnityEngine.UI.Dropdown;
 
 public class CharacterSelector : MonoBehaviour
 {
+    [Header("Characters")]
     public List<GameObject> AllCharacters = new List<GameObject>();
 
     private List<GameObject> SelectableAbleCharacters = new List<GameObject>();
     private List<GameObject> SelectedCharacters = new List<GameObject>();
 
     private List<EnumUnit> listEnum = new List<EnumUnit>();
-
+    [Header("Dropdown")]
     public Dropdown CharacterDropdown;
-
+    [Header("Buttons")]
     public GameObject ConfirmBt;
     public GameObject AddCharacterButton;
     public GameObject RemoveBt;
     public GameObject BackBt;
-
+    [Header("Text")]
     public Text CharacterCount;
+    public Text CharacterDescription;
 
     private GameObject CurrentSelectedCharacterObject = null;
 
@@ -88,6 +91,30 @@ public class CharacterSelector : MonoBehaviour
         {
             CharacterCount.text = "Select Characters: " + (SelectedCharacters.Count) + "/3";
         }
+    }
+
+    private void UpdateCharacterDescriptionString(Character currentCharacter)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(currentCharacter.CharacterName);
+        builder.AppendLine();
+        builder.Append("Health: ");
+        builder.Append(currentCharacter.MaxHealth);
+        builder.AppendLine();
+        builder.Append("Manacost: ");
+        builder.Append(currentCharacter.ManaCost);
+        builder.AppendLine();
+        builder.Append("Damage: ");
+        builder.Append(currentCharacter.Damage);
+        builder.AppendLine();
+        builder.Append("Speed: ");
+        builder.Append(currentCharacter.Speed);
+        builder.AppendLine();
+        builder.Append("Range: ");
+        builder.Append(currentCharacter.Range);
+        builder.AppendLine();
+
+        CharacterDescription.text = builder.ToString();
     }
 
     private void CheckButtonsAvailable()
@@ -171,6 +198,7 @@ public class CharacterSelector : MonoBehaviour
 
         SelectableAbleCharacters[PosInList].SetActive(true);
         CurrentSelectedCharacterObject = SelectableAbleCharacters[PosInList];
+        UpdateCharacterDescriptionString(SelectableAbleCharacters[PosInList].GetComponent<Character>());
     }
 
     public void RemoveClick()

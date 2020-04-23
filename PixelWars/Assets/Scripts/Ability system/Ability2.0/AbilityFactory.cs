@@ -13,8 +13,8 @@ public class AbilityFactory
                 return new RogueAbility();
             case EnumUnit.PRIEST:
                 return new PriestAbility();
-            case EnumUnit.NONE:
             case EnumUnit.GHOST:
+            case EnumUnit.NONE:
             case EnumUnit.KNIGHT:
             case EnumUnit.ARCHER:
             case EnumUnit.MAGE:
