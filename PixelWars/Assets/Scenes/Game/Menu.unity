@@ -1863,6 +1863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: db64c7405f888c54a87734bc77da2390, type: 2}
+  audioSource: {fileID: 1162943941}
   resolutionDropdown: {fileID: 1901395393}
 --- !u!1 &903286505
 GameObject:
@@ -2848,8 +2849,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 118455638}
   m_HandleRect: {fileID: 1027170176}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
