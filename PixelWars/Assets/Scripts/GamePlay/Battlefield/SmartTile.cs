@@ -22,88 +22,7 @@ public class SmartTile : MonoBehaviour
 
     private GameObject redCharacterGameObject = null;
     private GameObject blueCharacterGameObject = null;
-    /// <summary>
-    /// Link and move character to space in given direction Returns True if Succesfull and False if unsuccesfull
-    /// </summary>
-    /// <param name="directionToMove">Direction to move to</param>
-    /// <param name="teamToGet">Team that moves from this tile</param>
-    /// <returns>True if Succesfull and False if unsuccesfull</returns>
-    /// 
-
-    //public void MoveDirection(EnumDirection directionToMove, EnumTeams teamToMove)
-    //{
-    //    GameObject tileToMoveTo = GetTileFromDirection(directionToMove, teamToMove);
-    //    SmartTile smartTileToMoveTo = GetSmartTileFromDirection(directionToMove, teamToMove);
-
-    //    GameObject characterObjectToMove = GetCharacterObject(teamToMove);
-    //    Character characterData = GetCharacter(teamToMove);
-
-    //    Character enemy = FightHandler.IsFight(this, teamToMove);
-
-    //    //if there is a friendly in front of us we handle healing ability
-    //    if (characterData.AbilityTemplate.AbilityType == EnumAbilityType.HEAL)
-    //    {
-    //        if (smartTileToMoveTo != null)
-    //        {
-    //            characterData.AbilityTemplate.HandleHealAbility(smartTileToMoveTo.GetCharacter(teamToMove));
-    //        }
-    //    }
-
-    //    if (characterData.AbilityTemplate.AbilityType == EnumAbilityType.MOVE)
-    //    {
-    //        characterData.AbilityTemplate.HandleMoveAbility(this, directionToMove, teamToMove);
-    //    }
-
-    //    if (!characterData.AbilityTemplate.CanHandle)
-    //    {
-    //        //if there is no fight on this tile withtin range then we move to next tile
-    //        if (enemy == null)
-    //        {
-
-    //            //only move if the next tile excists
-    //            if (tileToMoveTo != null && smartTileToMoveTo != null)
-    //            {
-    //                if (smartTileToMoveTo.IsEmpty(teamToMove))
-    //                {
-    //                    Debug.Log("Just moved " + characterData.TeamColor + characterData.CharacterName + " to space X-" + smartTileToMoveTo.positionNumberX + "_Y-" + smartTileToMoveTo.PositionNumberY);
-    //                    smartTileToMoveTo.AddCharacterToSpace(characterData, characterObjectToMove);
-    //                    this.RemoveCharacterFromSpace(characterData);
-    //                    return;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                //if no tile excists we are at the end and this team has won
-    //                TurnHandler.SetVictoryState();
-    //            }
-    //        }
-    //        else
-    //        {
-    //            HandleFight(teamToMove, enemy);
-    //        }
-    //    }
-        
-
-    //    //Check for victory
-    //    switch ((teamToMove))
-    //    {
-    //        case EnumTeams.Red:
-    //            if (this.positionNumberX == 5 && this.IsEmpty(EnumTeams.Blue))
-    //            {
-    //                Debug.Log("RED TEAM WINS");
-    //            }
-    //            break;
-    //        case EnumTeams.Blue:
-    //            if (this.positionNumberX == 1 && this.IsEmpty(EnumTeams.Red))
-    //            {
-    //                Debug.Log("BLUE TEAM WINS");
-    //            }
-    //            break;
-    //    }
-
-
-    //    return false;
-    //}
+   
 
     private AbilityDefault GetCharacterOnTileAbility(EnumTeams teamToGet)
     {
@@ -117,7 +36,12 @@ public class SmartTile : MonoBehaviour
                 return new AbilityDefault();
         }
     }
-
+    /// <summary>
+    /// Link and move character to space in given direction 
+    /// </summary>
+    /// <param name="directionToMove">Direction to move to</param>
+    /// <param name="teamToGet">Team that moves from this tile</param>
+    /// 
     public void CallMove(EnumDirection directionToMove, EnumTeams teamToMove)
     {
         AbilityDefault def = GetCharacterOnTileAbility(teamToMove);
@@ -126,7 +50,7 @@ public class SmartTile : MonoBehaviour
 
         if (targetCharacter != null)
         {
-            def.HandleFight(this,teamToMove,targetCharacter);
+            def.HandleFight(this, teamToMove, targetCharacter);
         }
         else
         {

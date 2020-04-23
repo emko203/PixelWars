@@ -10,7 +10,7 @@ public class RogueAbility : AbilityDefault
 
     private bool DidNotUseAbility = true;
 
-    public override void MoveCharacterOnTile(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
+    public override SmartTile MoveCharacterOnTile(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
     {
         SmartTile tileToMoveTo = smartTile.GetSmartTileFromDirection(directionToMove, teamToMove);
         SmartTile smartTileToMoveTo = smartTile.GetSmartTileFromDirection(directionToMove, teamToMove);
@@ -32,5 +32,7 @@ public class RogueAbility : AbilityDefault
             thisRogue.Range = 0;
             base.MoveCharacterOnTile(smartTile, directionToMove, teamToMove);
         }
+
+        return smartTileToMoveTo;
     }
 }

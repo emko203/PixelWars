@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,6 +19,11 @@ public class GameMaster : MonoBehaviour
     [Header("AllCharacterPrefabs")]
     [SerializeField] private List<GameObject> RedCharacterPrefabs;
     [SerializeField] private List<GameObject> BlueCharacterPrefabs;
+
+    [Space]
+    [Header("Cheats")]
+    [Tooltip("When this is not set we will spawn only that unit")]
+    [SerializeField] private EnumUnit unitToSpawn = EnumUnit.NONE;
 
     private PlayerHandler playerHandler = new PlayerHandler();
     private TurnHandler turnHandler;
@@ -225,6 +231,12 @@ public class GameMaster : MonoBehaviour
                 {
                     CurrentSelectedUnit = keyHandler.HandleSelectKey(CurrentTeam, playerHandler.GetCurrentPlayer(CurrentTeam), CurrentSelectedUnit,
                         selectorManager, battlefieldHandler, guiHandler, turnHandler);
+
+                    if (Application.isEditor && unitToSpawn != EnumUnit.NONE)
+                    {
+                        CurrentSelectedUnit = unitToSpawn;
+                    }
+
                     break;
                 }
 

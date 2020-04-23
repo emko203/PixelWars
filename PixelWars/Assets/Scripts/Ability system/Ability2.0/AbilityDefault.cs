@@ -25,14 +25,14 @@ public class AbilityDefault : MonoBehaviour
         return target;
     }
 
-    public virtual void MoveCharacterOnTile(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
+    public virtual SmartTile MoveCharacterOnTile(SmartTile smartTile, EnumDirection directionToMove, EnumTeams teamToMove)
     {
         GameObject tileToMoveTo = smartTile.GetTileFromDirection(directionToMove, teamToMove);
 
         GameObject characterObjectToMove = smartTile.GetCharacterObject(teamToMove);
         Character characterData = smartTile.GetCharacter(teamToMove);
 
-        SmartTile smartTileToMoveTo = BattlefieldHandler.GetTileFromDirectionAhead(characterData.Speed, smartTile, teamToMove, directionToMove);
+        SmartTile smartTileToMoveTo = smartTile.GetSmartTileFromDirection(directionToMove, teamToMove);
 
         //only move if the next tile excists
         if (tileToMoveTo != null && smartTileToMoveTo != null)
@@ -49,5 +49,7 @@ public class AbilityDefault : MonoBehaviour
             //if no tile excists we are at the end and this team has won
             TurnHandler.SetVictoryState();
         }
+
+        return smartTileToMoveTo;
     }
 }
