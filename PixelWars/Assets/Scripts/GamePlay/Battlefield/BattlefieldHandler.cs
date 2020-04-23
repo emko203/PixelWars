@@ -133,7 +133,7 @@ public class BattlefieldHandler : MonoBehaviour
                 smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r, Color.cyan.g, Color.cyan.b, Color.cyan.a);
 
                 yield return new WaitForSeconds(TimeBetweenMoves);
-                smartTiles[i].MoveDirection(EnumDirection.UP, teamToMove);
+                smartTiles[i].CallMove(EnumDirection.UP, teamToMove);
 
                 smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color = cRevert;
 
@@ -156,7 +156,7 @@ public class BattlefieldHandler : MonoBehaviour
                 
                 yield return new WaitForSeconds(TimeBetweenMoves);
 
-                tile.MoveDirection(EnumDirection.UP, teamToMove);
+                tile.CallMove(EnumDirection.UP, teamToMove);
 
                 tile.ThisTileObject.GetComponent<SpriteRenderer>().color = cRevert;
             }

@@ -21,7 +21,8 @@ public class Character : MonoBehaviour
     private float currentHealth;
 
     private AbilityTemplate abilityTemplate = new NoAbility();
-    
+    private AbilityDefault ability = new AbilityDefault();
+
     public void InitCharacter()
     {
         this.maxHealth = data.MaxHealth;
@@ -38,33 +39,7 @@ public class Character : MonoBehaviour
     //Set ability according to class
     private void InitAbility()
     {
-        switch (unitType)
-        {
-            case EnumUnit.KNIGHT:
-                abilityTemplate = new NoAbility();
-                break;
-            case EnumUnit.ARCHER:
-                abilityTemplate = new NoAbility();
-                break;
-            case EnumUnit.MAGE:
-                abilityTemplate = new NoAbility();
-                break;
-            case EnumUnit.ROGUE:
-                abilityTemplate = new RogueAbility();
-                break;
-            case EnumUnit.NONE:
-                abilityTemplate = new NoAbility();
-                break;
-            case EnumUnit.PRIEST:
-                abilityTemplate = new PriestAbility();
-                break;
-            case EnumUnit.GHOST:
-                abilityTemplate = new NoAbility();
-                break;
-            default:
-                abilityTemplate = new NoAbility();
-                break;
-        }
+        ability = AbilityFactory.GetAbilityFromCharacter(unitType);
     }
 
     private void Start()
@@ -89,6 +64,7 @@ public class Character : MonoBehaviour
     {
         if (currentHealth + amount <= maxHealth)
         {
+            FloatingTextController.CreateFloatingText(Damage.ToString(), this.transform,true);
             currentHealth += amount;
             UpdateHealthbar.Invoke();
         }
@@ -140,5 +116,5 @@ public class Character : MonoBehaviour
     public float Range { get => range; set => range = value; }
     public string CharacterName { get => characterName; set => characterName = value; }
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
-    public AbilityTemplate AbilityTemplate { get => abilityTemplate; }
+    public AbilityDefault Ability { get => ability; }
 }

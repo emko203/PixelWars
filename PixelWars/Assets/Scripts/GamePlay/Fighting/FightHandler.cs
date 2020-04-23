@@ -15,10 +15,9 @@ public static class FightHandler
         Character AttackingCharacter = tileToCheck.GetCharacter(currentMovingTeam);
         SmartTile tempTile;
 
-        float actualRange = AttackingCharacter.Range;
-
         if (AttackingCharacter != null)
         {
+            float actualRange = AttackingCharacter.Range;
             //we check each tile in range if there is an enemy in this range we start attacking the closesed enemy unit
             for (int i = 0; i <= actualRange; i++)
             {
