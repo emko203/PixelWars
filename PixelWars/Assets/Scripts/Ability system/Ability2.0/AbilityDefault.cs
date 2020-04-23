@@ -14,6 +14,7 @@ public class AbilityDefault : MonoBehaviour
 
     public virtual void HandleFight(SmartTile smarttile, EnumTeams teamToMove, Character enemy)
     {
+        smarttile.GetCharacter(teamToMove).PlayAnimationAttack();
         FightHandler.FightWithClosestEnemy(smarttile, teamToMove, enemy);
     }
 

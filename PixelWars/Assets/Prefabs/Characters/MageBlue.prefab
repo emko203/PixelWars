@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3914561128533316421}
   - component: {fileID: 2848093519044054447}
   - component: {fileID: 1383096575530883452}
+  - component: {fileID: -3682011350570469155}
   m_Layer: 0
   m_Name: MageBlue
   m_TagString: Untagged
@@ -98,6 +99,26 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: dccf5092aa2a35a429b6d83787dabf00, type: 2}
   teamColor: 1
   unitType: 3
+  animator: {fileID: -3682011350570469155}
+--- !u!95 &-3682011350570469155
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122677094853172875}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8197d383ff3a8f746b3f7a0407f13138, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2961577495375647392
 PrefabInstance:
   m_ObjectHideFlags: 0

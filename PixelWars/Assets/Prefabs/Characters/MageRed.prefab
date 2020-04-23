@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5739839125781709315}
   - component: {fileID: 7129588237413607221}
   - component: {fileID: 7862862513129498922}
+  - component: {fileID: -1138636292758226035}
   m_Layer: 0
   m_Name: MageRed
   m_TagString: Untagged
@@ -98,6 +99,26 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: dccf5092aa2a35a429b6d83787dabf00, type: 2}
   teamColor: 0
   unitType: 3
+  animator: {fileID: -1138636292758226035}
+--- !u!95 &-1138636292758226035
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660270964978773773}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cafab07a389cbef40ab9809aacfa23da, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &3404027990844358734
 PrefabInstance:
   m_ObjectHideFlags: 0

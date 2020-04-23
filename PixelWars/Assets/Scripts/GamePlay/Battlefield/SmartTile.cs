@@ -193,6 +193,13 @@ public class SmartTile : MonoBehaviour
 
     IEnumerator handleAnimation(Transform startpos, Transform endpos, Transform toMove, EnumTeams currentTeam)
     {
+        Character characterOnTile = this.GetCharacter(currentTeam);
+
+        if (characterOnTile != null)
+        {
+            characterOnTile.PlayAnimationWalk();
+        }
+
         // Transforms to act as start and end markers for the journey.
         Transform startMarker = startpos;
         Transform endMarker = endpos;
@@ -235,6 +242,11 @@ public class SmartTile : MonoBehaviour
         }
 
         toMove.position = endMarker.position;
+
+        if (characterOnTile != null)
+        {
+            characterOnTile.PlayAnimationIdle();
+        }
 
         yield return null;
     }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 677981282970586349}
   - component: {fileID: 6225007621286887752}
   - component: {fileID: 3289704390548884571}
+  - component: {fileID: 1664392155546036337}
   m_Layer: 0
   m_Name: ArcherRed
   m_TagString: Untagged
@@ -98,6 +99,26 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: beebb34ad13517a41a7a8bd0692216b8, type: 2}
   teamColor: 0
   unitType: 2
+  animator: {fileID: 1664392155546036337}
+--- !u!95 &1664392155546036337
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5694302452648927487}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6bc1114e3865ee24f94d512dce31dbad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2339330188175493039
 PrefabInstance:
   m_ObjectHideFlags: 0

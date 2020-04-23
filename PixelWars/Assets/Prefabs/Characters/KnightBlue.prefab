@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1177508311893408806}
   - component: {fileID: 7326925485356784609}
   - component: {fileID: 4417136322684768894}
+  - component: {fileID: 9165756507738532898}
   m_Layer: 0
   m_Name: KnightBlue
   m_TagString: Untagged
@@ -98,6 +99,26 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 9e02f9d4814bf054abc5522f45905dab, type: 2}
   teamColor: 1
   unitType: 1
+  animator: {fileID: 9165756507738532898}
+--- !u!95 &9165756507738532898
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493910270505690658}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e8b4140a50fe505428908b8f95657e6b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &7045737345800591445
 PrefabInstance:
   m_ObjectHideFlags: 0

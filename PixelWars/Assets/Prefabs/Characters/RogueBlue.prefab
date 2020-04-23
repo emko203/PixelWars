@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1784655440844660254}
   - component: {fileID: 3684687375680968304}
   - component: {fileID: 2745031000620607907}
+  - component: {fileID: -741417116718535750}
   m_Layer: 0
   m_Name: RogueBlue
   m_TagString: Untagged
@@ -98,6 +99,26 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 37735331cd1ec904f9f699b8ed7a2601, type: 2}
   teamColor: 1
   unitType: 4
+  animator: {fileID: -741417116718535750}
+--- !u!95 &-741417116718535750
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3771279655986087872}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d43bbd8c3069f345b1f7044eecee922, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6333917058314652578
 PrefabInstance:
   m_ObjectHideFlags: 0

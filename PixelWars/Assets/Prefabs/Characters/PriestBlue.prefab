@@ -98,6 +98,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: e823121196530db4fa1c5cad6a17e80c, type: 2}
   teamColor: 1
   unitType: 5
+  animator: {fileID: 0}
 --- !u!1001 &9068396083184204077
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Character_Template data;
     [SerializeField] private EnumTeams teamColor;
     [SerializeField] private EnumUnit unitType;
+    [SerializeField] private Animator animator;
 
     private UnityEvent UpdateHealthbar = new UnityEvent();
     private HealthBar bar;
@@ -19,6 +20,8 @@ public class Character : MonoBehaviour
     private float range;
     private string characterName;
     private float currentHealth;
+
+    private float delayOnDeath = 1f;
 
     private AbilityTemplate abilityTemplate = new NoAbility();
     private AbilityDefault ability = new AbilityDefault();
@@ -34,6 +37,40 @@ public class Character : MonoBehaviour
         currentHealth = maxHealth;
 
         InitAbility();
+    }
+
+    public void PlayAnimationWalk()
+    {
+        if (IsAnimatorNotNull())
+        {
+            animator.SetBool("IsMoving", true);
+        }
+    }
+
+    public void PlayAnimationIdle()
+    {
+        if (IsAnimatorNotNull())
+        {
+            animator.SetBool("IsMoving", false);
+        }
+    }
+
+    public void PlayAnimationAttack()
+    {
+        if (IsAnimatorNotNull())
+        {
+            animator.SetTrigger("IsAttacking");
+        }
+    }
+
+    private bool IsAnimatorNotNull()
+    {
+        if (animator != null)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     //Set ability according to class
@@ -103,7 +140,7 @@ public class Character : MonoBehaviour
         {
             //TODO: kill character
             UpdateHealthbar.RemoveListener(() => bar.UpdateHealth(currentHealth));
-            GameObject.Destroy(gameObject);
+            GameObject.Destroy(gameObject, delayOnDeath);
         }
     }
 

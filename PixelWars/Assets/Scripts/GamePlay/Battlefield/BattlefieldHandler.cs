@@ -131,7 +131,6 @@ public class BattlefieldHandler : MonoBehaviour
                 Color cRevert = new Color();
                 cRevert = smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color ;
                 smartTiles[i].ThisTileObject.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r, Color.cyan.g, Color.cyan.b, Color.cyan.a);
-
                 yield return new WaitForSeconds(TimeBetweenMoves);
                 smartTiles[i].CallMove(EnumDirection.UP, teamToMove);
 

@@ -127,6 +127,11 @@ public class TurnHandler
         }
     }
 
+    public static EnumTeams GetCurrentTeam()
+    {
+        return currentPlayerTurn;
+    }
+
     public static EnumDirection GetDirectionFromTeam(EnumDirection directionToGet)
     {
         switch (currentPlayerTurn)
