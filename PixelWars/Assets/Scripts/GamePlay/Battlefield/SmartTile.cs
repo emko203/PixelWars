@@ -72,7 +72,7 @@ public class SmartTile : MonoBehaviour
                 else
                 {
                     //if no tile excists we are at the end and this team has won
-                    GameMaster.ShowVictoryScreen(teamToMove);
+                    TurnHandler.SetVictoryState();
                 }
             }
             else

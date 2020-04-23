@@ -8,7 +8,7 @@ public class TurnHandler
     private  EnumTeams[] validTeams = { EnumTeams.Blue, EnumTeams.Red };
     private static EnumTeams  currentPlayerTurn;
 
-    private EnumState currentGameState = EnumState.WAIT;
+    private static EnumState currentGameState = EnumState.WAIT;
 
     private GameObject RedTurnArrow;
     private GameObject BlueTurnArrow;
@@ -21,11 +21,16 @@ public class TurnHandler
         ArrowAnimator = arrowAnimator;
     }
 
+    public static void SetVictoryState()
+    {
+        currentGameState = EnumState.VICTORY;
+    }
+
     public void SetNextState()
     {
         switch (currentGameState)
         {
-            
+
             case EnumState.START_OF_TURN:
                 currentGameState = EnumState.PLAYER_TURN;
                 break;
@@ -40,6 +45,12 @@ public class TurnHandler
             case EnumState.WAIT:
                 currentGameState = EnumState.START_OF_TURN;
                 break;
+
+            case EnumState.VICTORY:
+                currentGameState = EnumState.START_OF_TURN;
+                SetNextTurn();
+                break;
+
             default:
                 break;
         }

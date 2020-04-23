@@ -312,7 +312,10 @@ public class BattlefieldHandler : MonoBehaviour
         {
             for (int i = 1; i <= amountToLookAhead; i++)
             {
-                TileToReturn = TileToReturn.GetSmartTileFromDirection(directionToLookIn, currentTeam);
+                if (TileToReturn != null)
+                {
+                    TileToReturn = TileToReturn.GetSmartTileFromDirection(directionToLookIn, currentTeam);
+                }
             }
         }
 

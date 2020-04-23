@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
@@ -22,9 +23,6 @@ public class GameMaster : MonoBehaviour
     private TurnHandler turnHandler;
     private KeyHandler keyHandler = new KeyHandler();
 
-    private static GameObject RedTeamVictory;
-    private static GameObject BlueTeamVictory;
-
     private List<SmartTile> mapping = new List<SmartTile>();
     private List<GameObject> AvailableRedCharacters = new List<GameObject>();
     private List<GameObject> AvailableBlueCharacters = new List<GameObject>();
@@ -40,30 +38,6 @@ public class GameMaster : MonoBehaviour
         turnHandler.SelectRandomStartPlayer();
     }
 
-    public static void ShowVictoryScreen(EnumTeams WinningTeam)
-    {
-        switch (WinningTeam)
-        {
-            case EnumTeams.Red:
-                RedTeamVictory.SetActive(true);
-                break;
-            case EnumTeams.Blue:
-                BlueTeamVictory.SetActive(true);
-                break;
-            default:
-                return;
-        }
-    }
-
-    private void LoadVictoryScreens()
-    {
-        RedTeamVictory = GameObject.FindWithTag("RedVictory");
-        BlueTeamVictory = GameObject.FindWithTag("BlueVictory");
-
-        RedTeamVictory.SetActive(false);
-        BlueTeamVictory.SetActive(false);
-    }
-
     private void LoadGuiMenu()
     {
         guiHandler.InitUI(GetCharactersFromCurrentTeam());
@@ -71,6 +45,9 @@ public class GameMaster : MonoBehaviour
 
     private void LoadPlayerPrefs()
     {
+        AvailableBlueCharacters.Clear();
+        AvailableRedCharacters.Clear();
+
         int AmountOfUnits = PlayerPrefs.GetInt("SelectionSize");
 
         for (int i = 0; i < AmountOfUnits; i++)
@@ -94,14 +71,13 @@ public class GameMaster : MonoBehaviour
         turnHandler.SetTurnArrows();
         LoadGuiMenu();
         FloatingTextController.Initialize();
-        LoadVictoryScreens();
     }
 
     private void Update()
     {
         switch (turnHandler.CurrentGameState)
         {
-            
+
             case EnumState.START_OF_TURN:
                 UpdateStartOfTurn();
                 break;
@@ -112,11 +88,17 @@ public class GameMaster : MonoBehaviour
                 UpdateEndOfTurn();
                 break;
 
+            case EnumState.VICTORY:
+                UpdateVictory();
+                break;
+
             case EnumState.WAIT:
             default:
                 break;
         }
     }
+
+   
 
     #endregion
 
@@ -155,6 +137,13 @@ public class GameMaster : MonoBehaviour
         selectorManager.HideCharacterSelector();
         turnHandler.SetNextState();
         StopAllCoroutines();
+    }
+
+    private void UpdateVictory()
+    {
+        //TODO: Load victoryScene
+        PlayerPrefs.SetInt("Victory", (int)turnHandler.CurrentPlayerTurn);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     #endregion

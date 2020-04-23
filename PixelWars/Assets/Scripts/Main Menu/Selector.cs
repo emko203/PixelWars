@@ -30,8 +30,17 @@ public class Selector : MonoBehaviour
 
     private void Start()
     {
-        CharacterDropdown.ClearOptions();
+        ClearAll();
         UpdateCurrentSelectableCharacter();
+    }
+
+    public void ClearAll()
+    {
+        listEnum.Clear();
+        SelectedCharacters.Clear();
+        DropdownOptions.Clear();
+        SelectedObject = null;
+        CharacterDropdown.ClearOptions();
     }
 
     public void NextCharacter()
