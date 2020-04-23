@@ -818,6 +818,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 37735331cd1ec904f9f699b8ed7a2601, type: 2}
   teamColor: 1
   unitType: 4
+  animator: {fileID: 0}
 --- !u!1 &401001679
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,6 +916,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: dccf5092aa2a35a429b6d83787dabf00, type: 2}
   teamColor: 1
   unitType: 3
+  animator: {fileID: 0}
 --- !u!1 &445026107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,6 +1980,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: e823121196530db4fa1c5cad6a17e80c, type: 2}
   teamColor: 1
   unitType: 5
+  animator: {fileID: 0}
 --- !u!212 &964428967
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2850,7 +2853,8 @@ MonoBehaviour:
   - {fileID: 964428965}
   CharacterDropdown: {fileID: 1236793086}
   ConfirmBt: {fileID: 1380393642}
-  AddBt: {fileID: 595149002}
+  AddBtPlayer1: {fileID: 0}
+  AddBtPlayer2: {fileID: 595149002}
   RemoveBt: {fileID: 752661125}
   CharacterCount: {fileID: 1756386641}
 --- !u!4 &1682269771
@@ -3429,6 +3433,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: beebb34ad13517a41a7a8bd0692216b8, type: 2}
   teamColor: 1
   unitType: 2
+  animator: {fileID: 0}
 --- !u!1 &2012409628
 GameObject:
   m_ObjectHideFlags: 0
@@ -3599,3 +3604,4 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 9e02f9d4814bf054abc5522f45905dab, type: 2}
   teamColor: 1
   unitType: 1
+  animator: {fileID: 0}

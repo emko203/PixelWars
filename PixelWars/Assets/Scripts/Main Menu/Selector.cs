@@ -14,7 +14,7 @@ public class Selector : MonoBehaviour
     public Dropdown CharacterDropdown;
 
     public GameObject ConfirmBt;
-    public GameObject AddBt;
+    public GameObject AddBtPlayer1;
     public GameObject RemoveBt;
 
     public Text CharacterCount;
@@ -36,8 +36,6 @@ public class Selector : MonoBehaviour
 
     public void ClearAll()
     {
-        listEnum.Clear();
-        SelectedCharacters.Clear();
         DropdownOptions.Clear();
         SelectedObject = null;
         CharacterDropdown.ClearOptions();
@@ -109,9 +107,11 @@ public class Selector : MonoBehaviour
         }
         else if (SelectedCharacters.Count == teamsize * 2)
         {
+            SavePlayerPrefs();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            listEnum.Clear();
+            SelectedCharacters.Clear();
         }
-       
     }
 
     private void SavePlayerPrefs()
@@ -186,13 +186,13 @@ public class Selector : MonoBehaviour
         if (SelectedCharacters.Count == teamsize || SelectedCharacters.Count == teamsize * 2)
         {
             ConfirmBt.SetActive(true);
-            AddBt.SetActive(false);
+            AddBtPlayer1.SetActive(false);
         }
         
         if(ConfirmBt.activeSelf && SelectedCharacters.Count != teamsize)
         {
             ConfirmBt.SetActive(false);
-            AddBt.SetActive(true);
+            AddBtPlayer1.SetActive(true);
         }
 
         if (SelectedCharacters.Count > 0)
