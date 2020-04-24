@@ -452,17 +452,17 @@ PrefabInstance:
     - target: {fileID: 2580778823092263177, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.31800315
+      value: 0.39875
       objectReference: {fileID: 0}
     - target: {fileID: 2580778823092263177, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.31800315
+      value: 0.39875
       objectReference: {fileID: 0}
     - target: {fileID: 2580778823092263177, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.31800315
+      value: 0.39875
       objectReference: {fileID: 0}
     - target: {fileID: 2580778823092263177, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
@@ -502,12 +502,12 @@ PrefabInstance:
     - target: {fileID: 2580778823542702701, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -319
+      value: -319.00003
       objectReference: {fileID: 0}
     - target: {fileID: 2580778823542702701, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -199.5
+      value: -199.50002
       objectReference: {fileID: 0}
     - target: {fileID: 2580778823542702701, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
@@ -553,6 +553,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2580778823542702701, guid: b30e9094ace029147934ba63639a380c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.507837
+      objectReference: {fileID: 0}
+    - target: {fileID: 2580778823542702701, guid: b30e9094ace029147934ba63639a380c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.507837
+      objectReference: {fileID: 0}
+    - target: {fileID: 2580778823542702701, guid: b30e9094ace029147934ba63639a380c,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.507837
       objectReference: {fileID: 0}
     - target: {fileID: 3423465390448871833, guid: b30e9094ace029147934ba63639a380c,
         type: 3}
@@ -4001,7 +4016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
