@@ -12,10 +12,6 @@ public class CharacterSelector : MonoBehaviour
     [Header("Characters")]
     public List<GameObject> AllCharacters = new List<GameObject>();
 
-    private List<GameObject> SelectableAbleCharacters = new List<GameObject>();
-    private List<GameObject> SelectedCharacters = new List<GameObject>();
-
-    private List<EnumUnit> listEnum = new List<EnumUnit>();
     [Header("Dropdown")]
     public Dropdown CharacterDropdown;
     [Header("Buttons")]
@@ -26,8 +22,13 @@ public class CharacterSelector : MonoBehaviour
     [Header("Text")]
     public Text CharacterCount;
     public Text CharacterDescription;
+    [Header("Sceneloader")]
+    public SceneLoader sceneLoader;
 
+    private List<GameObject> SelectableAbleCharacters = new List<GameObject>();
+    private List<GameObject> SelectedCharacters = new List<GameObject>();
     private GameObject CurrentSelectedCharacterObject = null;
+    private List<EnumUnit> listEnum = new List<EnumUnit>();
 
     private int PosInList = 0;
     private int teamsize = 3;
@@ -246,7 +247,7 @@ public class CharacterSelector : MonoBehaviour
         {
             SavePlayerPrefs();
             Audio.PlayGameMusic();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            sceneLoader.LoadNextLevel();
             listEnum.Clear();
             SelectedCharacters.Clear();
         }

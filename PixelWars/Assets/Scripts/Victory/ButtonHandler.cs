@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
+    [SerializeField] private SceneLoader sceneLoader;
     public void ButtonBackToMenuClick()
     {
-        SceneManager.LoadScene(0);
+        sceneLoader.LoadFirstLevel();
     }
 
     public void ButtonQuitClick()

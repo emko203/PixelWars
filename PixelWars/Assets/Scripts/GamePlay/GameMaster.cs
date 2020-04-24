@@ -14,7 +14,8 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private InputManager inputManager;
     [SerializeField] private SelectorManager selectorManager;
     [SerializeField] private GUI_Handler guiHandler;
-    
+    [SerializeField] private SceneLoader sceneLoader;
+
     [Space]
     [Header("AllCharacterPrefabs")]
     [SerializeField] private List<GameObject> RedCharacterPrefabs;
@@ -149,9 +150,8 @@ public class GameMaster : MonoBehaviour
 
     private void UpdateVictory()
     {
-        //TODO: Load victoryScene
         PlayerPrefs.SetInt("Victory", (int)turnHandler.CurrentPlayerTurn);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        sceneLoader.LoadNextLevel();
     }
 
     #endregion
