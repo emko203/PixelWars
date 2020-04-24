@@ -94,7 +94,7 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    private void UpdateCharacterDescriptionString(Character currentCharacter)
+    IEnumerator UpdateCharacterDescriptionString(Character currentCharacter)
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(currentCharacter.CharacterName);
@@ -116,6 +116,7 @@ public class CharacterSelector : MonoBehaviour
         builder.AppendLine();
 
         CharacterDescription.text = builder.ToString();
+        yield return new WaitForSeconds(0.1f);
     }
 
     private void CheckButtonsAvailable()
@@ -199,7 +200,7 @@ public class CharacterSelector : MonoBehaviour
 
         SelectableAbleCharacters[PosInList].SetActive(true);
         CurrentSelectedCharacterObject = SelectableAbleCharacters[PosInList];
-        UpdateCharacterDescriptionString(SelectableAbleCharacters[PosInList].GetComponent<Character>());
+        StartCoroutine(UpdateCharacterDescriptionString(SelectableAbleCharacters[PosInList].GetComponent<Character>()));
     }
 
     public void RemoveClick()
